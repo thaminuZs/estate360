@@ -1,0 +1,9 @@
+POST http://localhost:3000/owners
+Content-Type: application/json
+
+{
+  "name": "Saman Senadheera",
+  "email": "samans@mail.com",
+  "phone": "0753764222",
+  "address": "132 Birdy Lande, LA"
+}
