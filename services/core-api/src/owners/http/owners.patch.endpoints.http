@@ -1,0 +1,7 @@
+PATCH http://localhost:3000/owners/ab-12-bc
+Content-Type: application/json
+
+{
+  "email": "samans@mail.com",
+  "address": "132 Birdy Lande, LA"
+}
