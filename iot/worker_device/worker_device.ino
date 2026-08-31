@@ -248,11 +248,11 @@ void sendWorkerData(
   // GPS VALID
   if (gps.location.isValid()) {
 
-    double latitude =
-      gps.location.lat();
+    double latitude = gps.location.lat();
 
-    double longitude =
-      gps.location.lng();
+    double longitude = gps.location.lng();
+	  
+	double altitude = gps.altitude.meters();
 
 
     message =
@@ -263,6 +263,8 @@ void sendWorkerData(
       String(latitude, 6) +
       "|LON=" +
       String(longitude, 6) +
+      "|ALT=" +
+	  String(altitude, 2) +
       "|STATUS=" +
       activityStatus;
   }
@@ -277,6 +279,7 @@ void sendWorkerData(
       String(DEVICE_UUID) +
       "|LAT=INVALID" +
       "|LON=INVALID" +
+      "|ALT=INVALID" +
       "|STATUS=" +
       activityStatus;
   }
