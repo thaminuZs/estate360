@@ -8,8 +8,8 @@ export class OwnersController {
   constructor(private readonly ownersService: OwnersService) {}
 
   @Post()
-  public createOwners(@Body() createOwnerDto: CreateOwnerDto) {
-    console.log(createOwnerDto);
+  public createOwner(@Body() createOwnerDto: CreateOwnerDto) {
+    return this.ownersService.createOwner(createOwnerDto);
   }
 
   @Patch('/:id')
