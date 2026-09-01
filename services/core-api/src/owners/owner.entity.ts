@@ -1,19 +1,39 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { OwnerStatus } from './enums/ownerStatus.enum';
 
 @Entity({ name: 'owners' })
 export class Owner {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name!: string;
 
-  @Column({ name: 'contact_email' })
+  @Column({ name: 'contact_email', type: 'varchar' })
   contactEmail!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   phone!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   address!: string;
+
+  @Column({
+    type: 'enum',
+    enum: OwnerStatus,
+    default: OwnerStatus.ACTIVE,
+  })
+  status!: string;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+  updatedAt!: Date;
 }

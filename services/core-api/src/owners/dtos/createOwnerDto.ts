@@ -1,12 +1,15 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   Matches,
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { OwnerStatus } from '../enums/ownerStatus.enum';
 
 export class CreateOwnerDto {
   @IsString()
@@ -35,6 +38,10 @@ export class CreateOwnerDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
-  @MaxLength(96)
+  @MaxLength(512)
   address!: string;
+
+  @IsOptional()
+  @IsEnum(OwnerStatus)
+  status?: OwnerStatus;
 }
