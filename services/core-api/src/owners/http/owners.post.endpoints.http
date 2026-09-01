@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name": "Saman Senadheera",
-  "email": "samans@mail.com",
+  "contactEmail": "samans@mail.com",
   "password": "Pa$$w0rd35",
   "phone": "0753764222",
   "address": "132 Birdy Lande, LA"
