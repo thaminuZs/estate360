@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OwnerStatus } from './enums/ownerStatus.enum';
+import { OwnerStatus } from './enums/owner-status.enum';
 
 @Entity({ name: 'owners' })
 export class Owner {
@@ -31,9 +31,9 @@ export class Owner {
   })
   status!: string;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 }
