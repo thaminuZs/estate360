@@ -9,7 +9,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { OwnerStatus } from '../enums/ownerStatus.enum';
+import { OwnerStatus } from '../enums/owner-status.enum';
 
 export class CreateOwnerDto {
   @IsString()

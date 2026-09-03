@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { OwnerStatus } from './enums/ownerStatus.enum';
+import { OwnerStatus } from './enums/owner-status.enum';
 
 @Entity({ name: 'owners' })
 export class Owner {

@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { OwnersModule } from './owners/owners.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Owner } from './owners/owner.entity';
+import { User } from './auth/entities/users.entity';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { Owner } from './owners/owner.entity';
       inject: [],
       useFactory: () => ({
         type: 'postgres',
-        entities: [Owner],
+        entities: [Owner, User],
         synchronize: true,
         port: 5432,
         host: 'localhost',
