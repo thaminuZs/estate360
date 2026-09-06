@@ -14,7 +14,7 @@ export class Estate {
   id!: string;
 
   @Column({ name: 'owner_id' })
-  ownerId!: Owner;
+  ownerId!: string;
 
   @Column({ name: 'crop_id' })
   cropId!: string;
@@ -48,9 +48,9 @@ export class Estate {
   @Column({ type: 'enum', enum: EstateStatus, default: EstateStatus.ACTIVE })
   status!: EstateStatus;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
   updatedAt!: Date;
 }

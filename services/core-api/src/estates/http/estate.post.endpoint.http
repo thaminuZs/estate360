@@ -1,0 +1,26 @@
+POST http://localhost:3000/estates/112
+Content-Type: application/json
+
+{
+  "ownerId": "550e8400-e29b-41d4-a716-446655440000",
+  "cropId": "660e8400-e29b-41d4-a716-446655440001",
+  "name": "Green Valley Tea Estate",
+  "code": "GV-001",
+  "location": {
+    "type": "Point",
+    "coordinates": [80.6355, 6.9271]
+  },
+  "boundary": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [80.6300, 6.9250],
+        [80.6400, 6.9250],
+        [80.6400, 6.9300],
+        [80.6300, 6.9300],
+        [80.6300, 6.9250]
+      ]
+    ]
+  },
+  "status": "active"
+}
