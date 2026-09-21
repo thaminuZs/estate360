@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estate360 - Interactive Map</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- 100% Full-Screen Map Container -->
+  <div id="map"></div>
+
+  <!-- Glassmorphism Floating UI Control Panel -->
+  <div class="control-panel">
+    <div class="panel-header">
+      <h2>Estate360 Map Explorer</h2>
+    </div>
+
+    <div class="panel-section">
+      <h3>Pin Coordinates</h3>
+      <form id="pin-form">
+        <div class="input-group">
+          <input type="number" id="lat-input" step="any" placeholder="Latitude (e.g. 6.9271)" required />
+          <input type="number" id="lng-input" step="any" placeholder="Longitude (e.g. 79.8612)" required />
+        </div>
+        <input type="text" id="label-input" placeholder="Label / Title (optional)" />
+        <button type="submit" id="add-pin-btn">📍 Add Pin</button>
+      </form>
+    </div>
+
+    <div class="panel-section">
+      <div class="section-title-row">
+        <h3>Pinned Locations</h3>
+        <button id="clear-pins-btn" class="btn-secondary">Clear All</button>
+      </div>
+      <ul id="pins-list" class="pins-list">
+        <li class="empty-msg">No pins added yet. Click anywhere on the map or enter coordinates above!</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <!-- Application JS -->
+  <script src="app.js"></script>
+</body>
+
+</html>
