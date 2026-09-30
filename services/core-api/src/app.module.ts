@@ -8,12 +8,14 @@ import { User } from './auth/entities/users.entity';
 import { EstatesModule } from './estates/estates.module';
 import { AuthModule } from './auth/auth.module';
 import { Estate } from './estates/estate.entity';
+import { CropModule } from './crop/crop.module';
 
 @Module({
   imports: [
     OwnersModule,
     EstatesModule,
     AuthModule,
+    CropModule,
 
     TypeOrmModule.forRootAsync({
       imports: [],
