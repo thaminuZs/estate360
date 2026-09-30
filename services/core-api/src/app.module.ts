@@ -9,6 +9,7 @@ import { EstatesModule } from './estates/estates.module';
 import { AuthModule } from './auth/auth.module';
 import { Estate } from './estates/estate.entity';
 import { CropModule } from './crop/crop.module';
+import { Crop } from './crop/crop.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { CropModule } from './crop/crop.module';
       inject: [],
       useFactory: () => ({
         type: 'postgres',
-        entities: [Owner, User, Estate],
+        entities: [Owner, User, Estate, Crop],
         synchronize: true,
         port: 5432,
         host: 'localhost',
