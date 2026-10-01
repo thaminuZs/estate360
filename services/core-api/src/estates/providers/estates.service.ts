@@ -12,7 +12,7 @@ export class EstatesService {
   ) {}
 
   public async createEstate(createEstateDto: CreateEstateDto) {
-    const estate = this.estatesRepository.create(createEstateDto);
-    return await this.estatesRepository.save(estate);
+    //const estate = this.estatesRepository.create(createEstateDto);
+    //return await this.estatesRepository.save(estate);
   }
 }

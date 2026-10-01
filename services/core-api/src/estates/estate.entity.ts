@@ -1,12 +1,14 @@
-import { Owner } from 'src/owners/owner.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { EstateStatus } from './enums/estate-status.enum';
+import { Crop } from 'src/crop/crop.entity';
 
 @Entity({ name: 'estates' })
 export class Estate {
@@ -16,8 +18,12 @@ export class Estate {
   @Column({ name: 'owner_id' })
   ownerId!: string;
 
-  @Column({ name: 'crop_id' })
-  cropId!: string;
+  @ManyToOne(() => Crop, (crop) => crop.estates, {
+    nullable: false,
+    eager: true,
+  })
+  @JoinColumn({ name: 'crop_id' })
+  crop!: Crop;
 
   @Column({ type: 'varchar' })
   name!: string;
