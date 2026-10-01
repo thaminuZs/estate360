@@ -33,7 +33,7 @@ export class PolygonDto {
 export class CreateEstateDto {
   @IsNotEmpty()
   @IsString()
-  ownerId!: string;
+  owner!: string;
 
   @IsNotEmpty()
   @IsString()
