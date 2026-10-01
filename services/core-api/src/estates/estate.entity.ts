@@ -16,7 +16,7 @@ export class Estate {
   id!: string;
 
   @Column({ name: 'owner_id' })
-  ownerId!: string;
+  owner!: string;
 
   @ManyToOne(() => Crop, (crop) => crop.estates, {
     nullable: false,

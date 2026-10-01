@@ -2,9 +2,9 @@ POST http://localhost:3000/estates/112
 Content-Type: application/json
 
 {
-  "ownerId": "550e8400-e29b-41d4-a716-446655440000",
-  "cropId": "660e8400-e29b-41d4-a716-446655440001",
-  "name": "Green Valley Tea Estate",
+  "owner": "550e8400-e29b-41d4-a716-446655440000",
+  "crop": "37ec5e0c-9129-4524-bd2e-c3a70514b08c",
+  "name": "Green Valley Coconut Estate",
   "code": "GV-001",
   "location": {
     "type": "Point",
