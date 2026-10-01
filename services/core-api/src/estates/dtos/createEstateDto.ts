@@ -37,7 +37,7 @@ export class CreateEstateDto {
 
   @IsNotEmpty()
   @IsString()
-  cropId!: string;
+  crop!: string;
 
   @IsNotEmpty()
   @IsString()

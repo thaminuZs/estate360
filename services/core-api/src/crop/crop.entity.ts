@@ -1,7 +1,9 @@
+import { Estate } from 'src/estates/estate.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,4 +30,7 @@ export class Crop {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt!: Date;
+
+  @OneToMany(() => Estate, (estate) => estate.crop)
+  estates!: Estate[];
 }
