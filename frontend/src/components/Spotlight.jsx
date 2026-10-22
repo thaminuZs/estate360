@@ -22,9 +22,9 @@ export default function Spotlight() {
         {/* Row 1: Software GIS Map */}
         <div 
           ref={ref1} 
-          className={`spotlight-row reveal-init ${isVisible1 ? 'reveal-visible' : ''}`}
+          className="spotlight-row"
         >
-          <div className="spotlight-image-container">
+          <div className={`spotlight-image-container reveal-fade-left ${isVisible1 ? 'reveal-visible' : ''}`}>
             <img 
               src="/dashboard-preview.jpg" 
               alt="Estate360 Live GIS Topographic Map & Worker Analytics" 
@@ -32,7 +32,7 @@ export default function Spotlight() {
             />
           </div>
 
-          <div className="spotlight-content">
+          <div className={`spotlight-content reveal-fade-right delay-2 ${isVisible1 ? 'reveal-visible' : ''}`}>
             <span className="spotlight-pill">Software Architecture</span>
             <h3 className="spotlight-title">Precision GIS Topography & Automated Harvest Rostering</h3>
             <p className="spotlight-text">
@@ -75,9 +75,9 @@ export default function Spotlight() {
         {/* Row 2: IoT Hardware Device */}
         <div 
           ref={ref2} 
-          className={`spotlight-row reverse reveal-init ${isVisible2 ? 'reveal-visible' : ''}`}
+          className="spotlight-row reverse"
         >
-          <div className="spotlight-image-container">
+          <div className={`spotlight-image-container reveal-fade-right ${isVisible2 ? 'reveal-visible' : ''}`}>
             <img 
               src="/iot-device.jpg" 
               alt="Rugged Field Worker IoT Tracker Badge" 
@@ -85,7 +85,7 @@ export default function Spotlight() {
             />
           </div>
 
-          <div className="spotlight-content">
+          <div className={`spotlight-content reveal-fade-left delay-2 ${isVisible2 ? 'reveal-visible' : ''}`}>
             <span className="spotlight-pill">Embedded Hardware</span>
             <h3 className="spotlight-title">Ruggedized Field IoT Tracker with Kinetic Activity Recognition</h3>
             <p className="spotlight-text">

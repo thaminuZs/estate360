@@ -49,7 +49,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="how-it-works-section">
-      <div className="section-wrapper">
+      <div ref={ref} className={`section-wrapper reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
         <div className="section-badge">
           <span className="dot"></span>
           End-to-End Architecture
@@ -59,9 +59,9 @@ export default function HowItWorks() {
           From micro-sensors in remote tea fields to centralized cloud analytics — reliable, autonomous telemetry every second.
         </p>
 
-        <div ref={ref} className={`pipeline-grid reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
+        <div className="pipeline-grid">
           {steps.map((st, i) => (
-            <div key={i} className={`step-card delay-${i + 1}`}>
+            <div key={i} className="step-card">
               <div className="step-badge-number">{st.step}</div>
               <div className="step-illustration">
                 {st.illustration}

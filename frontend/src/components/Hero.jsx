@@ -1,24 +1,27 @@
 import React from 'react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export default function Hero() {
+  const [ref, isVisible] = useScrollReveal({ threshold: 0.1 });
+
   return (
     <section className="hero-section">
-      <div className="section-wrapper">
-        <div className="hero-grid">
+      <div className="section-wrapper" style={{ width: '100%' }}>
+        <div ref={ref} className={`hero-grid reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
           <div className="hero-content">
 
-            <h1 className="hero-headline">
+            <h1 className="hero-headline delay-1">
               Manage Every Acre. <br />
               <span className="highlight">Track Every Worker</span> in Real-Time.
             </h1>
 
-            <p className="hero-description">
+            <p className="hero-description delay-2">
               Estate360 synchronizes GPS-enabled IoT badges, long-range LoRa communication,
               and enterprise estate analytics — giving estate managers complete operational visibility
               across vast agricultural plantations.
             </p>
 
-            <div className="hero-cta-group">
+            <div className="hero-cta-group delay-3">
               <a href="#features" className="btn-yellow">
                 Explore Platform
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -34,7 +37,7 @@ export default function Hero() {
               </a>
             </div>
 
-            <div className="hero-trust-bar">
+            <div className="hero-trust-bar delay-4">
               <div className="trust-item">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -57,7 +60,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="hero-visual">
+          <div className="hero-visual delay-2">
             <div className="hero-visual-card">
               {/* Floating Top Badge */}
               <div className="floating-badge floating-badge-top">
@@ -65,8 +68,8 @@ export default function Hero() {
                   <span className="pulse-indicator"></span>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>LIVE STATUS</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--green-dark)' }}>48 Harvesters Online</div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-muted)' }}>LIVE STATUS</div>
+                  <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--green-dark)' }}>48 Harvesters Online</div>
                 </div>
               </div>
 
@@ -87,8 +90,8 @@ export default function Hero() {
                   </svg>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>LORA BASE STATION</div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--green-dark)' }}>100% Transmission Rate</div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-muted)' }}>LORA BASE STATION</div>
+                  <div style={{ fontSize: '0.92rem', fontWeight: 700, color: 'var(--green-dark)' }}>100% Transmission Rate</div>
                 </div>
               </div>
             </div>

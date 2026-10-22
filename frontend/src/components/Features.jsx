@@ -45,7 +45,7 @@ export default function Features() {
 
   return (
     <section id="features" className="features-section">
-      <div className="section-wrapper">
+      <div ref={ref} className={`section-wrapper reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
         <div className="section-badge">
           <span className="dot"></span>
           Platform Capabilities
@@ -56,9 +56,9 @@ export default function Features() {
           Estate360 ensures non-stop tracking and automated estate governance.
         </p>
 
-        <div ref={ref} className={`features-grid reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
+        <div className="features-grid">
           {features.map((feat, idx) => (
-            <div key={idx} className={`feature-card delay-${idx + 1}`}>
+            <div key={idx} className="feature-card">
               <div className="feature-icon-wrapper">
                 {feat.icon}
               </div>
