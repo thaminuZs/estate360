@@ -250,6 +250,7 @@ Set the correct `DEVICE_UUID` in `worker_device.ino` before flashing each device
 
 | Name | Student ID | Role |
 |---|---|---|
+| | | |
 | Nethsara Rahiru | 2022/ICT/62 | Assistant Developer |
 | | | |
 | | | |
