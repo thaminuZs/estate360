@@ -93,15 +93,15 @@ export default function TelemetrySimulator() {
   }, []);
 
   return (
-    <section id="simulator" className="simulator-section" style={{ padding: '95px 0', backgroundColor: 'var(--green-dark)', position: 'relative' }}>
+    <section id="simulator" className="simulator-section" style={{ padding: '95px 0', background: 'linear-gradient(180deg, #E6EFE9 0%, var(--green-light) 100%)', position: 'relative' }}>
       <div className="section-wrapper">
         <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-          <div className="section-badge" style={{ backgroundColor: 'rgba(215, 230, 221, 0.15)', color: 'var(--yellow)', borderColor: 'rgba(241, 196, 15, 0.3)' }}>
+          <div className="section-badge" style={{ backgroundColor: 'rgba(31, 61, 44, 0.1)', color: 'var(--green-dark)', borderColor: 'rgba(31, 61, 44, 0.18)' }}>
             <span className="dot"></span>
             Interactive Live Telemetry
           </div>
-          <h2 className="section-title" style={{ color: 'var(--white)' }}>Experience Real-Time Field Telemetry</h2>
-          <p className="section-subtitle" style={{ color: 'var(--green-light)' }}>
+          <h2 className="section-title" style={{ color: 'var(--green-dark)' }}>Experience Real-Time Field Telemetry</h2>
+          <p className="section-subtitle" style={{ color: 'var(--text-secondary)' }}>
             Switch between different plantation environments to inspect live GPS tracking, 
             radio frequency link metrics, and kinetic worker activity status.
           </p>
@@ -138,10 +138,10 @@ export default function TelemetrySimulator() {
                   alignItems: 'center',
                   gap: '8px',
                   transition: 'all var(--transition-normal)',
-                  backgroundColor: activeEstate === tab.id ? 'var(--yellow)' : 'rgba(255, 255, 255, 0.1)',
-                  color: activeEstate === tab.id ? 'var(--green-dark)' : 'var(--green-light)',
-                  border: `1.5px solid ${activeEstate === tab.id ? 'var(--yellow)' : 'rgba(215, 230, 221, 0.25)'}`,
-                  boxShadow: activeEstate === tab.id ? '0 4px 16px rgba(241, 196, 15, 0.4)' : 'none'
+                  backgroundColor: activeEstate === tab.id ? 'var(--green-dark)' : 'var(--white)',
+                  color: activeEstate === tab.id ? 'var(--yellow)' : 'var(--text-secondary)',
+                  border: `1.5px solid ${activeEstate === tab.id ? 'var(--green-dark)' : 'rgba(31, 61, 44, 0.12)'}`,
+                  boxShadow: activeEstate === tab.id ? 'var(--shadow-md)' : 'var(--shadow-sm)'
                 }}
               >
                 {tab.label}
@@ -153,13 +153,13 @@ export default function TelemetrySimulator() {
           <div style={{
             background: 'var(--white)',
             borderRadius: '24px',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            boxShadow: '0 24px 60px rgba(0, 0, 0, 0.25)',
+            border: '1px solid rgba(31, 61, 44, 0.1)',
+            boxShadow: 'var(--shadow-lg)',
             overflow: 'hidden'
           }}>
             {/* Header bar */}
             <div style={{
-              backgroundColor: '#15291e',
+              backgroundColor: 'var(--green-dark)',
               borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
               color: 'var(--white)',
               padding: '22px 28px',
