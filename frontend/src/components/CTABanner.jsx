@@ -6,7 +6,16 @@ export default function CTABanner() {
 
   return (
     <section id="contact" className="cta-section">
-      <div className="section-wrapper">
+      {/* Luminous Firefly Accents */}
+      <div className="particles-layer" aria-hidden="true">
+        <span className="particle-firefly" style={{ width: '6px', height: '6px', backgroundColor: 'var(--yellow)', color: 'rgba(241, 196, 15, 0.7)', top: '25%', left: '15%', animationDuration: '3.5s' }}></span>
+        <span className="particle-firefly" style={{ width: '4px', height: '4px', backgroundColor: '#7de89f', color: 'rgba(125, 232, 159, 0.8)', top: '65%', left: '85%', animationDuration: '4.8s', animationDelay: '1s' }}></span>
+        <span className="particle-firefly" style={{ width: '5px', height: '5px', backgroundColor: 'var(--yellow)', color: 'rgba(241, 196, 15, 0.6)', top: '75%', left: '20%', animationDuration: '4.2s', animationDelay: '2s' }}></span>
+        <span className="particle-firefly" style={{ width: '4px', height: '4px', backgroundColor: '#7de89f', color: 'rgba(125, 232, 159, 0.8)', top: '30%', left: '80%', animationDuration: '5s', animationDelay: '0.5s' }}></span>
+        <span className="particle" style={{ width: '5px', height: '5px', background: 'rgba(241, 196, 15, 0.5)', top: '80%', left: '50%', animationDuration: '15s', animationDelay: '3s' }}></span>
+      </div>
+
+      <div className="section-wrapper" style={{ position: 'relative', zIndex: 2 }}>
         <div ref={ref} className={`cta-box reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
           <div className="section-badge" style={{ backgroundColor: 'rgba(215, 230, 221, 0.15)', color: 'var(--yellow)', borderColor: 'rgba(241, 196, 15, 0.3)' }}>
             <span className="dot"></span>

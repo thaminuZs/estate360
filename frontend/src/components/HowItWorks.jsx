@@ -49,6 +49,16 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="how-it-works-section">
+      {/* Gentle ambient particles — cream/green tones matching gradient */}
+      <div className="particles-layer" aria-hidden="true">
+        <span className="particle" style={{ width: '5px', height: '5px', background: 'var(--green-medium)', top: '15%', left: '8%', animationDuration: '18s', animationDelay: '0s', opacity: 0.35 }}></span>
+        <span className="particle" style={{ width: '7px', height: '7px', background: 'var(--brown)', top: '70%', left: '90%', animationDuration: '22s', animationDelay: '3s', opacity: 0.25 }}></span>
+        <span className="particle" style={{ width: '4px', height: '4px', background: 'var(--yellow)', top: '50%', left: '55%', animationDuration: '16s', animationDelay: '6s', opacity: 0.3 }}></span>
+        <span className="particle-firefly" style={{ width: '4px', height: '4px', backgroundColor: 'var(--green-dark)', color: 'rgba(31, 61, 44, 0.3)', top: '30%', left: '75%', animationDuration: '5s', animationDelay: '1s' }}></span>
+        <span className="particle-firefly" style={{ width: '3px', height: '3px', backgroundColor: 'var(--yellow)', color: 'rgba(241, 196, 15, 0.45)', top: '80%', left: '25%', animationDuration: '4.5s', animationDelay: '2.5s' }}></span>
+        <span className="particle-firefly" style={{ width: '4px', height: '4px', backgroundColor: 'var(--brown)', color: 'rgba(139, 90, 43, 0.3)', top: '10%', left: '45%', animationDuration: '6s', animationDelay: '0.5s' }}></span>
+      </div>
+
       <div ref={ref} className={`section-wrapper reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
         <div className="section-badge">
           <span className="dot"></span>

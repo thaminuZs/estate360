@@ -6,7 +6,18 @@ export default function Hero() {
 
   return (
     <section className="hero-section">
-      <div className="section-wrapper" style={{ width: '100%' }}>
+      {/* Gentle Floating Agritech Particles */}
+      <div className="particles-layer" aria-hidden="true">
+        <span className="particle" style={{ width: '6px', height: '6px', background: 'var(--green-medium)', top: '22%', left: '12%', animationDuration: '14s', animationDelay: '0s' }}></span>
+        <span className="particle" style={{ width: '8px', height: '8px', background: 'var(--yellow)', top: '65%', left: '24%', animationDuration: '18s', animationDelay: '2s', opacity: 0.4 }}></span>
+        <span className="particle" style={{ width: '5px', height: '5px', background: 'var(--brown)', top: '35%', left: '48%', animationDuration: '16s', animationDelay: '4s' }}></span>
+        <span className="particle" style={{ width: '7px', height: '7px', background: 'var(--green-medium)', top: '78%', left: '80%', animationDuration: '20s', animationDelay: '1s' }}></span>
+        <span className="particle" style={{ width: '4px', height: '4px', background: 'var(--yellow)', top: '18%', left: '72%', animationDuration: '13s', animationDelay: '5s' }}></span>
+        <span className="particle-firefly" style={{ width: '5px', height: '5px', backgroundColor: 'var(--yellow)', color: 'rgba(241, 196, 15, 0.6)', top: '42%', left: '6%', animationDuration: '4s' }}></span>
+        <span className="particle-firefly" style={{ width: '4px', height: '4px', backgroundColor: 'var(--green-medium)', color: 'rgba(44, 84, 61, 0.4)', top: '82%', left: '40%', animationDuration: '5.5s', animationDelay: '1.5s' }}></span>
+      </div>
+
+      <div className="section-wrapper" style={{ width: '100%', position: 'relative', zIndex: 2 }}>
         <div ref={ref} className={`hero-grid reveal-init ${isVisible ? 'reveal-visible' : ''}`}>
           <div className="hero-content">
 
