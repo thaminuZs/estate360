@@ -1,0 +1,14 @@
+POST http://localhost:3000/employees
+Content-Type: application/json
+
+{
+  "employeeCode": "EMP001",
+  "firstName": "Kamal",
+  "lastName": "Perera",
+  "nic": "200012345678",
+  "phone": "+94771234567",
+  "address": "Colombo, Sri Lanka",
+  "dob": "2000-05-15",
+  "dateJoined": "2026-10-01",
+  "status": "active"
+}

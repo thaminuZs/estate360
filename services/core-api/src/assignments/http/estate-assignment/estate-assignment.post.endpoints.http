@@ -1,0 +1,9 @@
+POST http://localhost:3000/assignments/estate
+Content-Type: application/json
+
+{
+  "estateId": "43a92146-943f-4dc6-80e9-c7ce3e384174",
+  "employeeId": "f6b3cb5e-22ac-41ef-928e-834ad93458bf",
+  "role": "worker",
+  "startDate": "2026-10-16T00:00:00.000Z"
+}

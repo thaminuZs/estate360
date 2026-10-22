@@ -1,0 +1,8 @@
+POST http://localhost:3000/crops
+Content-Type: application/json
+
+{
+  "name": "coconut",
+  "code": "coco-01",
+  "paymentFactor": 1.5
+}

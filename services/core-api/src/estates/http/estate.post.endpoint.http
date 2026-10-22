@@ -1,0 +1,29 @@
+POST http://localhost:3000/estates
+Content-Type: application/json
+
+{
+  "name": "Hill Estate",
+  "code": "EST001",
+  "owner": "90859bce-1ac1-45b8-a81a-5c38c87975ef",
+  "crop": "20572ff2-1948-4333-9fd6-439bc4d8738b",
+  "location": {
+    "type": "Point",
+    "coordinates": [80.6355, 6.9271]
+  },
+  "boundary": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [80.6300, 6.9250],
+        [80.6400, 6.9250],
+        [80.6400, 6.9300],
+        [80.6300, 6.9300],
+        [80.6300, 6.9250]
+      ]
+    ]
+  },
+  "status": "active"
+}
+
+
+GET http://localhost:3000/estates
