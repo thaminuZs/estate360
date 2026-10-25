@@ -1,0 +1,13 @@
+{
+  "name": "Estate 360 - Core API Documentation",
+  "tsconfig": "tsconfig.build.json",
+  "output": "documentation",
+  "theme": "material",
+  "language": "en-US",
+  "port": 8080,
+  "exportFormat": "html",
+  "disableCoverage": false,
+  "disableInternal": true,
+  "disableLifeCycleHooks": true,
+  "hideGenerator": false
+}

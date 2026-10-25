@@ -1,0 +1,1631 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Estate 360 - Core API Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Estate 360 - Core API Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Injectables</li>
+  <li class="breadcrumb-item" >IotService</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/iot/providers/iot.service.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/IotModule.html" target="_self" >IotModule</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="tab-pane fade " id="api">
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createAssignment" >createAssignment</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createDevice" >createDevice</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createEnvironmentReading" >createEnvironmentReading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#createWorkerReading" >createWorkerReading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllAssignments" >findAllAssignments</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findAllDevices" >findAllDevices</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findDeviceById" >findDeviceById</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findEnvironmentReadings" >findEnvironmentReadings</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#findWorkerReadings" >findWorkerReadings</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#verifyEstateOwnership" >verifyEstateOwnership</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(devicesRepository: <a href="../entitys/Device.html" target="_self">Repository&lt;Device&gt;</a>, assignmentsRepository: Repository<DeviceAssignment>, workerReadingsRepository: <a href="../entitys/WorkerIotReading.html" target="_self">Repository&lt;WorkerIotReading&gt;</a>, envReadingsRepository: <a href="../entitys/EnvironmentIotReading.html" target="_self">Repository&lt;EnvironmentIotReading&gt;</a>, employeesRepository: <a href="../entitys/Employee.html" target="_self">Repository&lt;Employee&gt;</a>, estatesRepository: <a href="../entitys/Estate.html" target="_self">Repository&lt;Estate&gt;</a>, workSessionsRepository: <a href="../entitys/WorkSession.html" target="_self">Repository&lt;WorkSession&gt;</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/iot/providers/iot.service.ts:23</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>devicesRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/Device.html" target="_self" >Repository&lt;Device&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>assignmentsRepository</td>
+                                                  
+                                                        <td>
+                                                                    <code>Repository&lt;DeviceAssignment&gt;</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>workerReadingsRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/WorkerIotReading.html" target="_self" >Repository&lt;WorkerIotReading&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>envReadingsRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/EnvironmentIotReading.html" target="_self" >Repository&lt;EnvironmentIotReading&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>employeesRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/Employee.html" target="_self" >Repository&lt;Employee&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>estatesRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/Estate.html" target="_self" >Repository&lt;Estate&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>workSessionsRepository</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../entitys/WorkSession.html" target="_self" >Repository&lt;WorkSession&gt;</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createAssignment"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createAssignment</b></span>
+                        <a href="#createAssignment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createAssignment(createDto: <a href="../classes/CreateDeviceAssignmentDto.html" target="_self">CreateDeviceAssignmentDto</a>, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="106"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:106</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateDeviceAssignmentDto.html" target="_self" >CreateDeviceAssignmentDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createDevice"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createDevice</b></span>
+                        <a href="#createDevice"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createDevice(createDto: <a href="../classes/CreateDeviceDto.html" target="_self">CreateDeviceDto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="61"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>createDto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateDeviceDto.html" target="_self" >CreateDeviceDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createEnvironmentReading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createEnvironmentReading</b></span>
+                        <a href="#createEnvironmentReading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createEnvironmentReading(dto: <a href="../classes/CreateEnvironmentReadingDto.html" target="_self">CreateEnvironmentReadingDto</a>, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="269"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:269</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateEnvironmentReadingDto.html" target="_self" >CreateEnvironmentReadingDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="createWorkerReading"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>createWorkerReading</b></span>
+                        <a href="#createWorkerReading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>createWorkerReading(dto: <a href="../classes/CreateWorkerReadingDto.html" target="_self">CreateWorkerReadingDto</a>, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="176"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:176</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>dto</td>
+                                            <td>
+                                                            <code><a href="../classes/CreateWorkerReadingDto.html" target="_self" >CreateWorkerReadingDto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllAssignments"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllAssignments</b></span>
+                        <a href="#findAllAssignments"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllAssignments(user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="158"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:158</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findAllDevices"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findAllDevices</b></span>
+                        <a href="#findAllDevices"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findAllDevices(user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findDeviceById"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findDeviceById</b></span>
+                        <a href="#findDeviceById"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findDeviceById(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="85"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findEnvironmentReadings"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findEnvironmentReadings</b></span>
+                        <a href="#findEnvironmentReadings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findEnvironmentReadings(filter?: { estateId?: string; deviceId?: string; limit?: number }, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filter</td>
+                                            <td>
+                                                        <code>{ estateId?: string; deviceId?: string; limit?: number }</code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="findWorkerReadings"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>findWorkerReadings</b></span>
+                        <a href="#findWorkerReadings"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>findWorkerReadings(filter?: { estateId?: string; workerId?: string; sessionId?: string; limit?: number }, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="219"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:219</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>filter</td>
+                                            <td>
+                                                        <code>{ estateId?: string; workerId?: string; sessionId?: string; limit?: number }</code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="verifyEstateOwnership"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Async</span>
+                        <span ><b>verifyEstateOwnership</b></span>
+                        <a href="#verifyEstateOwnership"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>verifyEstateOwnership(estateId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, user?: <a href="../interfaces/ActiveUserData.html" target="_self">ActiveUserData</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/iot/providers/iot.service.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>estateId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="../interfaces/ActiveUserData.html" target="_self" >ActiveUserData</a></code>
+                                            </td>
+
+                                            <td>
+                                                    Yes
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>unknown</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from &#x27;@nestjs/common&#x27;;
+import { InjectRepository } from &#x27;@nestjs/typeorm&#x27;;
+import { Repository } from &#x27;typeorm&#x27;;
+import { Device } from &#x27;../entities/device.entity&#x27;;
+import { DeviceAssignment } from &#x27;../entities/device-assignment.entity&#x27;;
+import { WorkerIotReading } from &#x27;../entities/worker-iot-reading.entity&#x27;;
+import { EnvironmentIotReading } from &#x27;../entities/environment-iot-reading.entity&#x27;;
+import { CreateDeviceDto } from &#x27;../dtos/create-device.dto&#x27;;
+import { CreateDeviceAssignmentDto } from &#x27;../dtos/create-device-assignment.dto&#x27;;
+import { CreateWorkerReadingDto } from &#x27;../dtos/create-worker-reading.dto&#x27;;
+import { CreateEnvironmentReadingDto } from &#x27;../dtos/create-environment-reading.dto&#x27;;
+import { Employee } from &#x27;src/employees/employee.entity&#x27;;
+import { Estate } from &#x27;src/estates/estate.entity&#x27;;
+import { WorkSession } from &#x27;src/work-sessions/work-session.entity&#x27;;
+import { Role } from &#x27;src/auth/enums/role.enum&#x27;;
+import type { ActiveUserData } from &#x27;src/auth/interfaces/active-user-data.interface&#x27;;
+
+@Injectable()
+export class IotService {
+  constructor(
+    @InjectRepository(Device)
+    private readonly devicesRepository: Repository&lt;Device&gt;,
+
+    @InjectRepository(DeviceAssignment)
+    private readonly assignmentsRepository: Repository&lt;DeviceAssignment&gt;,
+
+    @InjectRepository(WorkerIotReading)
+    private readonly workerReadingsRepository: Repository&lt;WorkerIotReading&gt;,
+
+    @InjectRepository(EnvironmentIotReading)
+    private readonly envReadingsRepository: Repository&lt;EnvironmentIotReading&gt;,
+
+    @InjectRepository(Employee)
+    private readonly employeesRepository: Repository&lt;Employee&gt;,
+
+    @InjectRepository(Estate)
+    private readonly estatesRepository: Repository&lt;Estate&gt;,
+
+    @InjectRepository(WorkSession)
+    private readonly workSessionsRepository: Repository&lt;WorkSession&gt;,
+  ) {}
+
+  public async verifyEstateOwnership(estateId: string, user?: ActiveUserData) {
+    const estate &#x3D; await this.estatesRepository.findOne({
+      where: { id: estateId },
+      relations: { owner: true },
+    });
+    if (!estate) {
+      throw new NotFoundException(&#x27;Estate not found&#x27;);
+    }
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER &amp;&amp; estate.owner?.id !&#x3D;&#x3D; user.ownerId) {
+      throw new ForbiddenException(&#x27;You do not have access to this estate&#x27;);
+    }
+    return estate;
+  }
+
+  public async createDevice(createDto: CreateDeviceDto) {
+    const device &#x3D; this.devicesRepository.create(createDto);
+    return this.devicesRepository.save(device);
+  }
+
+  public async findAllDevices(user?: ActiveUserData) {
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          &#x27;Owner profile is not linked to this account&#x27;,
+        );
+      }
+      return this.devicesRepository
+        .createQueryBuilder(&#x27;device&#x27;)
+        .innerJoin(&#x27;device.assignments&#x27;, &#x27;assignment&#x27;)
+        .innerJoin(&#x27;assignment.estate&#x27;, &#x27;estate&#x27;)
+        .where(&#x27;estate.owner_id &#x3D; :ownerId&#x27;, { ownerId: user.ownerId })
+        .distinct(true)
+        .getMany();
+    }
+
+    return this.devicesRepository.find();
+  }
+
+  public async findDeviceById(id: string, user?: ActiveUserData) {
+    const device &#x3D; await this.devicesRepository.findOne({
+      where: { id },
+      relations: { assignments: { estate: { owner: true } } },
+    });
+    if (!device) {
+      throw new NotFoundException(&#x60;Device with ID ${id} not found&#x60;);
+    }
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      const hasAccess &#x3D; (device.assignments ?? []).some(
+        (a) &#x3D;&gt; a.estate?.owner?.id &#x3D;&#x3D;&#x3D; user.ownerId,
+      );
+      if (!hasAccess) {
+        throw new ForbiddenException(&#x27;You do not have access to this device&#x27;);
+      }
+    }
+
+    return device;
+  }
+
+  public async createAssignment(
+    createDto: CreateDeviceAssignmentDto,
+    user?: ActiveUserData,
+  ) {
+    const [device, estate] &#x3D; await Promise.all([
+      this.devicesRepository.findOne({ where: { id: createDto.deviceId } }),
+      this.estatesRepository.findOne({
+        where: { id: createDto.estateId },
+        relations: { owner: true },
+      }),
+    ]);
+
+    if (!device) throw new NotFoundException(&#x27;Device not found&#x27;);
+    if (!estate) throw new NotFoundException(&#x27;Estate not found&#x27;);
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER &amp;&amp; estate.owner?.id !&#x3D;&#x3D; user.ownerId) {
+      throw new ForbiddenException(
+        &#x27;You can only assign devices to your own estates&#x27;,
+      );
+    }
+
+    let worker: Employee | null &#x3D; null;
+    if (createDto.workerId) {
+      worker &#x3D; await this.employeesRepository.findOne({
+        where: { id: createDto.workerId },
+        relations: { owner: true },
+      });
+      if (!worker) throw new NotFoundException(&#x27;Worker not found&#x27;);
+
+      if (
+        user &amp;&amp;
+        user.role &#x3D;&#x3D;&#x3D; Role.OWNER &amp;&amp;
+        worker.owner &amp;&amp;
+        worker.owner.id !&#x3D;&#x3D; user.ownerId
+      ) {
+        throw new ForbiddenException(
+          &#x27;You cannot assign a device to another owner’s worker&#x27;,
+        );
+      }
+    }
+
+    const assignment &#x3D; this.assignmentsRepository.create({
+      device,
+      worker,
+      estate,
+      startDate: new Date(createDto.startDate),
+      endDate: createDto.endDate ? new Date(createDto.endDate) : undefined,
+    });
+
+    return this.assignmentsRepository.save(assignment);
+  }
+
+  public async findAllAssignments(user?: ActiveUserData) {
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          &#x27;Owner profile is not linked to this account&#x27;,
+        );
+      }
+      return this.assignmentsRepository.find({
+        where: { estate: { owner: { id: user.ownerId } } },
+        relations: { device: true, worker: true, estate: true },
+      });
+    }
+
+    return this.assignmentsRepository.find({
+      relations: { device: true, worker: true, estate: true },
+    });
+  }
+
+  public async createWorkerReading(
+    dto: CreateWorkerReadingDto,
+    user?: ActiveUserData,
+  ) {
+    const [device, worker, estate, workSession] &#x3D; await Promise.all([
+      this.devicesRepository.findOne({ where: { id: dto.deviceId } }),
+      this.employeesRepository.findOne({ where: { id: dto.workerId } }),
+      this.estatesRepository.findOne({
+        where: { id: dto.estateId },
+        relations: { owner: true },
+      }),
+      this.workSessionsRepository.findOne({ where: { id: dto.workSessionId } }),
+    ]);
+
+    if (!device) throw new NotFoundException(&#x27;Device not found&#x27;);
+    if (!worker) throw new NotFoundException(&#x27;Worker not found&#x27;);
+    if (!estate) throw new NotFoundException(&#x27;Estate not found&#x27;);
+    if (!workSession) throw new NotFoundException(&#x27;WorkSession not found&#x27;);
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER &amp;&amp; estate.owner?.id !&#x3D;&#x3D; user.ownerId) {
+      throw new ForbiddenException(
+        &#x27;You can only record readings for your own estates&#x27;,
+      );
+    }
+
+    const reading &#x3D; this.workerReadingsRepository.create({
+      device,
+      worker,
+      estate,
+      workSession,
+      recordedAt: dto.recordedAt ? new Date(dto.recordedAt) : new Date(),
+      activityStatus: dto.activityStatus ?? &#x27;active&#x27;,
+      location: dto.location
+        ? {
+            type: &#x27;Point&#x27;,
+            coordinates: [dto.location.longitude, dto.location.latitude],
+          }
+        : undefined,
+    });
+
+    return this.workerReadingsRepository.save(reading);
+  }
+
+  public async findWorkerReadings(
+    filter?: {
+      estateId?: string;
+      workerId?: string;
+      sessionId?: string;
+      limit?: number;
+    },
+    user?: ActiveUserData,
+  ) {
+    if (filter?.estateId &amp;&amp; user?.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      await this.verifyEstateOwnership(filter.estateId, user);
+    }
+
+    const query &#x3D; this.workerReadingsRepository
+      .createQueryBuilder(&#x27;reading&#x27;)
+      .leftJoinAndSelect(&#x27;reading.device&#x27;, &#x27;device&#x27;)
+      .leftJoinAndSelect(&#x27;reading.worker&#x27;, &#x27;worker&#x27;)
+      .leftJoinAndSelect(&#x27;reading.estate&#x27;, &#x27;estate&#x27;)
+      .leftJoinAndSelect(&#x27;reading.workSession&#x27;, &#x27;workSession&#x27;)
+      .orderBy(&#x27;reading.recordedAt&#x27;, &#x27;DESC&#x27;)
+      .take(filter?.limit ?? 50);
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          &#x27;Owner profile is not linked to this account&#x27;,
+        );
+      }
+      query.andWhere(&#x27;estate.owner_id &#x3D; :ownerId&#x27;, { ownerId: user.ownerId });
+    }
+
+    if (filter?.estateId) {
+      query.andWhere(&#x27;reading.estate_id &#x3D; :estateId&#x27;, {
+        estateId: filter.estateId,
+      });
+    }
+    if (filter?.workerId) {
+      query.andWhere(&#x27;reading.worker_id &#x3D; :workerId&#x27;, {
+        workerId: filter.workerId,
+      });
+    }
+    if (filter?.sessionId) {
+      query.andWhere(&#x27;reading.work_session_id &#x3D; :sessionId&#x27;, {
+        sessionId: filter.sessionId,
+      });
+    }
+
+    return query.getMany();
+  }
+
+  public async createEnvironmentReading(
+    dto: CreateEnvironmentReadingDto,
+    user?: ActiveUserData,
+  ) {
+    const [device, estate] &#x3D; await Promise.all([
+      this.devicesRepository.findOne({ where: { id: dto.deviceId } }),
+      this.estatesRepository.findOne({
+        where: { id: dto.estateId },
+        relations: { owner: true },
+      }),
+    ]);
+
+    if (!device) throw new NotFoundException(&#x27;Device not found&#x27;);
+    if (!estate) throw new NotFoundException(&#x27;Estate not found&#x27;);
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER &amp;&amp; estate.owner?.id !&#x3D;&#x3D; user.ownerId) {
+      throw new ForbiddenException(
+        &#x27;You can only record readings for your own estates&#x27;,
+      );
+    }
+
+    const reading &#x3D; this.envReadingsRepository.create({
+      device,
+      estate,
+      recordedAt: new Date(dto.recordedAt),
+      temperature: dto.temperature,
+      humidity: dto.humidity,
+      soilMoisture: dto.soilMoisture,
+      location: dto.location
+        ? {
+            type: &#x27;Point&#x27;,
+            coordinates: [dto.location.longitude, dto.location.latitude],
+          }
+        : undefined,
+    });
+
+    return this.envReadingsRepository.save(reading);
+  }
+
+  public async findEnvironmentReadings(
+    filter?: {
+      estateId?: string;
+      deviceId?: string;
+      limit?: number;
+    },
+    user?: ActiveUserData,
+  ) {
+    if (filter?.estateId &amp;&amp; user?.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      await this.verifyEstateOwnership(filter.estateId, user);
+    }
+
+    const query &#x3D; this.envReadingsRepository
+      .createQueryBuilder(&#x27;reading&#x27;)
+      .leftJoinAndSelect(&#x27;reading.device&#x27;, &#x27;device&#x27;)
+      .leftJoinAndSelect(&#x27;reading.estate&#x27;, &#x27;estate&#x27;)
+      .orderBy(&#x27;reading.recordedAt&#x27;, &#x27;DESC&#x27;)
+      .take(filter?.limit ?? 50);
+
+    if (user &amp;&amp; user.role &#x3D;&#x3D;&#x3D; Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          &#x27;Owner profile is not linked to this account&#x27;,
+        );
+      }
+      query.andWhere(&#x27;estate.owner_id &#x3D; :ownerId&#x27;, { ownerId: user.ownerId });
+    }
+
+    if (filter?.estateId) {
+      query.andWhere(&#x27;reading.estate_id &#x3D; :estateId&#x27;, {
+        estateId: filter.estateId,
+      });
+    }
+    if (filter?.deviceId) {
+      query.andWhere(&#x27;reading.device_id &#x3D; :deviceId&#x27;, {
+        deviceId: filter.deviceId,
+      });
+    }
+
+    return query.getMany();
+  }
+}
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'IotService.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
