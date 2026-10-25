@@ -1,63 +1,26 @@
-import { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/landing/Hero';
-import { Features } from './components/landing/Features';
-import { HowItWorks } from './components/landing/HowItWorks';
-import { Footer } from './components/landing/Footer';
-import { OwnerLogin } from './components/auth/OwnerLogin';
-import { OwnerRegister } from './components/auth/OwnerRegister';
-import { OwnerDashboard } from './components/dashboard/OwnerDashboard';
-import { getStoredAuth, clearStoredAuth, fetchProfile } from './api/auth';
+import { lazy, Suspense } from 'react';
+import { RouterProvider, Routes, Route, Navigate } from './router';
+import { OwnerProvider, useOwner } from './context/OwnerContext';
+import { PublicLayout } from './layouts/PublicLayout';
+import { OwnerDashboardLayout } from './layouts/OwnerDashboardLayout';
+import { LandingPage } from './pages/public/LandingPage';
+import { OwnerLoginPage } from './pages/public/OwnerLoginPage';
+import { OwnerRegisterPage } from './pages/public/OwnerRegisterPage';
+import { OwnerHomePage } from './pages/owner/OwnerHomePage';
+import { OwnerEstatesPage } from './pages/owner/OwnerEstatesPage';
+import { OwnerRegisterEstatePage } from './pages/owner/OwnerRegisterEstatePage';
+import { OwnerWorkforcePage } from './pages/owner/OwnerWorkforcePage';
+import { OwnerRegisterEmployeePage } from './pages/owner/OwnerRegisterEmployeePage';
+import { OwnerPayrollsPage } from './pages/owner/OwnerPayrollsPage';
 
-export default function App() {
-  const [currentView, setView] = useState('landing');
-  const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true);
+const AdminApp = lazy(() =>
+  import('./components/admin/AdminApp').then((module) => ({
+    default: module.AdminApp,
+  })),
+);
 
-  // Restore stored session on mount
-  useEffect(() => {
-    async function restoreSession() {
-      try {
-        const stored = getStoredAuth();
-        if (stored && stored.accessToken) {
-          if (stored.user) {
-            setUser(stored.user);
-          }
-          try {
-            const profile = await fetchProfile(stored.accessToken);
-            if (profile) {
-              setUser(profile);
-            }
-          } catch {
-            clearStoredAuth();
-            setUser(null);
-          }
-        }
-      } catch {
-        clearStoredAuth();
-      } finally {
-        setAuthLoading(false);
-      }
-    }
-
-    restoreSession();
-  }, []);
-
-  const handleLoginSuccess = (profile) => {
-    setUser(profile);
-    setView('dashboard');
-  };
-
-  const handleRegisterSuccess = (profile) => {
-    setUser(profile);
-    setView('dashboard');
-  };
-
-  const handleLogout = () => {
-    clearStoredAuth();
-    setUser(null);
-    setView('landing');
-  };
+function MainRoutes() {
+  const { authLoading } = useOwner();
 
   if (authLoading) {
     return (
@@ -71,48 +34,116 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F9FA] text-[#1F2937]">
-      {/* Top Navbar */}
-      <Navbar
-        currentView={currentView}
-        setView={setView}
-        user={user}
-        onLogout={handleLogout}
-      />
+    <PublicLayout>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<OwnerLoginPage />} />
+        <Route path="/register" element={<OwnerRegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerHomePage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/estates"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerEstatesPage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/estates/new"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerRegisterEstatePage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/workforce"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerWorkforcePage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/workforce/new"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerRegisterEmployeePage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route
+          path="/dashboard/payrolls"
+          element={
+            <OwnerDashboardLayout>
+              <OwnerPayrollsPage />
+            </OwnerDashboardLayout>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </PublicLayout>
+  );
+}
 
-      {/* Main Content Area */}
-      <main className="flex-1">
-        {currentView === 'landing' && (
-          <>
-            <Hero setView={setView} />
-            <Features />
-            <HowItWorks setView={setView} />
-            <Footer setView={setView} />
-          </>
-        )}
-
-        {currentView === 'login' && (
-          <OwnerLogin
-            setView={setView}
-            onLoginSuccess={handleLoginSuccess}
-          />
-        )}
-
-        {currentView === 'register' && (
-          <OwnerRegister
-            setView={setView}
-            onRegisterSuccess={handleRegisterSuccess}
-          />
-        )}
-
-        {currentView === 'dashboard' && (
-          <OwnerDashboard
-            user={user}
-            onLogout={handleLogout}
-            setView={setView}
-          />
-        )}
-      </main>
-    </div>
+export default function App() {
+  return (
+    <RouterProvider>
+      <Routes>
+        <Route
+          path="/admin/*"
+          element={
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+                  <div className="text-center space-y-2">
+                    <div className="w-8 h-8 border-2 border-[#1F3D2C] border-t-transparent animate-spin mx-auto" />
+                    <p className="text-xs text-[#4B5563] font-medium">
+                      Loading Estate 360 Admin...
+                    </p>
+                  </div>
+                </div>
+              }
+            >
+              <AdminApp />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <Suspense
+              fallback={
+                <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center">
+                  <div className="text-center space-y-2">
+                    <div className="w-8 h-8 border-2 border-[#1F3D2C] border-t-transparent animate-spin mx-auto" />
+                    <p className="text-xs text-[#4B5563] font-medium">
+                      Loading Estate 360 Admin...
+                    </p>
+                  </div>
+                </div>
+              }
+            >
+              <AdminApp />
+            </Suspense>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <OwnerProvider>
+              <MainRoutes />
+            </OwnerProvider>
+          }
+        />
+      </Routes>
+    </RouterProvider>
   );
 }

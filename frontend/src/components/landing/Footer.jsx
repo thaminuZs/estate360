@@ -1,6 +1,7 @@
 import { Trees } from 'lucide-react';
+import { Link } from '../../router';
 
-export function Footer({ setView }) {
+export function Footer() {
   return (
     <footer className="bg-[#1F3D2C] text-[#D7E6DD] border-t border-[#162D20] py-6">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
@@ -18,24 +19,15 @@ export function Footer({ setView }) {
 
         {/* Links */}
         <div className="flex items-center gap-6 text-[#D7E6DD]/80">
-          <button
-            onClick={() => setView('landing')}
-            className="hover:text-white transition-colors cursor-pointer"
-          >
+          <Link to="/" className="hover:text-white transition-colors cursor-pointer">
             Overview
-          </button>
-          <button
-            onClick={() => setView('login')}
-            className="hover:text-white transition-colors cursor-pointer"
-          >
+          </Link>
+          <Link to="/login" className="hover:text-white transition-colors cursor-pointer">
             Owner Login
-          </button>
-          <button
-            onClick={() => setView('register')}
-            className="hover:text-white transition-colors cursor-pointer"
-          >
+          </Link>
+          <Link to="/register" className="hover:text-white transition-colors cursor-pointer">
             Owner Registration
-          </button>
+          </Link>
         </div>
 
         {/* Copyright */}

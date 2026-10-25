@@ -6,9 +6,13 @@ import { Label } from '../ui/label';
 import { Alert } from '../ui/alert';
 import { Badge } from '../ui/badge';
 import { registerOwner, loginOwner, fetchProfile, setStoredAuth } from '../../api/auth';
+import { useNavigate } from '../../router';
+import { useOwner } from '../../context/OwnerContext';
 import { Trees, User, Mail, Phone, MapPin, Lock, ArrowRight } from 'lucide-react';
 
-export function OwnerRegister({ setView, onRegisterSuccess }) {
+export function OwnerRegister({ onRegisterSuccess }) {
+  const navigate = useNavigate();
+  const ownerCtx = useOwner();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -93,12 +97,17 @@ export function OwnerRegister({ setView, onRegisterSuccess }) {
         setStoredAuth(authData);
 
         setTimeout(() => {
-          onRegisterSuccess(profile);
-        }, 800);
+          if (onRegisterSuccess) {
+            onRegisterSuccess(profile);
+          } else {
+            ownerCtx.onLoginSuccess(profile);
+          }
+          navigate('/dashboard');
+        }, 600);
       } catch {
         setTimeout(() => {
-          setView('login');
-        }, 1200);
+          navigate('/login');
+        }, 1000);
       }
     } catch (err) {
       setError(err.message || 'Registration failed. Please review your inputs.');
@@ -292,7 +301,7 @@ export function OwnerRegister({ setView, onRegisterSuccess }) {
                 Already registered as an owner?{' '}
                 <button
                   type="button"
-                  onClick={() => setView('login')}
+                  onClick={() => navigate('/login')}
                   className="font-semibold text-[#1F3D2C] hover:underline cursor-pointer"
                 >
                   Sign in here
@@ -306,7 +315,7 @@ export function OwnerRegister({ setView, onRegisterSuccess }) {
         <div className="text-center">
           <button
             type="button"
-            onClick={() => setView('landing')}
+            onClick={() => navigate('/')}
             className="text-xs text-[#8C6239] hover:text-[#1F3D2C] font-medium transition-colors cursor-pointer"
           >
             ← Back to Estate 360

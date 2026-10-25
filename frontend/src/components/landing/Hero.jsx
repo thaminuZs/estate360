@@ -1,8 +1,11 @@
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
+import { useNavigate } from '../../router';
 import { ArrowRight, UserPlus, LogIn } from 'lucide-react';
 
-export function Hero({ setView }) {
+export function Hero() {
+  const navigate = useNavigate();
+
   return (
     <section className="py-20 md:py-28 border-b border-[#D7E6DD] bg-[#F8F9FA]">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center space-y-6">
@@ -16,7 +19,7 @@ export function Hero({ setView }) {
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-[#1F3D2C] leading-tight">
-          Simple Plantation & Estate Management
+          Simple Plantation &amp; Estate Management
         </h1>
 
         <p className="text-base sm:text-lg text-[#4B5563] max-w-2xl mx-auto leading-relaxed">
@@ -28,7 +31,7 @@ export function Hero({ setView }) {
         <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
           <Button
             size="lg"
-            onClick={() => setView('register')}
+            onClick={() => navigate('/register')}
             className="bg-[#1F3D2C] text-white hover:bg-[#162D20] gap-2 font-medium"
           >
             <UserPlus className="w-4 h-4" />
@@ -39,7 +42,7 @@ export function Hero({ setView }) {
           <Button
             size="lg"
             variant="outline"
-            onClick={() => setView('login')}
+            onClick={() => navigate('/login')}
             className="border-[#1F3D2C] text-[#1F3D2C] hover:bg-[#D7E6DD]/40 gap-2 font-medium"
           >
             <LogIn className="w-4 h-4" />
