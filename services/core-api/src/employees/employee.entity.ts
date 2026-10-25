@@ -63,9 +63,17 @@ export class Employee {
 
   @Column({
     type: 'varchar',
+    length: 30,
+    nullable: true,
+    default: 'worker',
+  })
+  role?: string;
+
+  @Column({
+    type: 'varchar',
     length: 20,
     nullable: true,
-    default: EmployeeStatus.INACTIVE,
+    default: EmployeeStatus.ACTIVE,
   })
   status!: string;
 

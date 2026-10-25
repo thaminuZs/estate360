@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Crop } from 'src/crop/crop.entity';
 import { Owner } from 'src/owners/owner.entity';
 import { Role } from 'src/auth/enums/role.enum';
+import { EstateStatus } from '../enums/estate-status.enum';
 import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Injectable()
@@ -105,6 +106,12 @@ export class EstatesService {
     if (!crop) throw new NotFoundException('Crop not found');
     if (!owner) throw new NotFoundException('Owner not found');
 
+    // Automatically set estate status as active for owner upon registration
+    const status =
+      user && user.role === Role.OWNER
+        ? EstateStatus.ACTIVE
+        : (createEstateDto.status ?? EstateStatus.ACTIVE);
+
     const estate = this.estatesRepository.create({
       owner,
       crop,
@@ -112,7 +119,7 @@ export class EstatesService {
       code: createEstateDto.code,
       location: createEstateDto.location,
       boundary: createEstateDto.boundary,
-      status: createEstateDto.status,
+      status,
     });
 
     return this.estatesRepository.save(estate);
@@ -167,6 +174,18 @@ export class EstatesService {
 
   public async deleteEstate(id: string, user?: ActiveUserData) {
     const estate = await this.findOne(id, user);
+    try {
+      await this.estatesRepository.query(
+        'DELETE FROM "estate_assignment" WHERE "estate_id" = $1',
+        [estate.id],
+      );
+      await this.estatesRepository.query(
+        'DELETE FROM "worker_assignment" WHERE "estate_id" = $1',
+        [estate.id],
+      );
+    } catch {
+      // Safe catch
+    }
     await this.estatesRepository.remove(estate);
     return { message: 'Estate deleted successfully' };
   }
