@@ -2,6 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -11,11 +13,16 @@ import { EmployeeStatus } from './enums/employee-status.enum';
 import { EstateAssignment } from 'src/assignments/entities/estate-assignment.entity';
 import { WorkerAssignment } from 'src/assignments/entities/worker-assignment.entity';
 import { EmployeePaymentDetail } from 'src/payment-details/payment-details.entity';
+import { Owner } from 'src/owners/owner.entity';
 
 @Entity({ name: 'employee' })
 export class Employee {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
+
+  @ManyToOne(() => Owner, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'owner_id' })
+  owner?: Owner | null;
 
   @Column({ name: 'employee_code', type: 'varchar', length: 50, unique: true })
   employeeCode!: string;

@@ -18,6 +18,8 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Controller('attendance')
 @UseGuards(AuthGuard, RolesGuard)
@@ -26,8 +28,11 @@ export class AttendanceController {
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
   @Post('check-in')
-  public checkIn(@Body() dto: CheckInAttendanceDto) {
-    return this.attendanceService.checkIn(dto);
+  public checkIn(
+    @Body() dto: CheckInAttendanceDto,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.attendanceService.checkIn(dto, user);
   }
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
@@ -35,17 +40,19 @@ export class AttendanceController {
   public checkOut(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: CheckOutAttendanceDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
-    return this.attendanceService.checkOut(id, dto);
+    return this.attendanceService.checkOut(id, dto, user);
   }
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
   @Get()
   public findAll(
+    @ActiveUser() user: ActiveUserData,
     @Query('workerId') workerId?: string,
     @Query('estateId') estateId?: string,
     @Query('date') date?: string,
   ) {
-    return this.attendanceService.findAll({ workerId, estateId, date });
+    return this.attendanceService.findAll({ workerId, estateId, date }, user);
   }
 }

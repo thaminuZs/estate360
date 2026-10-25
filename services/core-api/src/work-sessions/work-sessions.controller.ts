@@ -18,6 +18,8 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Controller('work-sessions')
 @UseGuards(AuthGuard, RolesGuard)
@@ -26,8 +28,11 @@ export class WorkSessionsController {
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
   @Post()
-  public startSession(@Body() createDto: CreateWorkSessionDto) {
-    return this.sessionsService.startSession(createDto);
+  public startSession(
+    @Body() createDto: CreateWorkSessionDto,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.sessionsService.startSession(createDto, user);
   }
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
@@ -35,23 +40,28 @@ export class WorkSessionsController {
   public endSession(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() endDto: EndWorkSessionDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
-    return this.sessionsService.endSession(id, endDto);
+    return this.sessionsService.endSession(id, endDto, user);
   }
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
   @Get()
   public findAll(
+    @ActiveUser() user: ActiveUserData,
     @Query('workerId') workerId?: string,
     @Query('estateId') estateId?: string,
     @Query('status') status?: string,
   ) {
-    return this.sessionsService.findAll({ workerId, estateId, status });
+    return this.sessionsService.findAll({ workerId, estateId, status }, user);
   }
 
   @Roles(Role.ADMIN, Role.OWNER, Role.SUPERVISOR)
   @Get(':id')
-  public findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.sessionsService.findOne(id);
+  public findOne(
+    @Param('id', ParseUUIDPipe) id: string,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.sessionsService.findOne(id, user);
   }
 }

@@ -1,6 +1,7 @@
 import {
   IsDateString,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
   MaxLength,
@@ -8,8 +9,8 @@ import {
 
 export class GeneratePayrollDto {
   @IsUUID()
-  @IsNotEmpty()
-  ownerId!: string;
+  @IsOptional()
+  ownerId?: string;
 
   @IsDateString()
   @IsNotEmpty()

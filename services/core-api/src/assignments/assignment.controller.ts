@@ -19,6 +19,8 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role as AuthRole } from 'src/auth/enums/role.enum';
+import { ActiveUser } from 'src/auth/decorators/active-user.decorator';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Controller('assignments')
 @UseGuards(AuthGuard, RolesGuard)
@@ -28,14 +30,16 @@ export class AssignmentsController {
     private readonly workerAssignmentService: WorkerAssignmentService,
   ) {}
 
-  //Estate
+  // Estate
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Post('/estate')
   public createEstateAssignment(
     @Body() createEstateAssignmentDto: CreateEstateAssignmentDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
     return this.estateAssignmentService.createAssignment(
       createEstateAssignmentDto,
+      user,
     );
   }
 
@@ -44,39 +48,49 @@ export class AssignmentsController {
   public updateEstateAssignment(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateEstateAssignmentDto: UpdateEstateAssignmentDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
     return this.estateAssignmentService.updateAssignment(
       id,
       updateEstateAssignmentDto,
+      user,
     );
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Get('/estate')
-  public getAllEstateAssignments() {
-    return this.estateAssignmentService.findAllAssignments();
+  public getAllEstateAssignments(@ActiveUser() user: ActiveUserData) {
+    return this.estateAssignmentService.findAllAssignments(user);
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Get('/estate/:id')
-  public getEstateAssignmentById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.estateAssignmentService.findAssignmentById(id);
+  public getEstateAssignmentById(
+    @Param('id', ParseUUIDPipe) id: string,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.estateAssignmentService.findAssignmentById(id, user);
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Delete('/estate/:id')
-  public deleteEstateAssignment(@Param('id', ParseUUIDPipe) id: string) {
-    return this.estateAssignmentService.removeAssignment(id);
+  public deleteEstateAssignment(
+    @Param('id', ParseUUIDPipe) id: string,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.estateAssignmentService.removeAssignment(id, user);
   }
 
-  //Worker
+  // Worker
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Post('/worker')
   public createWorkerAssignment(
     @Body() createWorkerAssignmentDto: CreateWorkerAssignmentDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
     return this.workerAssignmentService.createAssignment(
       createWorkerAssignmentDto,
+      user,
     );
   }
 
@@ -85,28 +99,36 @@ export class AssignmentsController {
   public updateWorkerAssignment(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateWorkerAssignmentDto: UpdateWorkerAssignmentDto,
+    @ActiveUser() user: ActiveUserData,
   ) {
     return this.workerAssignmentService.updateAssignment(
       id,
       updateWorkerAssignmentDto,
+      user,
     );
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Get('/worker')
-  public getAllWorkerAssignments() {
-    return this.workerAssignmentService.findAllAssignments();
+  public getAllWorkerAssignments(@ActiveUser() user: ActiveUserData) {
+    return this.workerAssignmentService.findAllAssignments(user);
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Get('/worker/:id')
-  public getWorkerAssignmentById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.workerAssignmentService.findAssignmentById(id);
+  public getWorkerAssignmentById(
+    @Param('id', ParseUUIDPipe) id: string,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.workerAssignmentService.findAssignmentById(id, user);
   }
 
   @Roles(AuthRole.ADMIN, AuthRole.OWNER)
   @Delete('/worker/:id')
-  public deleteWorkerAssignment(@Param('id', ParseUUIDPipe) id: string) {
-    return this.workerAssignmentService.deleteAssignment(id);
+  public deleteWorkerAssignment(
+    @Param('id', ParseUUIDPipe) id: string,
+    @ActiveUser() user: ActiveUserData,
+  ) {
+    return this.workerAssignmentService.deleteAssignment(id, user);
   }
 }
