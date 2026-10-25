@@ -1,8 +1,11 @@
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
+import { useNavigate } from '../../router';
 import { UserPlus, MapPin, Banknote, ArrowRight } from 'lucide-react';
 
-export function HowItWorks({ setView }) {
+export function HowItWorks() {
+  const navigate = useNavigate();
+
   const steps = [
     {
       step: '01',
@@ -75,7 +78,7 @@ export function HowItWorks({ setView }) {
             </span>
             <Button
               size="sm"
-              onClick={() => setView('register')}
+              onClick={() => navigate('/register')}
               className="bg-[#1F3D2C] text-white hover:bg-[#162D20] gap-1.5"
             >
               <UserPlus className="w-3.5 h-3.5" />
