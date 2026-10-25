@@ -16,6 +16,14 @@ export class CreateEmployeeDto {
   @IsUUID()
   ownerId?: string;
 
+  @IsOptional()
+  @IsUUID()
+  estateId?: string;
+
+  @IsOptional()
+  @IsString()
+  role?: string;
+
   @IsNotEmpty()
   @IsString()
   employeeCode!: string;
@@ -33,7 +41,7 @@ export class CreateEmployeeDto {
   nic!: string;
 
   @IsOptional()
-  @IsPhoneNumber('LK')
+  @IsString()
   phone?: string;
 
   @IsOptional()

@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -68,6 +68,9 @@ export class CreateEstateDto {
   boundary!: PolygonDto;
 
   @IsOptional()
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.toLowerCase() : value,
+  )
   @IsEnum(EstateStatus)
   status?: EstateStatus;
 }

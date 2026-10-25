@@ -22,7 +22,7 @@ import { Role } from 'src/auth/enums/role.enum';
 export class CropsController {
   constructor(private readonly cropsService: CropsService) {}
 
-  @Roles(Role.ADMIN, Role.OWNER)
+  @Roles(Role.ADMIN)
   @Post()
   public createCrop(@Body() createCropDto: CreateCropDto) {
     return this.cropsService.createCrop(createCropDto);
@@ -40,7 +40,7 @@ export class CropsController {
     return this.cropsService.findOneCrop(id);
   }
 
-  @Roles(Role.ADMIN, Role.OWNER)
+  @Roles(Role.ADMIN)
   @Patch(':id')
   public updateCrop(
     @Param('id', ParseUUIDPipe) id: string,
