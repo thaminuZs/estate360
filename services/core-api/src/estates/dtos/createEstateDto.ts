@@ -32,13 +32,11 @@ export class PolygonDto {
 }
 
 export class CreateEstateDto {
-  @ValidateIf((o: CreateEstateDto) => !o.ownerId)
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   owner?: string;
 
-  @ValidateIf((o: CreateEstateDto) => !o.owner)
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   ownerId?: string;
 

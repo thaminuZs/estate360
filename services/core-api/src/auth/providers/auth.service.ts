@@ -114,6 +114,22 @@ export class AuthService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
+    if (user.role === Role.OWNER && !user.owner) {
+      let linkedOwner = await this.ownersRepository.findOne({
+        where: { email: normalizedEmail },
+      });
+      if (!linkedOwner) {
+        linkedOwner = await this.ownersRepository.save(
+          this.ownersRepository.create({
+            name: normalizedEmail.split('@')[0],
+            email: normalizedEmail,
+            status: OwnerStatus.ACTIVE,
+          }),
+        );
+      }
+      user.owner = linkedOwner;
+    }
+
     user.lastLogin = new Date();
     await this.usersRepository.save(user);
 
