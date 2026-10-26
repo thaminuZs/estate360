@@ -1,87 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Ubuntu', sans-serif;
+  --font-heading: 'PT Sans', sans-serif;
+}
+
 :root {
-  /* Brand Palette */
-  --green-dark: #1F3D2C;
-  --green-dark-hover: #162b1f;
-  --green-medium: #2c543d;
-  --green-light: #D7E6DD;
-  --green-subtle: #edf4f0;
-  --brown: #8C6239;
-  --brown-light: #f5eee6;
-  --yellow: #F1C40F;
-  --yellow-hover: #d4ac0d;
-  --cream: #F8F9FA;
-  --white: #FFFFFF;
-  --text-primary: #1c2520;
-  --text-secondary: #4a5951;
-  --text-muted: #738379;
-  --border-light: rgba(31, 61, 44, 0.1);
-  --border-card: rgba(31, 61, 44, 0.08);
-
-  /* Elevation Shadows */
-  --shadow-sm: 0 2px 8px rgba(31, 61, 44, 0.05);
-  --shadow-md: 0 8px 24px rgba(31, 61, 44, 0.08);
-  --shadow-lg: 0 16px 40px rgba(31, 61, 44, 0.12);
-  --shadow-hover: 0 20px 48px rgba(31, 61, 44, 0.16);
-
-  /* Typography */
-  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-  /* Transitions */
-  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --primary-dark: #1F3D2C;
+  --accent-light: #D7E6DD;
+  --earth-brown: #8C6239;
+  --status-yellow: #F1C40F;
+  --bg-cream: #F8F9FA;
+  --text-main: #1F2937;
+  --text-muted: #4B5563;
+  --border-subtle: #D1D5DB;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-  background-color: var(--cream);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+body,
+input,
+button,
+select,
+textarea,
+label {
+  font-family: 'Ubuntu', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 body {
-  min-height: 100vh;
-  background-color: var(--cream);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-
-#root {
-  width: 100%;
-  min-height: 100vh;
   margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+  background-color: #F8F9FA;
+  color: #1F2937;
+  -webkit-font-smoothing: antialiased;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: 'PT Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
+/* Custom flat utility classes matching exact requested palette without glow effects */
+.bg-dark-green { background-color: #1F3D2C; }
+.text-dark-green { color: #1F3D2C; }
+.border-dark-green { border-color: #1F3D2C; }
 
-ul, ol {
-  list-style: none;
-}
+.bg-light-green { background-color: #D7E6DD; }
+.text-light-green { color: #D7E6DD; }
+.border-light-green { border-color: #D7E6DD; }
 
-img, svg {
-  display: block;
-  max-width: 100%;
-}
+.bg-earth-brown { background-color: #8C6239; }
+.text-earth-brown { color: #8C6239; }
+.border-earth-brown { border-color: #8C6239; }
+
+.bg-badge-yellow { background-color: #F1C40F; }
+.text-badge-yellow { color: #9A7B0C; }
+.border-badge-yellow { border-color: #F1C40F; }
+
+.bg-cream { background-color: #F8F9FA; }

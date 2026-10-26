@@ -1,52 +1,152 @@
-import React, { useState, useEffect } from 'react';
+import { Trees, User, LogOut, LayoutDashboard, Home, UserPlus } from 'lucide-react';
+import { Button } from './ui/button';
+import { useNavigate, useLocation } from '../router';
+import { useOwner } from '../context/OwnerContext';
 
-export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+export function Navbar() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { user, onLogout } = useOwner();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+  const isLanding = pathname === '/';
+  const isDashboard = pathname.startsWith('/dashboard');
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/');
+  };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div className="navbar-inner">
-        <a href="#" className="brand-logo" aria-label="Estate360 Home">
-          <div className="brand-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
+    <header className="sticky top-0 z-50 w-full border-b border-[#D7E6DD] bg-[#F8F9FA]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Brand: Just "Estate 360" */}
+        <button
+          onClick={() => navigate(user ? '/dashboard' : '/')}
+          className="flex items-center gap-2.5 text-left cursor-pointer focus:outline-none"
+        >
+          <div className="w-8 h-8 bg-[#1F3D2C] flex items-center justify-center text-white">
+            <Trees className="w-4 h-4 text-[#D7E6DD]" />
           </div>
-          <span>Estate<span style={{ color: 'var(--brown)' }}>360</span></span>
-        </a>
+          <div>
+            <span className="font-bold text-lg text-[#1F3D2C] tracking-tight">
+              Estate 360
+            </span>
+            <p className="text-[11px] text-[#4B5563] -mt-0.5 hidden sm:block">
+              Plantation Management
+            </p>
+          </div>
+        </button>
 
-        <div className="nav-links">
-          <a href="#features" className="nav-link">Platform</a>
-          <a href="#how-it-works" className="nav-link">How It Works</a>
-          <a href="#simulator" className="nav-link">Live Telemetry</a>
-          <a href="#spotlight" className="nav-link">Technology</a>
-        </div>
+        {/* Navigation Links */}
+        <nav className="hidden md:flex items-center gap-6 text-sm text-[#4B5563]">
+          <button
+            onClick={() => navigate('/')}
+            className={`hover:text-[#1F3D2C] transition-colors cursor-pointer ${
+              isLanding ? 'text-[#1F3D2C] font-semibold' : ''
+            }`}
+          >
+            Overview
+          </button>
+          <a
+            href="#features"
+            onClick={(e) => {
+              if (!isLanding) {
+                e.preventDefault();
+                navigate('/');
+                setTimeout(() => {
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className="hover:text-[#1F3D2C] transition-colors cursor-pointer"
+          >
+            Features
+          </a>
+          <a
+            href="#how-it-works"
+            onClick={(e) => {
+              if (!isLanding) {
+                e.preventDefault();
+                navigate('/');
+                setTimeout(() => {
+                  document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className="hover:text-[#1F3D2C] transition-colors cursor-pointer"
+          >
+            How It Works
+          </a>
+        </nav>
 
-        <div className="nav-actions">
-          <a href="#spotlight" className="btn-outline" style={{ padding: '9px 20px', fontSize: '0.9rem' }}>
-            Live Demo
-          </a>
-          <a href="#contact" className="btn-primary" style={{ padding: '10px 22px', fontSize: '0.9rem' }}>
-            Get Started
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
+        {/* User / Auth Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {user ? (
+            <>
+              <div className="hidden sm:flex flex-col items-end mr-1">
+                <span className="text-xs font-semibold text-[#1F3D2C]">
+                  {user.name || user.email}
+                </span>
+                <span className="text-[10px] text-[#8C6239] uppercase font-bold tracking-wider">
+                  Owner
+                </span>
+              </div>
+              {!isDashboard ? (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => navigate('/dashboard')}
+                  className="gap-1.5"
+                >
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Dashboard
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => navigate('/')}
+                  className="gap-1.5"
+                >
+                  <Home className="w-3.5 h-3.5" />
+                  Home
+                </Button>
+              )}
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleLogoutClick}
+                className="text-[#8C6239] hover:bg-[#D7E6DD]/40 gap-1.5"
+                title="Log out"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline">Logout</span>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                size="sm"
+                variant={pathname === '/login' ? 'secondary' : 'outline'}
+                onClick={() => navigate('/login')}
+                className="gap-1.5"
+              >
+                <User className="w-3.5 h-3.5" />
+                Owner Login
+              </Button>
+              <Button
+                size="sm"
+                variant={pathname === '/register' ? 'secondary' : 'default'}
+                onClick={() => navigate('/register')}
+                className="bg-[#1F3D2C] hover:bg-[#162D20] gap-1.5"
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                Owner Registration
+              </Button>
+            </>
+          )}
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

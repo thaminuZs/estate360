@@ -29,15 +29,20 @@ export class EstateAssignment {
   @JoinColumn({ name: 'employee_id' })
   employee!: Employee;
 
-  @Column({ type: 'enum', enum: Role })
-  role!: Role;
+  @Column({
+    type: 'varchar',
+    length: 20,
+    nullable: true,
+    default: Role.SUPERVISOR,
+  })
+  role?: Role | string;
 
-  @Column({ name: 'start_date', type: 'timestamptz' })
+  @Column({ name: 'start_date', type: 'date' })
   startDate!: Date;
 
-  @Column({ name: 'end_date', type: 'timestamptz', nullable: true })
+  @Column({ name: 'end_date', type: 'date', nullable: true })
   endDate?: Date;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
 }

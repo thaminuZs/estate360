@@ -1,0 +1,3 @@
+### Get Current User Profile (Protected)
+GET http://localhost:3000/auth/me
+Authorization: Bearer <YOUR_ACCESS_TOKEN_HERE>

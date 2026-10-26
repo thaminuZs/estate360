@@ -15,18 +15,18 @@ export class WorkerAssignment {
   id!: string;
 
   @ManyToOne(() => Employee, (employee) => employee.workerAssignments, {
-    nullable: false,
+    nullable: true,
     eager: true,
   })
-  @JoinColumn({ name: 'employee_id' })
-  worker!: Employee;
+  @JoinColumn({ name: 'worker_id' })
+  worker?: Employee;
 
-  @ManyToOne(() => Estate, (estate) => estate.estateAssignments, {
-    nullable: false,
+  @ManyToOne(() => Estate, (estate) => estate.workerAssignments, {
+    nullable: true,
     eager: true,
   })
   @JoinColumn({ name: 'estate_id' })
-  estate!: Estate;
+  estate?: Estate;
 
   @ManyToOne(() => Employee, (supervisor) => supervisor.supervisorAssignments, {
     nullable: true,
@@ -35,12 +35,12 @@ export class WorkerAssignment {
   @JoinColumn({ name: 'supervisor_id' })
   supervisor?: Employee | null;
 
-  @Column({ name: 'start_date' })
-  startDate!: Date;
+  @Column({ name: 'start_date', type: 'date', nullable: true })
+  startDate?: Date;
 
-  @Column({ name: 'end_date', nullable: true })
+  @Column({ name: 'end_date', type: 'date', nullable: true })
   endDate?: Date;
 
-  @CreateDateColumn({ name: 'created-at' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
 }

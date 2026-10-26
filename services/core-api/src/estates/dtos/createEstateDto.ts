@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
   MinLength,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { EstateStatus } from '../enums/estate-status.enum';
@@ -31,13 +32,23 @@ export class PolygonDto {
 }
 
 export class CreateEstateDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  owner!: string;
+  owner?: string;
 
+  @IsOptional()
+  @IsString()
+  ownerId?: string;
+
+  @ValidateIf((o: CreateEstateDto) => !o.cropId)
   @IsNotEmpty()
   @IsString()
-  crop!: string;
+  crop?: string;
+
+  @ValidateIf((o: CreateEstateDto) => !o.crop)
+  @IsNotEmpty()
+  @IsString()
+  cropId?: string;
 
   @IsNotEmpty()
   @IsString()
@@ -57,6 +68,9 @@ export class CreateEstateDto {
   boundary!: PolygonDto;
 
   @IsOptional()
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.toLowerCase() : value,
+  )
   @IsEnum(EstateStatus)
-  status!: EstateStatus;
+  status?: EstateStatus;
 }

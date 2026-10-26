@@ -1,0 +1,83 @@
+### Register Device (Admin)
+POST http://localhost:3000/iot/devices
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "deviceCode": "DEV-SN-001",
+  "deviceType": "worker_tracker",
+  "status": "active"
+}
+
+### Get All Devices
+GET http://localhost:3000/iot/devices
+Authorization: Bearer <JWT_TOKEN>
+
+### Assign Device to Worker and Estate
+POST http://localhost:3000/iot/assignments
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "deviceId": "<DEVICE_UUID>",
+  "workerId": "<WORKER_UUID>",
+  "estateId": "<ESTATE_UUID>",
+  "startDate": "2026-10-24"
+}
+
+### Direct Ingest Worker IoT Reading
+POST http://localhost:3000/iot/readings/worker
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "deviceId": "<DEVICE_UUID>",
+  "workerId": "<WORKER_UUID>",
+  "estateId": "<ESTATE_UUID>",
+  "workSessionId": "<WORK_SESSION_UUID>",
+  "recordedAt": "2026-10-24T08:30:00Z",
+  "activityStatus": "active",
+  "location": {
+    "latitude": 6.9271,
+    "longitude": 79.8612
+  }
+}
+
+### Direct Ingest Environment IoT Reading
+POST http://localhost:3000/iot/readings/environment
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "deviceId": "<DEVICE_UUID>",
+  "estateId": "<ESTATE_UUID>",
+  "recordedAt": "2026-10-24T08:30:00Z",
+  "temperature": 27.5,
+  "humidity": 82.0,
+  "soilMoisture": 45.2,
+  "location": {
+    "latitude": 6.9271,
+    "longitude": 79.8612
+  }
+}
+
+### Check Current Cloud Fetch Configuration (Admin)
+GET http://localhost:3000/iot/cloud/config
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+
+### Update Cloud Fetch Path and API URL dynamically at Runtime
+PATCH http://localhost:3000/iot/cloud/config
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "apiUrl": "https://custom-iot-server.com",
+  "apiKey": "custom_secret_api_key_123",
+  "workerReadingsPath": "/api/v1/telemetry/workers",
+  "environmentReadingsPath": "/api/v1/telemetry/environment",
+  "enabled": true
+}
+
+### Trigger On-Demand Cloud Fetch Sync
+POST http://localhost:3000/iot/cloud/sync?limit=100
+Authorization: Bearer <JWT_TOKEN>

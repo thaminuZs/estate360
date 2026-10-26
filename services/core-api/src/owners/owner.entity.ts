@@ -3,42 +3,62 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { OwnerStatus } from './enums/owner-status.enum';
 import { Estate } from 'src/estates/estate.entity';
+import { User } from 'src/auth/entities/users.entity';
 
-@Entity({ name: 'owners' })
+@Entity({ name: 'owner' })
 export class Owner {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 150 })
   name!: string;
 
-  @Column({ name: 'contact_email', type: 'varchar' })
-  contactEmail!: string;
+  @Column({
+    name: 'email',
+    type: 'varchar',
+    length: 255,
+    unique: true,
+    nullable: true,
+  })
+  email?: string;
 
-  @Column({ type: 'varchar' })
-  phone!: string;
+  get contactEmail(): string {
+    return this.email ?? '';
+  }
 
-  @Column({ type: 'varchar' })
-  address!: string;
+  set contactEmail(val: string) {
+    this.email = val;
+  }
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  phone?: string;
+
+  @Column({ type: 'text', nullable: true })
+  address?: string;
 
   @Column({
-    type: 'enum',
-    enum: OwnerStatus,
+    type: 'varchar',
+    length: 20,
+    nullable: true,
     default: OwnerStatus.ACTIVE,
   })
   status!: string;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt!: Date;
 
   @OneToMany(() => Estate, (estate) => estate.owner)
   estates!: Estate[];
+
+  @OneToOne(() => User, (user) => user.owner)
+  user?: User;
 }

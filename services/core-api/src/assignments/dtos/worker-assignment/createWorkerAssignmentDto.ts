@@ -12,6 +12,10 @@ export class CreateWorkerAssignmentDto {
 
   @IsOptional()
   @IsUUID()
+  supervisorId?: string;
+
+  @IsOptional()
+  @IsUUID()
   superVisorId?: string;
 
   @IsNotEmpty()

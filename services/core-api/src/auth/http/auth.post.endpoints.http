@@ -1,0 +1,58 @@
+### Register Owner
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "owner@estate360.com",
+  "password": "Pa$$w0rd2026!",
+  "role": "owner",
+  "name": "Jane Owner",
+  "phone": "0771234567",
+  "address": "45 Plantation Way, Kandy"
+}
+
+### Register Admin
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "admin@estate360.com",
+  "password": "Pa$$w0rd2026!",
+  "role": "admin"
+}
+
+### Login (Owner)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "owner@estate360.com",
+  "password": "Pa$$w0rd2026!"
+}
+
+### Login (Admin)
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@estate360.com",
+  "password": "Pa$$w0rd2026!"
+}
+
+### Refresh Token
+POST http://localhost:3000/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "<YOUR_REFRESH_TOKEN_HERE>"
+}
+
+### Create Admin by Admin
+POST http://localhost:3000/auth/admin/create-admin
+Authorization: Bearer <ADMIN_JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "email": "newadmin@estate360.com",
+  "password": "Pa$$w0rd2026!"
+}

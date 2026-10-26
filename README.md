@@ -259,6 +259,11 @@ Set the correct `DEVICE_UUID` in `worker_device.ino` before flashing each device
 
 ---
 
+## Documentation
+- [API Routes Reference](docs/api-routes.md)
+
+---
+
 ## 📄 License
 
 This project is licensed under the **MIT License**.

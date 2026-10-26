@@ -1,0 +1,47 @@
+### Set Estate Pay Rate
+POST http://localhost:3000/payroll/rates
+Authorization: Bearer <ADMIN_OR_OWNER_TOKEN>
+Content-Type: application/json
+
+{
+  "estateId": "<ESTATE_UUID>",
+  "rate": 15.50,
+  "unit": "kg",
+  "paymentFactor": 1.0,
+  "effectiveFrom": "2026-10-01"
+}
+
+### Generate Payroll for Owner Period
+POST http://localhost:3000/payroll/generate
+Authorization: Bearer <ADMIN_OR_OWNER_TOKEN>
+Content-Type: application/json
+
+{
+  "ownerId": "<OWNER_UUID>",
+  "periodStart": "2026-10-01",
+  "periodEnd": "2026-10-31",
+  "paymentFrequency": "monthly"
+}
+
+### Get All Payrolls
+GET http://localhost:3000/payroll
+Authorization: Bearer <ADMIN_OR_OWNER_TOKEN>
+
+### Process Payroll
+PATCH http://localhost:3000/payroll/<PAYROLL_UUID>/process
+Authorization: Bearer <ADMIN_OR_OWNER_TOKEN>
+
+### Record Payment for Payroll Item
+POST http://localhost:3000/payroll/payments
+Authorization: Bearer <ADMIN_OR_OWNER_TOKEN>
+Content-Type: application/json
+
+{
+  "payrollItemId": "<PAYROLL_ITEM_UUID>",
+  "amount": 25400.00,
+  "paymentDate": "2026-10-24T10:00:00Z",
+  "bankName": "Bank of Ceylon",
+  "accountNumber": "123456789",
+  "accountName": "S. Perera",
+  "transactionReference": "TXN-20261024-9981"
+}

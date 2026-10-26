@@ -3,43 +3,42 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
-  Matches,
   MaxLength,
   MinLength,
+  ValidateIf,
 } from 'class-validator';
 import { OwnerStatus } from '../enums/owner-status.enum';
 
 export class CreateOwnerDto {
   @IsString()
   @IsNotEmpty()
-  @MaxLength(64)
+  @MaxLength(150)
   name!: string;
 
+  @ValidateIf((o: CreateOwnerDto) => !o.contactEmail)
   @IsEmail()
   @IsNotEmpty()
-  contactEmail!: string;
+  email?: string;
 
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    {
-      message:
-        'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character',
-    },
-  )
+  @ValidateIf((o: CreateOwnerDto) => !o.email)
+  @IsEmail()
+  @IsNotEmpty()
+  contactEmail?: string;
+
+  @MinLength(6, { message: 'Password must be at least 6 characters long' })
   @IsNotEmpty()
   password!: string;
 
-  @IsPhoneNumber('LK')
-  @IsNotEmpty()
-  phone!: string;
-
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
   @MinLength(3)
   @MaxLength(512)
-  address!: string;
+  address?: string;
 
   @IsOptional()
   @IsEnum(OwnerStatus)

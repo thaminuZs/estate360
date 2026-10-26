@@ -1,7 +1,9 @@
 import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
+  IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   MaxLength,
   MinLength,
@@ -21,6 +23,8 @@ export class CreateCropDto {
 
   @IsNotEmpty()
   @Type(() => Number)
+  @IsNumber()
+  @IsPositive()
   paymentFactor!: number;
 
   @IsOptional()

@@ -1,0 +1,26 @@
+### Check-In Worker
+POST http://localhost:3000/attendance/check-in
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "workerId": "<WORKER_UUID>",
+  "estateId": "<ESTATE_UUID>",
+  "date": "2026-10-24",
+  "checkIn": "2026-10-24T07:30:00Z",
+  "status": "present"
+}
+
+### Check-Out Worker
+PATCH http://localhost:3000/attendance/<ATTENDANCE_UUID>/check-out
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+
+{
+  "checkOut": "2026-10-24T16:30:00Z",
+  "status": "completed"
+}
+
+### Query Attendance Records
+GET http://localhost:3000/attendance?date=2026-10-24
+Authorization: Bearer <JWT_TOKEN>

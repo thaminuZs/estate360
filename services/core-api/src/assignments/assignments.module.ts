@@ -7,6 +7,7 @@ import { Employee } from 'src/employees/employee.entity';
 import { Estate } from 'src/estates/estate.entity';
 import { WorkerAssignmentService } from './providers/worker-assignment.service';
 import { WorkerAssignment } from './entities/worker-assignment.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   controllers: [AssignmentsController],
@@ -18,6 +19,7 @@ import { WorkerAssignment } from './entities/worker-assignment.entity';
       Employee,
       Estate,
     ]),
+    AuthModule,
   ],
 })
 export class AssignmentsModule {}

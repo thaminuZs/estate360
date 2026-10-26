@@ -5,18 +5,17 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'crops' })
+@Entity({ name: 'crop' })
 export class Crop {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 100, unique: true })
   name!: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 30, unique: true })
   code!: string;
 
   @Column({ name: 'payment_factor', type: 'numeric' })
@@ -25,11 +24,8 @@ export class Crop {
   @Column({ type: 'text', nullable: true })
   description?: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt!: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt!: Date;
 
   @OneToMany(() => Estate, (estate) => estate.crop)
   estates!: Estate[];
