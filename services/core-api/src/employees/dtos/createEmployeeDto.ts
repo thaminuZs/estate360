@@ -6,11 +6,24 @@ import {
   IsOptional,
   IsPhoneNumber,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import { EmployeeStatus } from '../enums/employee-status.enum';
 import { Type } from 'class-transformer';
 
 export class CreateEmployeeDto {
+  @IsOptional()
+  @IsUUID()
+  ownerId?: string;
+
+  @IsOptional()
+  @IsUUID()
+  estateId?: string;
+
+  @IsOptional()
+  @IsString()
+  role?: string;
+
   @IsNotEmpty()
   @IsString()
   employeeCode!: string;
@@ -28,7 +41,7 @@ export class CreateEmployeeDto {
   nic!: string;
 
   @IsOptional()
-  @IsPhoneNumber('LK')
+  @IsString()
   phone?: string;
 
   @IsOptional()

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -11,6 +12,9 @@ import { Estate } from '../estate.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Crop } from 'src/crop/crop.entity';
 import { Owner } from 'src/owners/owner.entity';
+import { Role } from 'src/auth/enums/role.enum';
+import { EstateStatus } from '../enums/estate-status.enum';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Injectable()
 export class EstatesService {
@@ -25,13 +29,25 @@ export class EstatesService {
     private readonly ownerRepository: Repository<Owner>,
   ) {}
 
-  public async findAll() {
+  public async findAll(user?: ActiveUserData) {
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      return this.estatesRepository.find({
+        where: { owner: { id: user.ownerId } },
+        relations: { owner: true, crop: true },
+      });
+    }
+
     return this.estatesRepository.find({
       relations: { owner: true, crop: true },
     });
   }
 
-  public async findOne(id: string) {
+  public async findOne(id: string, user?: ActiveUserData) {
     const estate = await this.estatesRepository.findOne({
       where: { id },
       relations: { owner: true, crop: true },
@@ -41,12 +57,35 @@ export class EstatesService {
       throw new NotFoundException(`Estate with ID ${id} not found`);
     }
 
+    if (user && user.role === Role.OWNER && estate.owner?.id !== user.ownerId) {
+      throw new ForbiddenException('You do not have access to this estate');
+    }
+
     return estate;
   }
 
-  public async createEstate(createEstateDto: CreateEstateDto) {
+  public async createEstate(
+    createEstateDto: CreateEstateDto,
+    user?: ActiveUserData,
+  ) {
     const cropId = createEstateDto.cropId ?? createEstateDto.crop;
-    const ownerId = createEstateDto.ownerId ?? createEstateDto.owner;
+    const requestedOwnerId = createEstateDto.ownerId ?? createEstateDto.owner;
+
+    let ownerId = requestedOwnerId;
+
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      if (requestedOwnerId && requestedOwnerId !== user.ownerId) {
+        throw new ForbiddenException(
+          'You can only create estates under your own owner account',
+        );
+      }
+      ownerId = user.ownerId;
+    }
 
     if (!cropId || !ownerId) {
       throw new BadRequestException('Both crop and owner IDs are required');
@@ -67,6 +106,12 @@ export class EstatesService {
     if (!crop) throw new NotFoundException('Crop not found');
     if (!owner) throw new NotFoundException('Owner not found');
 
+    // Automatically set estate status as active for owner upon registration
+    const status =
+      user && user.role === Role.OWNER
+        ? EstateStatus.ACTIVE
+        : (createEstateDto.status ?? EstateStatus.ACTIVE);
+
     const estate = this.estatesRepository.create({
       owner,
       crop,
@@ -74,14 +119,18 @@ export class EstatesService {
       code: createEstateDto.code,
       location: createEstateDto.location,
       boundary: createEstateDto.boundary,
-      status: createEstateDto.status,
+      status,
     });
 
     return this.estatesRepository.save(estate);
   }
 
-  public async updateEstate(id: string, updateEstateDto: UpdateEstateDto) {
-    const estate = await this.findOne(id);
+  public async updateEstate(
+    id: string,
+    updateEstateDto: UpdateEstateDto,
+    user?: ActiveUserData,
+  ) {
+    const estate = await this.findOne(id, user);
 
     const cropId = updateEstateDto.cropId ?? updateEstateDto.crop;
     if (cropId) {
@@ -92,6 +141,11 @@ export class EstatesService {
 
     const ownerId = updateEstateDto.ownerId ?? updateEstateDto.owner;
     if (ownerId) {
+      if (user && user.role === Role.OWNER && ownerId !== user.ownerId) {
+        throw new ForbiddenException(
+          'You cannot transfer an estate to another owner',
+        );
+      }
       const owner = await this.ownerRepository.findOne({
         where: { id: ownerId },
       });
@@ -118,8 +172,20 @@ export class EstatesService {
     return this.estatesRepository.save(estate);
   }
 
-  public async deleteEstate(id: string) {
-    const estate = await this.findOne(id);
+  public async deleteEstate(id: string, user?: ActiveUserData) {
+    const estate = await this.findOne(id, user);
+    try {
+      await this.estatesRepository.query(
+        'DELETE FROM "estate_assignment" WHERE "estate_id" = $1',
+        [estate.id],
+      );
+      await this.estatesRepository.query(
+        'DELETE FROM "worker_assignment" WHERE "estate_id" = $1',
+        [estate.id],
+      );
+    } catch {
+      // Safe catch
+    }
     await this.estatesRepository.remove(estate);
     return { message: 'Estate deleted successfully' };
   }

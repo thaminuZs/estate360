@@ -6,9 +6,13 @@ import { Label } from '../ui/label';
 import { Alert } from '../ui/alert';
 import { Badge } from '../ui/badge';
 import { loginOwner, fetchProfile, setStoredAuth } from '../../api/auth';
+import { useNavigate } from '../../router';
+import { useOwner } from '../../context/OwnerContext';
 import { Trees, Lock, Mail, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
-export function OwnerLogin({ setView, onLoginSuccess }) {
+export function OwnerLogin({ onLoginSuccess }) {
+  const navigate = useNavigate();
+  const ownerCtx = useOwner();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +50,12 @@ export function OwnerLogin({ setView, onLoginSuccess }) {
       };
 
       setStoredAuth(authData);
-      onLoginSuccess(profile);
+      if (onLoginSuccess) {
+        onLoginSuccess(profile);
+      } else {
+        ownerCtx.onLoginSuccess(profile);
+      }
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
@@ -157,10 +166,10 @@ export function OwnerLogin({ setView, onLoginSuccess }) {
               </Button>
 
               <div className="text-center text-xs text-[#4B5563] pt-1">
-                Don't have an owner account?{' '}
+                Don&apos;t have an owner account?{' '}
                 <button
                   type="button"
-                  onClick={() => setView('register')}
+                  onClick={() => navigate('/register')}
                   className="font-semibold text-[#1F3D2C] hover:underline cursor-pointer"
                 >
                   Owner Registration
@@ -174,7 +183,7 @@ export function OwnerLogin({ setView, onLoginSuccess }) {
         <div className="text-center">
           <button
             type="button"
-            onClick={() => setView('landing')}
+            onClick={() => navigate('/')}
             className="text-xs text-[#8C6239] hover:text-[#1F3D2C] font-medium transition-colors cursor-pointer"
           >
             ← Back to Estate 360

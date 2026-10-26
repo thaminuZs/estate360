@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Device } from '../entities/device.entity';
@@ -12,6 +16,8 @@ import { CreateEnvironmentReadingDto } from '../dtos/create-environment-reading.
 import { Employee } from 'src/employees/employee.entity';
 import { Estate } from 'src/estates/estate.entity';
 import { WorkSession } from 'src/work-sessions/work-session.entity';
+import { Role } from 'src/auth/enums/role.enum';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Injectable()
 export class IotService {
@@ -38,41 +44,104 @@ export class IotService {
     private readonly workSessionsRepository: Repository<WorkSession>,
   ) {}
 
+  public async verifyEstateOwnership(estateId: string, user?: ActiveUserData) {
+    const estate = await this.estatesRepository.findOne({
+      where: { id: estateId },
+      relations: { owner: true },
+    });
+    if (!estate) {
+      throw new NotFoundException('Estate not found');
+    }
+    if (user && user.role === Role.OWNER && estate.owner?.id !== user.ownerId) {
+      throw new ForbiddenException('You do not have access to this estate');
+    }
+    return estate;
+  }
+
   public async createDevice(createDto: CreateDeviceDto) {
     const device = this.devicesRepository.create(createDto);
     return this.devicesRepository.save(device);
   }
 
-  public async findAllDevices() {
+  public async findAllDevices(user?: ActiveUserData) {
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      return this.devicesRepository
+        .createQueryBuilder('device')
+        .innerJoin('device.assignments', 'assignment')
+        .innerJoin('assignment.estate', 'estate')
+        .where('estate.owner_id = :ownerId', { ownerId: user.ownerId })
+        .distinct(true)
+        .getMany();
+    }
+
     return this.devicesRepository.find();
   }
 
-  public async findDeviceById(id: string) {
+  public async findDeviceById(id: string, user?: ActiveUserData) {
     const device = await this.devicesRepository.findOne({
       where: { id },
-      relations: { assignments: true },
+      relations: { assignments: { estate: { owner: true } } },
     });
     if (!device) {
       throw new NotFoundException(`Device with ID ${id} not found`);
     }
+
+    if (user && user.role === Role.OWNER) {
+      const hasAccess = (device.assignments ?? []).some(
+        (a) => a.estate?.owner?.id === user.ownerId,
+      );
+      if (!hasAccess) {
+        throw new ForbiddenException('You do not have access to this device');
+      }
+    }
+
     return device;
   }
 
-  public async createAssignment(createDto: CreateDeviceAssignmentDto) {
+  public async createAssignment(
+    createDto: CreateDeviceAssignmentDto,
+    user?: ActiveUserData,
+  ) {
     const [device, estate] = await Promise.all([
       this.devicesRepository.findOne({ where: { id: createDto.deviceId } }),
-      this.estatesRepository.findOne({ where: { id: createDto.estateId } }),
+      this.estatesRepository.findOne({
+        where: { id: createDto.estateId },
+        relations: { owner: true },
+      }),
     ]);
 
     if (!device) throw new NotFoundException('Device not found');
     if (!estate) throw new NotFoundException('Estate not found');
 
+    if (user && user.role === Role.OWNER && estate.owner?.id !== user.ownerId) {
+      throw new ForbiddenException(
+        'You can only assign devices to your own estates',
+      );
+    }
+
     let worker: Employee | null = null;
     if (createDto.workerId) {
       worker = await this.employeesRepository.findOne({
         where: { id: createDto.workerId },
+        relations: { owner: true },
       });
       if (!worker) throw new NotFoundException('Worker not found');
+
+      if (
+        user &&
+        user.role === Role.OWNER &&
+        worker.owner &&
+        worker.owner.id !== user.ownerId
+      ) {
+        throw new ForbiddenException(
+          'You cannot assign a device to another owner’s worker',
+        );
+      }
     }
 
     const assignment = this.assignmentsRepository.create({
@@ -86,17 +155,35 @@ export class IotService {
     return this.assignmentsRepository.save(assignment);
   }
 
-  public async findAllAssignments() {
+  public async findAllAssignments(user?: ActiveUserData) {
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      return this.assignmentsRepository.find({
+        where: { estate: { owner: { id: user.ownerId } } },
+        relations: { device: true, worker: true, estate: true },
+      });
+    }
+
     return this.assignmentsRepository.find({
       relations: { device: true, worker: true, estate: true },
     });
   }
 
-  public async createWorkerReading(dto: CreateWorkerReadingDto) {
+  public async createWorkerReading(
+    dto: CreateWorkerReadingDto,
+    user?: ActiveUserData,
+  ) {
     const [device, worker, estate, workSession] = await Promise.all([
       this.devicesRepository.findOne({ where: { id: dto.deviceId } }),
       this.employeesRepository.findOne({ where: { id: dto.workerId } }),
-      this.estatesRepository.findOne({ where: { id: dto.estateId } }),
+      this.estatesRepository.findOne({
+        where: { id: dto.estateId },
+        relations: { owner: true },
+      }),
       this.workSessionsRepository.findOne({ where: { id: dto.workSessionId } }),
     ]);
 
@@ -104,6 +191,12 @@ export class IotService {
     if (!worker) throw new NotFoundException('Worker not found');
     if (!estate) throw new NotFoundException('Estate not found');
     if (!workSession) throw new NotFoundException('WorkSession not found');
+
+    if (user && user.role === Role.OWNER && estate.owner?.id !== user.ownerId) {
+      throw new ForbiddenException(
+        'You can only record readings for your own estates',
+      );
+    }
 
     const reading = this.workerReadingsRepository.create({
       device,
@@ -123,12 +216,19 @@ export class IotService {
     return this.workerReadingsRepository.save(reading);
   }
 
-  public async findWorkerReadings(filter?: {
-    estateId?: string;
-    workerId?: string;
-    sessionId?: string;
-    limit?: number;
-  }) {
+  public async findWorkerReadings(
+    filter?: {
+      estateId?: string;
+      workerId?: string;
+      sessionId?: string;
+      limit?: number;
+    },
+    user?: ActiveUserData,
+  ) {
+    if (filter?.estateId && user?.role === Role.OWNER) {
+      await this.verifyEstateOwnership(filter.estateId, user);
+    }
+
     const query = this.workerReadingsRepository
       .createQueryBuilder('reading')
       .leftJoinAndSelect('reading.device', 'device')
@@ -137,6 +237,15 @@ export class IotService {
       .leftJoinAndSelect('reading.workSession', 'workSession')
       .orderBy('reading.recordedAt', 'DESC')
       .take(filter?.limit ?? 50);
+
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      query.andWhere('estate.owner_id = :ownerId', { ownerId: user.ownerId });
+    }
 
     if (filter?.estateId) {
       query.andWhere('reading.estate_id = :estateId', {
@@ -157,14 +266,26 @@ export class IotService {
     return query.getMany();
   }
 
-  public async createEnvironmentReading(dto: CreateEnvironmentReadingDto) {
+  public async createEnvironmentReading(
+    dto: CreateEnvironmentReadingDto,
+    user?: ActiveUserData,
+  ) {
     const [device, estate] = await Promise.all([
       this.devicesRepository.findOne({ where: { id: dto.deviceId } }),
-      this.estatesRepository.findOne({ where: { id: dto.estateId } }),
+      this.estatesRepository.findOne({
+        where: { id: dto.estateId },
+        relations: { owner: true },
+      }),
     ]);
 
     if (!device) throw new NotFoundException('Device not found');
     if (!estate) throw new NotFoundException('Estate not found');
+
+    if (user && user.role === Role.OWNER && estate.owner?.id !== user.ownerId) {
+      throw new ForbiddenException(
+        'You can only record readings for your own estates',
+      );
+    }
 
     const reading = this.envReadingsRepository.create({
       device,
@@ -184,17 +305,33 @@ export class IotService {
     return this.envReadingsRepository.save(reading);
   }
 
-  public async findEnvironmentReadings(filter?: {
-    estateId?: string;
-    deviceId?: string;
-    limit?: number;
-  }) {
+  public async findEnvironmentReadings(
+    filter?: {
+      estateId?: string;
+      deviceId?: string;
+      limit?: number;
+    },
+    user?: ActiveUserData,
+  ) {
+    if (filter?.estateId && user?.role === Role.OWNER) {
+      await this.verifyEstateOwnership(filter.estateId, user);
+    }
+
     const query = this.envReadingsRepository
       .createQueryBuilder('reading')
       .leftJoinAndSelect('reading.device', 'device')
       .leftJoinAndSelect('reading.estate', 'estate')
       .orderBy('reading.recordedAt', 'DESC')
       .take(filter?.limit ?? 50);
+
+    if (user && user.role === Role.OWNER) {
+      if (!user.ownerId) {
+        throw new ForbiddenException(
+          'Owner profile is not linked to this account',
+        );
+      }
+      query.andWhere('estate.owner_id = :ownerId', { ownerId: user.ownerId });
+    }
 
     if (filter?.estateId) {
       query.andWhere('reading.estate_id = :estateId', {

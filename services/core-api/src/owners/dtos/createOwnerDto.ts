@@ -3,9 +3,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsOptional,
-  IsPhoneNumber,
   IsString,
-  Matches,
   MaxLength,
   MinLength,
   ValidateIf,
@@ -28,18 +26,12 @@ export class CreateOwnerDto {
   @IsNotEmpty()
   contactEmail?: string;
 
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    {
-      message:
-        'Password must be at least 8 characters and contain uppercase, lowercase, number, and special character',
-    },
-  )
+  @MinLength(6, { message: 'Password must be at least 6 characters long' })
   @IsNotEmpty()
   password!: string;
 
   @IsOptional()
-  @IsPhoneNumber('LK')
+  @IsString()
   phone?: string;
 
   @IsOptional()

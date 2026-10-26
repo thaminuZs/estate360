@@ -1,0 +1,1017 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Estate 360 - Core API Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+        <link rel="stylesheet" href="./styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">Estate 360 - Core API Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content overview">
+                   <div class="content-data">
+
+
+
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Overview</li>
+</ol>
+  
+<div class="text-center module-graph-container">
+    <div id="module-graph-svg">
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
+ -->
+<!-- Title: dependencies Pages: 1 -->
+<svg width="5020pt" height="306pt"
+ viewBox="0.00 0.00 5020.00 306.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 302)">
+<title>dependencies</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-302 5016,-302 5016,4 -4,4"/>
+<text text-anchor="start" x="2485.01" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
+<polygon fill="#ffffb3" stroke="transparent" points="2272,-10 2272,-30 2292,-30 2292,-10 2272,-10"/>
+<text text-anchor="start" x="2295.63" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
+<polygon fill="#8dd3c7" stroke="transparent" points="2385,-10 2385,-30 2405,-30 2405,-10 2385,-10"/>
+<text text-anchor="start" x="2408.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
+<polygon fill="#80b1d3" stroke="transparent" points="2471,-10 2471,-30 2491,-30 2491,-10 2471,-10"/>
+<text text-anchor="start" x="2494.78" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
+<polygon fill="#fdb462" stroke="transparent" points="2568,-10 2568,-30 2588,-30 2588,-10 2568,-10"/>
+<text text-anchor="start" x="2591.67" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
+<polygon fill="#fb8072" stroke="transparent" points="2664,-10 2664,-30 2684,-30 2684,-10 2664,-10"/>
+<text text-anchor="start" x="2687.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
+<g id="clust1" class="cluster">
+<title>cluster_AppModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="1063,-70 1063,-282 2568,-282 2568,-70 1063,-70"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_AppModule_imports</title>
+<polygon fill="none" stroke="black" points="1235,-78 1235,-206 2560,-206 2560,-78 1235,-78"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_AppModule_providers</title>
+<polygon fill="none" stroke="black" points="1083,-154 1083,-206 1213,-206 1213,-154 1083,-154"/>
+</g>
+<g id="clust7" class="cluster">
+<title>cluster_AssignmentsModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-138 509,-138 509,-70 8,-70"/>
+</g>
+<g id="clust12" class="cluster">
+<title>cluster_AssignmentsModule_providers</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 501,-130 501,-78 16,-78"/>
+</g>
+<g id="clust13" class="cluster">
+<title>cluster_AttendanceModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="2576,-222 2576,-290 2926,-290 2926,-222 2576,-222"/>
+</g>
+<g id="clust16" class="cluster">
+<title>cluster_AttendanceModule_exports</title>
+<polygon fill="none" stroke="black" points="2776,-230 2776,-282 2918,-282 2918,-230 2776,-230"/>
+</g>
+<g id="clust18" class="cluster">
+<title>cluster_AttendanceModule_providers</title>
+<polygon fill="none" stroke="black" points="2584,-230 2584,-282 2768,-282 2768,-230 2584,-230"/>
+</g>
+<g id="clust19" class="cluster">
+<title>cluster_AuthModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="2576,-146 2576,-214 3313,-214 3313,-146 2576,-146"/>
+</g>
+<g id="clust22" class="cluster">
+<title>cluster_AuthModule_exports</title>
+<polygon fill="none" stroke="black" points="2877,-154 2877,-206 3305,-206 3305,-154 2877,-154"/>
+</g>
+<g id="clust24" class="cluster">
+<title>cluster_AuthModule_providers</title>
+<polygon fill="none" stroke="black" points="2584,-154 2584,-206 2869,-206 2869,-154 2584,-154"/>
+</g>
+<g id="clust25" class="cluster">
+<title>cluster_CropModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="517,-70 517,-138 675,-138 675,-70 517,-70"/>
+</g>
+<g id="clust30" class="cluster">
+<title>cluster_CropModule_providers</title>
+<polygon fill="none" stroke="black" points="525,-78 525,-130 667,-130 667,-78 525,-78"/>
+</g>
+<g id="clust31" class="cluster">
+<title>cluster_EmployeesModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="683,-70 683,-138 881,-138 881,-70 683,-70"/>
+</g>
+<g id="clust36" class="cluster">
+<title>cluster_EmployeesModule_providers</title>
+<polygon fill="none" stroke="black" points="691,-78 691,-130 873,-130 873,-78 691,-78"/>
+</g>
+<g id="clust37" class="cluster">
+<title>cluster_EstatesModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="889,-70 889,-138 1055,-138 1055,-70 889,-70"/>
+</g>
+<g id="clust42" class="cluster">
+<title>cluster_EstatesModule_providers</title>
+<polygon fill="none" stroke="black" points="897,-78 897,-130 1047,-130 1047,-78 897,-78"/>
+</g>
+<g id="clust43" class="cluster">
+<title>cluster_IotModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="2934,-222 2934,-290 3540,-290 3540,-222 2934,-222"/>
+</g>
+<g id="clust46" class="cluster">
+<title>cluster_IotModule_exports</title>
+<polygon fill="none" stroke="black" points="3278,-230 3278,-282 3532,-282 3532,-230 3278,-230"/>
+</g>
+<g id="clust48" class="cluster">
+<title>cluster_IotModule_providers</title>
+<polygon fill="none" stroke="black" points="2942,-230 2942,-282 3270,-282 3270,-230 2942,-230"/>
+</g>
+<g id="clust49" class="cluster">
+<title>cluster_OwnersModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="3321,-146 3321,-214 3623,-214 3623,-146 3321,-146"/>
+</g>
+<g id="clust52" class="cluster">
+<title>cluster_OwnersModule_exports</title>
+<polygon fill="none" stroke="black" points="3493,-154 3493,-206 3615,-206 3615,-154 3493,-154"/>
+</g>
+<g id="clust54" class="cluster">
+<title>cluster_OwnersModule_providers</title>
+<polygon fill="none" stroke="black" points="3329,-154 3329,-206 3485,-206 3485,-154 3329,-154"/>
+</g>
+<g id="clust55" class="cluster">
+<title>cluster_PaymentDetailsModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="3548,-222 3548,-290 3956,-290 3956,-222 3548,-222"/>
+</g>
+<g id="clust58" class="cluster">
+<title>cluster_PaymentDetailsModule_exports</title>
+<polygon fill="none" stroke="black" points="3782,-230 3782,-282 3948,-282 3948,-230 3782,-230"/>
+</g>
+<g id="clust60" class="cluster">
+<title>cluster_PaymentDetailsModule_providers</title>
+<polygon fill="none" stroke="black" points="3556,-230 3556,-282 3774,-282 3774,-230 3556,-230"/>
+</g>
+<g id="clust61" class="cluster">
+<title>cluster_PayrollModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="3964,-222 3964,-290 4258,-290 4258,-222 3964,-222"/>
+</g>
+<g id="clust64" class="cluster">
+<title>cluster_PayrollModule_exports</title>
+<polygon fill="none" stroke="black" points="4132,-230 4132,-282 4250,-282 4250,-230 4132,-230"/>
+</g>
+<g id="clust66" class="cluster">
+<title>cluster_PayrollModule_providers</title>
+<polygon fill="none" stroke="black" points="3972,-230 3972,-282 4124,-282 4124,-230 3972,-230"/>
+</g>
+<g id="clust67" class="cluster">
+<title>cluster_ProductionModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="4266,-222 4266,-290 4608,-290 4608,-222 4266,-222"/>
+</g>
+<g id="clust70" class="cluster">
+<title>cluster_ProductionModule_exports</title>
+<polygon fill="none" stroke="black" points="4462,-230 4462,-282 4600,-282 4600,-230 4462,-230"/>
+</g>
+<g id="clust72" class="cluster">
+<title>cluster_ProductionModule_providers</title>
+<polygon fill="none" stroke="black" points="4274,-230 4274,-282 4454,-282 4454,-230 4274,-230"/>
+</g>
+<g id="clust73" class="cluster">
+<title>cluster_WorkSessionsModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="4616,-222 4616,-290 5004,-290 5004,-222 4616,-222"/>
+</g>
+<g id="clust76" class="cluster">
+<title>cluster_WorkSessionsModule_exports</title>
+<polygon fill="none" stroke="black" points="4838,-230 4838,-282 4996,-282 4996,-230 4838,-230"/>
+</g>
+<g id="clust78" class="cluster">
+<title>cluster_WorkSessionsModule_providers</title>
+<polygon fill="none" stroke="black" points="4624,-230 4624,-282 4830,-282 4830,-230 4624,-230"/>
+</g>
+<!-- AssignmentsModule -->
+<g id="node1" class="node"><a xlink:href="./modules/AssignmentsModule.html" href="./modules/AssignmentsModule.html" target="_top">
+<title>AssignmentsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1374.88,-198 1371.88,-202 1350.88,-202 1347.88,-198 1243.12,-198 1243.12,-162 1374.88,-162 1374.88,-198"/>
+<text text-anchor="middle" x="1309" y="-175.8" font-family="Times,serif" font-size="14.00">AssignmentsModule</text>
+</a></g>
+<!-- AppModule -->
+<g id="node13" class="node"><a xlink:href="./modules/AppModule.html" href="./modules/AppModule.html" target="_top">
+<title>AppModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1729.66,-274 1726.66,-278 1705.66,-278 1702.66,-274 1646.34,-274 1646.34,-238 1729.66,-238 1729.66,-274"/>
+<text text-anchor="middle" x="1688" y="-251.8" font-family="Times,serif" font-size="14.00">AppModule</text>
+</a></g>
+<!-- AssignmentsModule&#45;&gt;AppModule -->
+<g id="edge1" class="edge">
+<title>AssignmentsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1309,-198.15C1309,-221.76 1309,-260 1309,-260 1309,-260 1635.99,-260 1635.99,-260"/>
+<polygon fill="black" stroke="black" points="1635.99,-263.5 1645.99,-260 1635.99,-256.5 1635.99,-263.5"/>
+</g>
+<!-- AttendanceModule -->
+<g id="node2" class="node"><a xlink:href="./modules/AttendanceModule.html" href="./modules/AttendanceModule.html" target="_top">
+<title>AttendanceModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1878.8,-198 1875.8,-202 1854.8,-202 1851.8,-198 1755.2,-198 1755.2,-162 1878.8,-162 1878.8,-198"/>
+<text text-anchor="middle" x="1817" y="-175.8" font-family="Times,serif" font-size="14.00">AttendanceModule</text>
+</a></g>
+<!-- AttendanceModule&#45;&gt;AppModule -->
+<g id="edge2" class="edge">
+<title>AttendanceModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1817,-198.03C1817,-217.58 1817,-246 1817,-246 1817,-246 1739.88,-246 1739.88,-246"/>
+<polygon fill="black" stroke="black" points="1739.88,-242.5 1729.88,-246 1739.88,-249.5 1739.88,-242.5"/>
+</g>
+<!-- AttendanceService  -->
+<g id="node17" class="node"><a xlink:href="./injectables/AttendanceService.html" href="./injectables/AttendanceService.html" target="_top">
+<title>AttendanceService </title>
+<polygon fill="#fb8072" stroke="black" points="2909.72,-274 2784.28,-274 2784.28,-238 2909.72,-238 2909.72,-274"/>
+<text text-anchor="middle" x="2847" y="-251.8" font-family="Times,serif" font-size="14.00">AttendanceService </text>
+</a></g>
+<!-- AttendanceModule&#45;&gt;AttendanceService  -->
+<g id="edge18" class="edge">
+<title>AttendanceModule&#45;&gt;AttendanceService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1786.18,-198.03C1786.18,-214.4 1786.18,-236 1786.18,-236 1786.18,-236 2822.83,-236 2822.83,-236 2822.83,-236 2822.83,-236.18 2822.83,-236.18"/>
+<polygon fill="black" stroke="black" points="2819.33,-227.85 2822.83,-237.85 2826.33,-227.85 2819.33,-227.85"/>
+</g>
+<!-- AuthModule -->
+<g id="node3" class="node"><a xlink:href="./modules/AuthModule.html" href="./modules/AuthModule.html" target="_top">
+<title>AuthModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2249.55,-122 2246.55,-126 2225.55,-126 2222.55,-122 2162.45,-122 2162.45,-86 2249.55,-86 2249.55,-122"/>
+<text text-anchor="middle" x="2206" y="-99.8" font-family="Times,serif" font-size="14.00">AuthModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;AssignmentsModule -->
+<g id="edge14" class="edge">
+<title>AuthModule&#45;&gt;AssignmentsModule</title>
+<path fill="none" stroke="black" d="M2162.26,-90C1986.62,-90 1341.97,-90 1341.97,-90 1341.97,-90 1341.97,-151.79 1341.97,-151.79"/>
+<polygon fill="black" stroke="black" points="1338.47,-151.79 1341.97,-161.79 1345.47,-151.79 1338.47,-151.79"/>
+</g>
+<!-- AuthModule&#45;&gt;AttendanceModule -->
+<g id="edge17" class="edge">
+<title>AuthModule&#45;&gt;AttendanceModule</title>
+<path fill="none" stroke="black" d="M2162.13,-108C2060.4,-108 1817,-108 1817,-108 1817,-108 1817,-151.83 1817,-151.83"/>
+<polygon fill="black" stroke="black" points="1813.5,-151.83 1817,-161.83 1820.5,-151.83 1813.5,-151.83"/>
+</g>
+<!-- CropModule -->
+<g id="node4" class="node"><a xlink:href="./modules/CropModule.html" href="./modules/CropModule.html" target="_top">
+<title>CropModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1480.55,-198 1477.55,-202 1456.55,-202 1453.55,-198 1393.45,-198 1393.45,-162 1480.55,-162 1480.55,-198"/>
+<text text-anchor="middle" x="1437" y="-175.8" font-family="Times,serif" font-size="14.00">CropModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;CropModule -->
+<g id="edge26" class="edge">
+<title>AuthModule&#45;&gt;CropModule</title>
+<path fill="none" stroke="black" d="M2162.18,-94C2001.17,-94 1451.59,-94 1451.59,-94 1451.59,-94 1451.59,-151.76 1451.59,-151.76"/>
+<polygon fill="black" stroke="black" points="1448.09,-151.76 1451.59,-161.76 1455.09,-151.76 1448.09,-151.76"/>
+</g>
+<!-- EmployeesModule -->
+<g id="node5" class="node"><a xlink:href="./modules/EmployeesModule.html" href="./modules/EmployeesModule.html" target="_top">
+<title>EmployeesModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1620.76,-198 1617.76,-202 1596.76,-202 1593.76,-198 1499.24,-198 1499.24,-162 1620.76,-162 1620.76,-198"/>
+<text text-anchor="middle" x="1560" y="-175.8" font-family="Times,serif" font-size="14.00">EmployeesModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;EmployeesModule -->
+<g id="edge28" class="edge">
+<title>AuthModule&#45;&gt;EmployeesModule</title>
+<path fill="none" stroke="black" d="M2162,-101C2019.58,-101 1580.29,-101 1580.29,-101 1580.29,-101 1580.29,-151.68 1580.29,-151.68"/>
+<polygon fill="black" stroke="black" points="1576.79,-151.68 1580.29,-161.68 1583.79,-151.68 1576.79,-151.68"/>
+</g>
+<!-- EstatesModule -->
+<g id="node6" class="node"><a xlink:href="./modules/EstatesModule.html" href="./modules/EstatesModule.html" target="_top">
+<title>EstatesModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1737.7,-198 1734.7,-202 1713.7,-202 1710.7,-198 1638.3,-198 1638.3,-162 1737.7,-162 1737.7,-198"/>
+<text text-anchor="middle" x="1688" y="-175.8" font-family="Times,serif" font-size="14.00">EstatesModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;EstatesModule -->
+<g id="edge30" class="edge">
+<title>AuthModule&#45;&gt;EstatesModule</title>
+<path fill="none" stroke="black" d="M2162.38,-104C2040.37,-104 1704.53,-104 1704.53,-104 1704.53,-104 1704.53,-151.99 1704.53,-151.99"/>
+<polygon fill="black" stroke="black" points="1701.03,-151.99 1704.53,-161.99 1708.03,-151.99 1701.03,-151.99"/>
+</g>
+<!-- IotModule -->
+<g id="node7" class="node"><a xlink:href="./modules/IotModule.html" href="./modules/IotModule.html" target="_top">
+<title>IotModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1971.6,-198 1968.6,-202 1947.6,-202 1944.6,-198 1896.4,-198 1896.4,-162 1971.6,-162 1971.6,-198"/>
+<text text-anchor="middle" x="1934" y="-175.8" font-family="Times,serif" font-size="14.00">IotModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;IotModule -->
+<g id="edge32" class="edge">
+<title>AuthModule&#45;&gt;IotModule</title>
+<path fill="none" stroke="black" d="M2162.3,-112C2085.41,-112 1934,-112 1934,-112 1934,-112 1934,-151.78 1934,-151.78"/>
+<polygon fill="black" stroke="black" points="1930.5,-151.78 1934,-161.78 1937.5,-151.78 1930.5,-151.78"/>
+</g>
+<!-- PaymentDetailsModule -->
+<g id="node9" class="node"><a xlink:href="./modules/PaymentDetailsModule.html" href="./modules/PaymentDetailsModule.html" target="_top">
+<title>PaymentDetailsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2138.2,-198 2135.2,-202 2114.2,-202 2111.2,-198 1989.8,-198 1989.8,-162 2138.2,-162 2138.2,-198"/>
+<text text-anchor="middle" x="2064" y="-175.8" font-family="Times,serif" font-size="14.00">PaymentDetailsModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;PaymentDetailsModule -->
+<g id="edge39" class="edge">
+<title>AuthModule&#45;&gt;PaymentDetailsModule</title>
+<path fill="none" stroke="black" d="M2162.24,-115C2120.51,-115 2064,-115 2064,-115 2064,-115 2064,-151.89 2064,-151.89"/>
+<polygon fill="black" stroke="black" points="2060.5,-151.89 2064,-161.89 2067.5,-151.89 2060.5,-151.89"/>
+</g>
+<!-- PayrollModule -->
+<g id="node10" class="node"><a xlink:href="./modules/PayrollModule.html" href="./modules/PayrollModule.html" target="_top">
+<title>PayrollModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2255.99,-198 2252.99,-202 2231.99,-202 2228.99,-198 2156.01,-198 2156.01,-162 2255.99,-162 2255.99,-198"/>
+<text text-anchor="middle" x="2206" y="-175.8" font-family="Times,serif" font-size="14.00">PayrollModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;PayrollModule -->
+<g id="edge42" class="edge">
+<title>AuthModule&#45;&gt;PayrollModule</title>
+<path fill="none" stroke="black" d="M2173.17,-122.01C2173.17,-122.01 2173.17,-151.85 2173.17,-151.85"/>
+<polygon fill="black" stroke="black" points="2169.67,-151.85 2173.17,-161.85 2176.67,-151.85 2169.67,-151.85"/>
+</g>
+<!-- ProductionModule -->
+<g id="node11" class="node"><a xlink:href="./modules/ProductionModule.html" href="./modules/ProductionModule.html" target="_top">
+<title>ProductionModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2394.49,-198 2391.49,-202 2370.49,-202 2367.49,-198 2273.51,-198 2273.51,-162 2394.49,-162 2394.49,-198"/>
+<text text-anchor="middle" x="2334" y="-175.8" font-family="Times,serif" font-size="14.00">ProductionModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;ProductionModule -->
+<g id="edge45" class="edge">
+<title>AuthModule&#45;&gt;ProductionModule</title>
+<path fill="none" stroke="black" d="M2249.69,-113C2286.77,-113 2334,-113 2334,-113 2334,-113 2334,-151.69 2334,-151.69"/>
+<polygon fill="black" stroke="black" points="2330.5,-151.69 2334,-161.69 2337.5,-151.69 2330.5,-151.69"/>
+</g>
+<!-- WorkSessionsModule -->
+<g id="node12" class="node"><a xlink:href="./modules/WorkSessionsModule.html" href="./modules/WorkSessionsModule.html" target="_top">
+<title>WorkSessionsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2551.65,-198 2548.65,-202 2527.65,-202 2524.65,-198 2412.35,-198 2412.35,-162 2551.65,-162 2551.65,-198"/>
+<text text-anchor="middle" x="2482" y="-175.8" font-family="Times,serif" font-size="14.00">WorkSessionsModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;WorkSessionsModule -->
+<g id="edge48" class="edge">
+<title>AuthModule&#45;&gt;WorkSessionsModule</title>
+<path fill="none" stroke="black" d="M2249.78,-104C2315.06,-104 2430.32,-104 2430.32,-104 2430.32,-104 2430.32,-151.99 2430.32,-151.99"/>
+<polygon fill="black" stroke="black" points="2426.82,-151.99 2430.32,-161.99 2433.82,-151.99 2426.82,-151.99"/>
+</g>
+<!-- AuthModule&#45;&gt;AppModule -->
+<g id="edge3" class="edge">
+<title>AuthModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2162.23,-119C2153.55,-119 2147.05,-119 2147.05,-119 2147.05,-119 2147.05,-256 2147.05,-256 2147.05,-256 1739.95,-256 1739.95,-256"/>
+<polygon fill="black" stroke="black" points="1739.95,-252.5 1729.95,-256 1739.95,-259.5 1739.95,-252.5"/>
+</g>
+<!-- AuthGuard  -->
+<g id="node19" class="node"><a xlink:href="./guards/AuthGuard.html" href="./guards/AuthGuard.html" target="_top">
+<title>AuthGuard </title>
+<polygon fill="#fb8072" stroke="black" points="2967.48,-198 2884.52,-198 2884.52,-162 2967.48,-162 2967.48,-198"/>
+<text text-anchor="middle" x="2926" y="-175.8" font-family="Times,serif" font-size="14.00">AuthGuard </text>
+</a></g>
+<!-- AuthModule&#45;&gt;AuthGuard  -->
+<g id="edge20" class="edge">
+<title>AuthModule&#45;&gt;AuthGuard </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2184.11,-122.15C2184.11,-135.74 2184.11,-152 2184.11,-152 2184.11,-152 2926,-152 2926,-152 2926,-152 2926,-152.98 2926,-152.98"/>
+<polygon fill="black" stroke="black" points="2922.5,-151.79 2926,-161.79 2929.5,-151.79 2922.5,-151.79"/>
+</g>
+<!-- AuthService  -->
+<g id="node20" class="node"><a xlink:href="./injectables/AuthService.html" href="./injectables/AuthService.html" target="_top">
+<title>AuthService </title>
+<polygon fill="#fb8072" stroke="black" points="3296.98,-198 3207.02,-198 3207.02,-162 3296.98,-162 3296.98,-198"/>
+<text text-anchor="middle" x="3252" y="-175.8" font-family="Times,serif" font-size="14.00">AuthService </text>
+</a></g>
+<!-- AuthModule&#45;&gt;AuthService  -->
+<g id="edge21" class="edge">
+<title>AuthModule&#45;&gt;AuthService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2216.94,-122.17C2216.94,-124.45 2216.94,-126 2216.94,-126 2216.94,-126 3252,-126 3252,-126 3252,-126 3252,-151.72 3252,-151.72"/>
+<polygon fill="black" stroke="black" points="3248.5,-151.72 3252,-161.72 3255.5,-151.72 3248.5,-151.72"/>
+</g>
+<!-- BcryptService  -->
+<g id="node21" class="node"><a xlink:href="./injectables/BcryptService.html" href="./injectables/BcryptService.html" target="_top">
+<title>BcryptService </title>
+<polygon fill="#fb8072" stroke="black" points="3188.58,-198 3089.42,-198 3089.42,-162 3188.58,-162 3188.58,-198"/>
+<text text-anchor="middle" x="3139" y="-175.8" font-family="Times,serif" font-size="14.00">BcryptService </text>
+</a></g>
+<!-- AuthModule&#45;&gt;BcryptService  -->
+<g id="edge22" class="edge">
+<title>AuthModule&#45;&gt;BcryptService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2206,-122.06C2206,-126.49 2206,-130 2206,-130 2206,-130 3139,-130 3139,-130 3139,-130 3139,-151.95 3139,-151.95"/>
+<polygon fill="black" stroke="black" points="3135.5,-151.95 3139,-161.95 3142.5,-151.95 3135.5,-151.95"/>
+</g>
+<!-- RolesGuard  -->
+<g id="node22" class="node"><a xlink:href="./guards/RolesGuard.html" href="./guards/RolesGuard.html" target="_top">
+<title>RolesGuard </title>
+<polygon fill="#fb8072" stroke="black" points="3071.37,-198 2984.63,-198 2984.63,-162 3071.37,-162 3071.37,-198"/>
+<text text-anchor="middle" x="3028" y="-175.8" font-family="Times,serif" font-size="14.00">RolesGuard </text>
+</a></g>
+<!-- AuthModule&#45;&gt;RolesGuard  -->
+<g id="edge23" class="edge">
+<title>AuthModule&#45;&gt;RolesGuard </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2195.06,-122.2C2195.06,-128.03 2195.06,-133 2195.06,-133 2195.06,-133 3028,-133 3028,-133 3028,-133 3028,-151.96 3028,-151.96"/>
+<polygon fill="black" stroke="black" points="3024.5,-151.96 3028,-161.96 3031.5,-151.96 3024.5,-151.96"/>
+</g>
+<!-- CropModule&#45;&gt;AppModule -->
+<g id="edge4" class="edge">
+<title>CropModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1437,-198.04C1437,-219.66 1437,-253 1437,-253 1437,-253 1636.27,-253 1636.27,-253"/>
+<polygon fill="black" stroke="black" points="1636.27,-256.5 1646.27,-253 1636.27,-249.5 1636.27,-256.5"/>
+</g>
+<!-- EmployeesModule&#45;&gt;AppModule -->
+<g id="edge5" class="edge">
+<title>EmployeesModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1560,-198.03C1560,-217.58 1560,-246 1560,-246 1560,-246 1636.09,-246 1636.09,-246"/>
+<polygon fill="black" stroke="black" points="1636.09,-249.5 1646.09,-246 1636.09,-242.5 1636.09,-249.5"/>
+</g>
+<!-- EstatesModule&#45;&gt;AppModule -->
+<g id="edge6" class="edge">
+<title>EstatesModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1688,-198.01C1688,-198.01 1688,-227.85 1688,-227.85"/>
+<polygon fill="black" stroke="black" points="1684.5,-227.85 1688,-237.85 1691.5,-227.85 1684.5,-227.85"/>
+</g>
+<!-- IotModule&#45;&gt;AppModule -->
+<g id="edge7" class="edge">
+<title>IotModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1959.03,-198.13C1959.03,-218.57 1959.03,-249 1959.03,-249 1959.03,-249 1739.76,-249 1739.76,-249"/>
+<polygon fill="black" stroke="black" points="1739.76,-245.5 1729.76,-249 1739.75,-252.5 1739.76,-245.5"/>
+</g>
+<!-- IotCloudFetchService  -->
+<g id="node28" class="node"><a xlink:href="./injectables/IotCloudFetchService.html" href="./injectables/IotCloudFetchService.html" target="_top">
+<title>IotCloudFetchService </title>
+<polygon fill="#fb8072" stroke="black" points="3428.36,-274 3285.64,-274 3285.64,-238 3428.36,-238 3428.36,-274"/>
+<text text-anchor="middle" x="3357" y="-251.8" font-family="Times,serif" font-size="14.00">IotCloudFetchService </text>
+</a></g>
+<!-- IotModule&#45;&gt;IotCloudFetchService  -->
+<g id="edge33" class="edge">
+<title>IotModule&#45;&gt;IotCloudFetchService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1908.97,-198.04C1908.97,-211.29 1908.97,-227 1908.97,-227 1908.97,-227 3291.28,-227 3291.28,-227 3291.28,-227 3291.28,-228.08 3291.28,-228.08"/>
+<polygon fill="black" stroke="black" points="3287.78,-227.8 3291.28,-237.8 3294.78,-227.8 3287.78,-227.8"/>
+</g>
+<!-- IotService  -->
+<g id="node29" class="node"><a xlink:href="./injectables/IotService.html" href="./injectables/IotService.html" target="_top">
+<title>IotService </title>
+<polygon fill="#fb8072" stroke="black" points="3523.53,-274 3446.47,-274 3446.47,-238 3523.53,-238 3523.53,-274"/>
+<text text-anchor="middle" x="3485" y="-251.8" font-family="Times,serif" font-size="14.00">IotService </text>
+</a></g>
+<!-- IotModule&#45;&gt;IotService  -->
+<g id="edge34" class="edge">
+<title>IotModule&#45;&gt;IotService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M1921.48,-198.15C1921.48,-210.27 1921.48,-224 1921.48,-224 1921.48,-224 3461.75,-224 3461.75,-224 3461.75,-224 3461.75,-227.76 3461.75,-227.76"/>
+<polygon fill="black" stroke="black" points="3458.25,-227.76 3461.75,-237.76 3465.25,-227.76 3458.25,-227.76"/>
+</g>
+<!-- OwnersModule -->
+<g id="node8" class="node"><a xlink:href="./modules/OwnersModule.html" href="./modules/OwnersModule.html" target="_top">
+<title>OwnersModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="2551.58,-122 2548.58,-126 2527.58,-126 2524.58,-122 2448.42,-122 2448.42,-86 2551.58,-86 2551.58,-122"/>
+<text text-anchor="middle" x="2500" y="-99.8" font-family="Times,serif" font-size="14.00">OwnersModule</text>
+</a></g>
+<!-- OwnersModule&#45;&gt;AppModule -->
+<g id="edge8" class="edge">
+<title>OwnersModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2448.27,-95C2425.29,-95 2403.34,-95 2403.34,-95 2403.34,-95 2403.34,-267 2403.34,-267 2403.34,-267 1739.81,-267 1739.81,-267"/>
+<polygon fill="black" stroke="black" points="1739.81,-263.5 1729.81,-267 1739.81,-270.5 1739.81,-263.5"/>
+</g>
+<!-- OwnersService  -->
+<g id="node32" class="node"><a xlink:href="./injectables/OwnersService.html" href="./injectables/OwnersService.html" target="_top">
+<title>OwnersService </title>
+<polygon fill="#fb8072" stroke="black" points="3606.51,-198 3501.49,-198 3501.49,-162 3606.51,-162 3606.51,-198"/>
+<text text-anchor="middle" x="3554" y="-175.8" font-family="Times,serif" font-size="14.00">OwnersService </text>
+</a></g>
+<!-- OwnersModule&#45;&gt;OwnersService  -->
+<g id="edge37" class="edge">
+<title>OwnersModule&#45;&gt;OwnersService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2551.55,-98C2763.16,-98 3554,-98 3554,-98 3554,-98 3554,-151.8 3554,-151.8"/>
+<polygon fill="black" stroke="black" points="3550.5,-151.8 3554,-161.8 3557.5,-151.8 3550.5,-151.8"/>
+</g>
+<!-- PaymentDetailsModule&#45;&gt;AppModule -->
+<g id="edge9" class="edge">
+<title>PaymentDetailsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2101.05,-198.04C2101.05,-219.66 2101.05,-253 2101.05,-253 2101.05,-253 1739.88,-253 1739.88,-253"/>
+<polygon fill="black" stroke="black" points="1739.88,-249.5 1729.88,-253 1739.88,-256.5 1739.88,-249.5"/>
+</g>
+<!-- PaymentDetailsService  -->
+<g id="node34" class="node"><a xlink:href="./injectables/PaymentDetailsService.html" href="./injectables/PaymentDetailsService.html" target="_top">
+<title>PaymentDetailsService </title>
+<polygon fill="#fb8072" stroke="black" points="3940.12,-274 3789.88,-274 3789.88,-238 3940.12,-238 3940.12,-274"/>
+<text text-anchor="middle" x="3865" y="-251.8" font-family="Times,serif" font-size="14.00">PaymentDetailsService </text>
+</a></g>
+<!-- PaymentDetailsModule&#45;&gt;PaymentDetailsService  -->
+<g id="edge40" class="edge">
+<title>PaymentDetailsModule&#45;&gt;PaymentDetailsService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2026.95,-198.11C2026.95,-207.9 2026.95,-218 2026.95,-218 2026.95,-218 3865,-218 3865,-218 3865,-218 3865,-227.89 3865,-227.89"/>
+<polygon fill="black" stroke="black" points="3861.5,-227.89 3865,-237.89 3868.5,-227.89 3861.5,-227.89"/>
+</g>
+<!-- PayrollModule&#45;&gt;AppModule -->
+<g id="edge10" class="edge">
+<title>PayrollModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2231,-198.15C2231,-221.76 2231,-260 2231,-260 2231,-260 1739.71,-260 1739.71,-260"/>
+<polygon fill="black" stroke="black" points="1739.71,-256.5 1729.71,-260 1739.71,-263.5 1739.71,-256.5"/>
+</g>
+<!-- PayrollService  -->
+<g id="node36" class="node"><a xlink:href="./injectables/PayrollService.html" href="./injectables/PayrollService.html" target="_top">
+<title>PayrollService </title>
+<polygon fill="#fb8072" stroke="black" points="4241.92,-274 4140.08,-274 4140.08,-238 4241.92,-238 4241.92,-274"/>
+<text text-anchor="middle" x="4191" y="-251.8" font-family="Times,serif" font-size="14.00">PayrollService </text>
+</a></g>
+<!-- PayrollModule&#45;&gt;PayrollService  -->
+<g id="edge43" class="edge">
+<title>PayrollModule&#45;&gt;PayrollService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2181,-198.04C2181,-205.75 2181,-213 2181,-213 2181,-213 4191,-213 4191,-213 4191,-213 4191,-227.51 4191,-227.51"/>
+<polygon fill="black" stroke="black" points="4187.5,-227.51 4191,-237.51 4194.5,-227.51 4187.5,-227.51"/>
+</g>
+<!-- ProductionModule&#45;&gt;AppModule -->
+<g id="edge11" class="edge">
+<title>ProductionModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2364.25,-198.23C2364.25,-222.93 2364.25,-264 2364.25,-264 2364.25,-264 1739.79,-264 1739.79,-264"/>
+<polygon fill="black" stroke="black" points="1739.79,-260.5 1729.79,-264 1739.79,-267.5 1739.79,-260.5"/>
+</g>
+<!-- ProductionService  -->
+<g id="node38" class="node"><a xlink:href="./injectables/ProductionService.html" href="./injectables/ProductionService.html" target="_top">
+<title>ProductionService </title>
+<polygon fill="#fb8072" stroke="black" points="4592.42,-274 4469.58,-274 4469.58,-238 4592.42,-238 4592.42,-274"/>
+<text text-anchor="middle" x="4531" y="-251.8" font-family="Times,serif" font-size="14.00">ProductionService </text>
+</a></g>
+<!-- ProductionModule&#45;&gt;ProductionService  -->
+<g id="edge46" class="edge">
+<title>ProductionModule&#45;&gt;ProductionService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2303.75,-198.16C2303.75,-203.04 2303.75,-207 2303.75,-207 2303.75,-207 4531,-207 4531,-207 4531,-207 4531,-227.75 4531,-227.75"/>
+<polygon fill="black" stroke="black" points="4527.5,-227.75 4531,-237.75 4534.5,-227.75 4527.5,-227.75"/>
+</g>
+<!-- WorkSessionsModule&#45;&gt;AppModule -->
+<g id="edge12" class="edge">
+<title>WorkSessionsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M2516.91,-198.42C2516.91,-225.01 2516.91,-271 2516.91,-271 2516.91,-271 1739.67,-271 1739.67,-271"/>
+<polygon fill="black" stroke="black" points="1739.67,-267.5 1729.67,-271 1739.67,-274.5 1739.67,-267.5"/>
+</g>
+<!-- WorkSessionsService  -->
+<g id="node40" class="node"><a xlink:href="./injectables/WorkSessionsService.html" href="./injectables/WorkSessionsService.html" target="_top">
+<title>WorkSessionsService </title>
+<polygon fill="#fb8072" stroke="black" points="4987.58,-274 4846.42,-274 4846.42,-238 4987.58,-238 4987.58,-274"/>
+<text text-anchor="middle" x="4917" y="-251.8" font-family="Times,serif" font-size="14.00">WorkSessionsService </text>
+</a></g>
+<!-- WorkSessionsModule&#45;&gt;WorkSessionsService  -->
+<g id="edge49" class="edge">
+<title>WorkSessionsModule&#45;&gt;WorkSessionsService </title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M2447.09,-198.08C2447.09,-199.85 2447.09,-201 2447.09,-201 2447.09,-201 4917,-201 4917,-201 4917,-201 4917,-227.99 4917,-227.99"/>
+<polygon fill="black" stroke="black" points="4913.5,-227.99 4917,-237.99 4920.5,-227.99 4913.5,-227.99"/>
+</g>
+<!-- AppService -->
+<g id="node14" class="node"><a xlink:href="./injectables/AppService.html" href="./injectables/AppService.html" target="_top">
+<title>AppService</title>
+<ellipse fill="#fdb462" stroke="black" cx="1148" cy="-180" rx="56.74" ry="18"/>
+<text text-anchor="middle" x="1148" y="-175.8" font-family="Times,serif" font-size="14.00">AppService</text>
+</a></g>
+<!-- AppService&#45;&gt;AppModule -->
+<g id="edge13" class="edge">
+<title>AppService&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1148,-198.03C1148,-223.51 1148,-267 1148,-267 1148,-267 1636.08,-267 1636.08,-267"/>
+<polygon fill="black" stroke="black" points="1636.08,-270.5 1646.08,-267 1636.08,-263.5 1636.08,-270.5"/>
+</g>
+<!-- EstateAssignmentService -->
+<g id="node15" class="node"><a xlink:href="./injectables/EstateAssignmentService.html" href="./injectables/EstateAssignmentService.html" target="_top">
+<title>EstateAssignmentService</title>
+<ellipse fill="#fdb462" stroke="black" cx="383" cy="-104" rx="109.94" ry="18"/>
+<text text-anchor="middle" x="383" y="-99.8" font-family="Times,serif" font-size="14.00">EstateAssignmentService</text>
+</a></g>
+<!-- EstateAssignmentService&#45;&gt;AssignmentsModule -->
+<g id="edge15" class="edge">
+<title>EstateAssignmentService&#45;&gt;AssignmentsModule</title>
+<path fill="none" stroke="black" d="M383,-122.13C383,-132.71 383,-144 383,-144 383,-144 1309,-144 1309,-144 1309,-144 1309,-151.58 1309,-151.58"/>
+<polygon fill="black" stroke="black" points="1305.5,-151.58 1309,-161.58 1312.5,-151.58 1305.5,-151.58"/>
+</g>
+<!-- WorkerAssignmentService -->
+<g id="node16" class="node"><a xlink:href="./injectables/WorkerAssignmentService.html" href="./injectables/WorkerAssignmentService.html" target="_top">
+<title>WorkerAssignmentService</title>
+<ellipse fill="#fdb462" stroke="black" cx="140" cy="-104" rx="115.73" ry="18"/>
+<text text-anchor="middle" x="140" y="-99.8" font-family="Times,serif" font-size="14.00">WorkerAssignmentService</text>
+</a></g>
+<!-- WorkerAssignmentService&#45;&gt;AssignmentsModule -->
+<g id="edge16" class="edge">
+<title>WorkerAssignmentService&#45;&gt;AssignmentsModule</title>
+<path fill="none" stroke="black" d="M140,-122.15C140,-134.27 140,-148 140,-148 140,-148 1276.03,-148 1276.03,-148 1276.03,-148 1276.03,-151.76 1276.03,-151.76"/>
+<polygon fill="black" stroke="black" points="1272.53,-151.76 1276.03,-161.76 1279.53,-151.76 1272.53,-151.76"/>
+</g>
+<!-- AttendanceService -->
+<g id="node18" class="node"><a xlink:href="./injectables/AttendanceService.html" href="./injectables/AttendanceService.html" target="_top">
+<title>AttendanceService</title>
+<ellipse fill="#fdb462" stroke="black" cx="2676" cy="-256" rx="83.93" ry="18"/>
+<text text-anchor="middle" x="2676" y="-251.8" font-family="Times,serif" font-size="14.00">AttendanceService</text>
+</a></g>
+<!-- AttendanceService&#45;&gt;AttendanceModule -->
+<g id="edge19" class="edge">
+<title>AttendanceService&#45;&gt;AttendanceModule</title>
+<path fill="none" stroke="black" d="M2622.93,-242C2440.15,-242 1847.82,-242 1847.82,-242 1847.82,-242 1847.82,-208.27 1847.82,-208.27"/>
+<polygon fill="black" stroke="black" points="1851.32,-208.27 1847.82,-198.27 1844.32,-208.27 1851.32,-208.27"/>
+</g>
+<!-- AuthService -->
+<g id="node23" class="node"><a xlink:href="./injectables/AuthService.html" href="./injectables/AuthService.html" target="_top">
+<title>AuthService</title>
+<ellipse fill="#fdb462" stroke="black" cx="2651" cy="-180" rx="59.11" ry="18"/>
+<text text-anchor="middle" x="2651" y="-175.8" font-family="Times,serif" font-size="14.00">AuthService</text>
+</a></g>
+<!-- AuthService&#45;&gt;AuthModule -->
+<g id="edge24" class="edge">
+<title>AuthService&#45;&gt;AuthModule</title>
+<path fill="none" stroke="black" d="M2651,-161.92C2651,-160.15 2651,-159 2651,-159 2651,-159 2227.89,-159 2227.89,-159 2227.89,-159 2227.89,-132.01 2227.89,-132.01"/>
+<polygon fill="black" stroke="black" points="2231.39,-132.01 2227.89,-122.01 2224.39,-132.01 2231.39,-132.01"/>
+</g>
+<!-- BcryptService -->
+<g id="node24" class="node"><a xlink:href="./injectables/BcryptService.html" href="./injectables/BcryptService.html" target="_top">
+<title>BcryptService</title>
+<ellipse fill="#fdb462" stroke="black" cx="2795" cy="-180" rx="66.05" ry="18"/>
+<text text-anchor="middle" x="2795" y="-175.8" font-family="Times,serif" font-size="14.00">BcryptService</text>
+</a></g>
+<!-- BcryptService&#45;&gt;AuthModule -->
+<g id="edge25" class="edge">
+<title>BcryptService&#45;&gt;AuthModule</title>
+<path fill="none" stroke="black" d="M2795,-161.83C2795,-157.95 2795,-155 2795,-155 2795,-155 2238.83,-155 2238.83,-155 2238.83,-155 2238.83,-132.12 2238.83,-132.12"/>
+<polygon fill="black" stroke="black" points="2242.33,-132.12 2238.83,-122.12 2235.33,-132.12 2242.33,-132.12"/>
+</g>
+<!-- CropsService -->
+<g id="node25" class="node"><a xlink:href="./injectables/CropsService.html" href="./injectables/CropsService.html" target="_top">
+<title>CropsService</title>
+<ellipse fill="#fdb462" stroke="black" cx="596" cy="-104" rx="63.12" ry="18"/>
+<text text-anchor="middle" x="596" y="-99.8" font-family="Times,serif" font-size="14.00">CropsService</text>
+</a></g>
+<!-- CropsService&#45;&gt;CropModule -->
+<g id="edge27" class="edge">
+<title>CropsService&#45;&gt;CropModule</title>
+<path fill="none" stroke="black" d="M596,-122.07C596,-131.46 596,-141 596,-141 596,-141 1422.41,-141 1422.41,-141 1422.41,-141 1422.41,-151.87 1422.41,-151.87"/>
+<polygon fill="black" stroke="black" points="1418.91,-151.87 1422.41,-161.87 1425.91,-151.87 1418.91,-151.87"/>
+</g>
+<!-- EmployeesService -->
+<g id="node26" class="node"><a xlink:href="./injectables/EmployeesService.html" href="./injectables/EmployeesService.html" target="_top">
+<title>EmployeesService</title>
+<ellipse fill="#fdb462" stroke="black" cx="782" cy="-104" rx="82.8" ry="18"/>
+<text text-anchor="middle" x="782" y="-99.8" font-family="Times,serif" font-size="14.00">EmployeesService</text>
+</a></g>
+<!-- EmployeesService&#45;&gt;EmployeesModule -->
+<g id="edge29" class="edge">
+<title>EmployeesService&#45;&gt;EmployeesModule</title>
+<path fill="none" stroke="black" d="M782,-122.04C782,-129.75 782,-137 782,-137 782,-137 1539.71,-137 1539.71,-137 1539.71,-137 1539.71,-151.51 1539.71,-151.51"/>
+<polygon fill="black" stroke="black" points="1536.21,-151.51 1539.71,-161.51 1543.21,-151.51 1536.21,-151.51"/>
+</g>
+<!-- EstatesService -->
+<g id="node27" class="node"><a xlink:href="./injectables/EstatesService.html" href="./injectables/EstatesService.html" target="_top">
+<title>EstatesService</title>
+<ellipse fill="#fdb462" stroke="black" cx="972" cy="-104" rx="67.19" ry="18"/>
+<text text-anchor="middle" x="972" y="-99.8" font-family="Times,serif" font-size="14.00">EstatesService</text>
+</a></g>
+<!-- EstatesService&#45;&gt;EstatesModule -->
+<g id="edge31" class="edge">
+<title>EstatesService&#45;&gt;EstatesModule</title>
+<path fill="none" stroke="black" d="M1034.07,-97C1205.26,-97 1671.47,-97 1671.47,-97 1671.47,-97 1671.47,-151.99 1671.47,-151.99"/>
+<polygon fill="black" stroke="black" points="1667.97,-151.99 1671.47,-161.99 1674.97,-151.99 1667.97,-151.99"/>
+</g>
+<!-- IotCloudFetchService -->
+<g id="node30" class="node"><a xlink:href="./injectables/IotCloudFetchService.html" href="./injectables/IotCloudFetchService.html" target="_top">
+<title>IotCloudFetchService</title>
+<ellipse fill="#fdb462" stroke="black" cx="3046" cy="-256" rx="95.56" ry="18"/>
+<text text-anchor="middle" x="3046" y="-251.8" font-family="Times,serif" font-size="14.00">IotCloudFetchService</text>
+</a></g>
+<!-- IotCloudFetchService&#45;&gt;IotModule -->
+<g id="edge35" class="edge">
+<title>IotCloudFetchService&#45;&gt;IotModule</title>
+<path fill="none" stroke="black" d="M2958.73,-248.47C2958.73,-241.76 2958.73,-233 2958.73,-233 2958.73,-233 1934,-233 1934,-233 1934,-233 1934,-208.24 1934,-208.24"/>
+<polygon fill="black" stroke="black" points="1937.5,-208.24 1934,-198.24 1930.5,-208.24 1937.5,-208.24"/>
+</g>
+<!-- IotService -->
+<g id="node31" class="node"><a xlink:href="./injectables/IotService.html" href="./injectables/IotService.html" target="_top">
+<title>IotService</title>
+<ellipse fill="#fdb462" stroke="black" cx="3211" cy="-256" rx="50.94" ry="18"/>
+<text text-anchor="middle" x="3211" y="-251.8" font-family="Times,serif" font-size="14.00">IotService</text>
+</a></g>
+<!-- IotService&#45;&gt;IotModule -->
+<g id="edge36" class="edge">
+<title>IotService&#45;&gt;IotModule</title>
+<path fill="none" stroke="black" d="M3174.54,-243.3C3174.54,-236.7 3174.54,-230 3174.54,-230 3174.54,-230 1946.52,-230 1946.52,-230 1946.52,-230 1946.52,-208.05 1946.52,-208.05"/>
+<polygon fill="black" stroke="black" points="1950.02,-208.05 1946.52,-198.05 1943.02,-208.05 1950.02,-208.05"/>
+</g>
+<!-- OwnersService -->
+<g id="node33" class="node"><a xlink:href="./injectables/OwnersService.html" href="./injectables/OwnersService.html" target="_top">
+<title>OwnersService</title>
+<ellipse fill="#fdb462" stroke="black" cx="3407" cy="-180" rx="70.04" ry="18"/>
+<text text-anchor="middle" x="3407" y="-175.8" font-family="Times,serif" font-size="14.00">OwnersService</text>
+</a></g>
+<!-- OwnersService&#45;&gt;OwnersModule -->
+<g id="edge38" class="edge">
+<title>OwnersService&#45;&gt;OwnersModule</title>
+<path fill="none" stroke="black" d="M3407,-161.97C3407,-141.23 3407,-110 3407,-110 3407,-110 2561.69,-110 2561.69,-110"/>
+<polygon fill="black" stroke="black" points="2561.69,-106.5 2551.69,-110 2561.69,-113.5 2561.69,-106.5"/>
+</g>
+<!-- PaymentDetailsService -->
+<g id="node35" class="node"><a xlink:href="./injectables/PaymentDetailsService.html" href="./injectables/PaymentDetailsService.html" target="_top">
+<title>PaymentDetailsService</title>
+<ellipse fill="#fdb462" stroke="black" cx="3665" cy="-256" rx="101.28" ry="18"/>
+<text text-anchor="middle" x="3665" y="-251.8" font-family="Times,serif" font-size="14.00">PaymentDetailsService</text>
+</a></g>
+<!-- PaymentDetailsService&#45;&gt;PaymentDetailsModule -->
+<g id="edge41" class="edge">
+<title>PaymentDetailsService&#45;&gt;PaymentDetailsModule</title>
+<path fill="none" stroke="black" d="M3585.18,-244.93C3585.18,-234.67 3585.18,-221 3585.18,-221 3585.18,-221 2064,-221 2064,-221 2064,-221 2064,-208.1 2064,-208.1"/>
+<polygon fill="black" stroke="black" points="2067.5,-208.1 2064,-198.1 2060.5,-208.1 2067.5,-208.1"/>
+</g>
+<!-- PayrollService -->
+<g id="node37" class="node"><a xlink:href="./injectables/PayrollService.html" href="./injectables/PayrollService.html" target="_top">
+<title>PayrollService</title>
+<ellipse fill="#fdb462" stroke="black" cx="4048" cy="-256" rx="67.77" ry="18"/>
+<text text-anchor="middle" x="4048" y="-251.8" font-family="Times,serif" font-size="14.00">PayrollService</text>
+</a></g>
+<!-- PayrollService&#45;&gt;PayrollModule -->
+<g id="edge44" class="edge">
+<title>PayrollService&#45;&gt;PayrollModule</title>
+<path fill="none" stroke="black" d="M4048,-237.87C4048,-227.29 4048,-216 4048,-216 4048,-216 2206,-216 2206,-216 2206,-216 2206,-208.42 2206,-208.42"/>
+<polygon fill="black" stroke="black" points="2209.5,-208.42 2206,-198.42 2202.5,-208.42 2209.5,-208.42"/>
+</g>
+<!-- ProductionService -->
+<g id="node39" class="node"><a xlink:href="./injectables/ProductionService.html" href="./injectables/ProductionService.html" target="_top">
+<title>ProductionService</title>
+<ellipse fill="#fdb462" stroke="black" cx="4364" cy="-256" rx="82.24" ry="18"/>
+<text text-anchor="middle" x="4364" y="-251.8" font-family="Times,serif" font-size="14.00">ProductionService</text>
+</a></g>
+<!-- ProductionService&#45;&gt;ProductionModule -->
+<g id="edge47" class="edge">
+<title>ProductionService&#45;&gt;ProductionModule</title>
+<path fill="none" stroke="black" d="M4364,-237.82C4364,-224.96 4364,-210 4364,-210 4364,-210 2334,-210 2334,-210 2334,-210 2334,-208.14 2334,-208.14"/>
+<polygon fill="black" stroke="black" points="2337.5,-208.14 2334,-198.14 2330.5,-208.14 2337.5,-208.14"/>
+</g>
+<!-- WorkSessionsService -->
+<g id="node41" class="node"><a xlink:href="./injectables/WorkSessionsService.html" href="./injectables/WorkSessionsService.html" target="_top">
+<title>WorkSessionsService</title>
+<ellipse fill="#fdb462" stroke="black" cx="4727" cy="-256" rx="95.48" ry="18"/>
+<text text-anchor="middle" x="4727" y="-251.8" font-family="Times,serif" font-size="14.00">WorkSessionsService</text>
+</a></g>
+<!-- WorkSessionsService&#45;&gt;WorkSessionsModule -->
+<g id="edge50" class="edge">
+<title>WorkSessionsService&#45;&gt;WorkSessionsModule</title>
+<path fill="none" stroke="black" d="M4727,-237.81C4727,-222.82 4727,-204 4727,-204 4727,-204 2482,-204 2482,-204 2482,-204 2482,-203.42 2482,-203.42"/>
+<polygon fill="black" stroke="black" points="2485.5,-208.19 2482,-198.19 2478.5,-208.19 2485.5,-208.19"/>
+</g>
+</g>
+</svg>
+
+    </div>
+    <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
+    <div class="btn-group size-buttons">
+        <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
+        <button id="reset" class="btn btn-default btn-sm">Reset</button>
+        <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
+    </div>
+</div>
+  
+<div class="tab-content overview">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-ios-archive"></span></h4>
+                    <p class="card-text">
+                        <a href="./modules.html">13 Modules</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-md-swap"></span></h4>
+                    <p class="card-text">13 Controllers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-md-swap"></span></h4>
+                    <p class="card-text">19 Entities</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-md-arrow-round-down"></span></h4>
+                    <p class="card-text">16 Injectables</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-ios-paper"></span></h4>
+                    <p class="card-text">33 Classes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-ios-lock"></span></h4>
+                    <p class="card-text">2 Guards</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-md-information-circle-outline"></span></h4>
+                    <p class="card-text">5 Interfaces</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card text-center">
+                <div class="card-block">
+                    <h4 class="card-title"><span class="icon ion-ios-git-branch"></span></h4>
+                    <p class="card-text">
+                        <a href="./routes.html">0 </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/libs/svg-pan-zoom.min.js"></script>
+<script src="js/svg-pan-zoom.controls.js"></script> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'overview';
+            var COMPODOC_CURRENT_PAGE_URL = 'overview.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

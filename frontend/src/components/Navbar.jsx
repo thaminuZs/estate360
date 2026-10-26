@@ -1,13 +1,27 @@
 import { Trees, User, LogOut, LayoutDashboard, Home, UserPlus } from 'lucide-react';
 import { Button } from './ui/button';
+import { useNavigate, useLocation } from '../router';
+import { useOwner } from '../context/OwnerContext';
 
-export function Navbar({ currentView, setView, user, onLogout }) {
+export function Navbar() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { user, onLogout } = useOwner();
+
+  const isLanding = pathname === '/';
+  const isDashboard = pathname.startsWith('/dashboard');
+
+  const handleLogoutClick = () => {
+    onLogout();
+    navigate('/');
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#D7E6DD] bg-[#F8F9FA]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Brand: Just "Estate 360" */}
         <button
-          onClick={() => setView(user ? 'dashboard' : 'landing')}
+          onClick={() => navigate(user ? '/dashboard' : '/')}
           className="flex items-center gap-2.5 text-left cursor-pointer focus:outline-none"
         >
           <div className="w-8 h-8 bg-[#1F3D2C] flex items-center justify-center text-white">
@@ -26,9 +40,9 @@ export function Navbar({ currentView, setView, user, onLogout }) {
         {/* Navigation Links */}
         <nav className="hidden md:flex items-center gap-6 text-sm text-[#4B5563]">
           <button
-            onClick={() => setView('landing')}
+            onClick={() => navigate('/')}
             className={`hover:text-[#1F3D2C] transition-colors cursor-pointer ${
-              currentView === 'landing' ? 'text-[#1F3D2C] font-semibold' : ''
+              isLanding ? 'text-[#1F3D2C] font-semibold' : ''
             }`}
           >
             Overview
@@ -36,9 +50,9 @@ export function Navbar({ currentView, setView, user, onLogout }) {
           <a
             href="#features"
             onClick={(e) => {
-              if (currentView !== 'landing') {
+              if (!isLanding) {
                 e.preventDefault();
-                setView('landing');
+                navigate('/');
                 setTimeout(() => {
                   document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
                 }, 100);
@@ -51,9 +65,9 @@ export function Navbar({ currentView, setView, user, onLogout }) {
           <a
             href="#how-it-works"
             onClick={(e) => {
-              if (currentView !== 'landing') {
+              if (!isLanding) {
                 e.preventDefault();
-                setView('landing');
+                navigate('/');
                 setTimeout(() => {
                   document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
                 }, 100);
@@ -77,11 +91,11 @@ export function Navbar({ currentView, setView, user, onLogout }) {
                   Owner
                 </span>
               </div>
-              {currentView !== 'dashboard' ? (
+              {!isDashboard ? (
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setView('dashboard')}
+                  onClick={() => navigate('/dashboard')}
                   className="gap-1.5"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5" />
@@ -91,7 +105,7 @@ export function Navbar({ currentView, setView, user, onLogout }) {
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => setView('landing')}
+                  onClick={() => navigate('/')}
                   className="gap-1.5"
                 >
                   <Home className="w-3.5 h-3.5" />
@@ -101,7 +115,7 @@ export function Navbar({ currentView, setView, user, onLogout }) {
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={onLogout}
+                onClick={handleLogoutClick}
                 className="text-[#8C6239] hover:bg-[#D7E6DD]/40 gap-1.5"
                 title="Log out"
               >
@@ -113,8 +127,8 @@ export function Navbar({ currentView, setView, user, onLogout }) {
             <>
               <Button
                 size="sm"
-                variant={currentView === 'login' ? 'secondary' : 'outline'}
-                onClick={() => setView('login')}
+                variant={pathname === '/login' ? 'secondary' : 'outline'}
+                onClick={() => navigate('/login')}
                 className="gap-1.5"
               >
                 <User className="w-3.5 h-3.5" />
@@ -122,8 +136,8 @@ export function Navbar({ currentView, setView, user, onLogout }) {
               </Button>
               <Button
                 size="sm"
-                variant={currentView === 'register' ? 'secondary' : 'default'}
-                onClick={() => setView('register')}
+                variant={pathname === '/register' ? 'secondary' : 'default'}
+                onClick={() => navigate('/register')}
                 className="bg-[#1F3D2C] hover:bg-[#162D20] gap-1.5"
               >
                 <UserPlus className="w-3.5 h-3.5" />

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   OnModuleInit,
@@ -14,6 +15,7 @@ import { User } from 'src/auth/entities/users.entity';
 import { Role } from 'src/auth/enums/role.enum';
 import { UserStatus } from 'src/auth/enums/user-status.enum';
 import { BcryptService } from 'src/auth/providers/bcrypt.service';
+import type { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 
 @Injectable()
 export class OwnersService implements OnModuleInit {
@@ -93,7 +95,13 @@ export class OwnersService implements OnModuleInit {
     });
   }
 
-  public async findOneOwner(id: string) {
+  public async findOneOwner(id: string, user?: ActiveUserData) {
+    if (user && user.role === Role.OWNER && user.ownerId !== id) {
+      throw new ForbiddenException(
+        'You can only access your own owner profile',
+      );
+    }
+
     const owner = await this.ownersRepository.findOne({
       where: { id },
       relations: { estates: true },
@@ -106,8 +114,12 @@ export class OwnersService implements OnModuleInit {
     return owner;
   }
 
-  public async updateOwner(id: string, patchOwnerDto: PatchOwnerDto) {
-    const owner = await this.findOneOwner(id);
+  public async updateOwner(
+    id: string,
+    patchOwnerDto: PatchOwnerDto,
+    user?: ActiveUserData,
+  ) {
+    const owner = await this.findOneOwner(id, user);
 
     if (patchOwnerDto.name !== undefined) {
       owner.name = patchOwnerDto.name;
@@ -129,14 +141,14 @@ export class OwnersService implements OnModuleInit {
     }
 
     if (patchOwnerDto.password) {
-      const user = await this.usersRepository.findOne({
+      const linkedUser = await this.usersRepository.findOne({
         where: { owner: { id } },
       });
-      if (user) {
-        user.passwordHash = await this.bcryptService.hashPassword(
+      if (linkedUser) {
+        linkedUser.passwordHash = await this.bcryptService.hashPassword(
           patchOwnerDto.password,
         );
-        await this.usersRepository.save(user);
+        await this.usersRepository.save(linkedUser);
       }
     }
 

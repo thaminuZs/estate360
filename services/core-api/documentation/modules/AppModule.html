@@ -1,0 +1,743 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Estate 360 - Core API Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Estate 360 - Core API Documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content module">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">Modules</li>
+    <li class="breadcrumb-item" >AppModule</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app.module.ts</code>
+</div>
+
+<div class="text-center module-graph-container">
+    <div id="module-graph-svg">
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.47.0 (20210316.0004)
+ -->
+<!-- Title: dependencies Pages: 1 -->
+<svg width="1730pt" height="211pt"
+ viewBox="0.00 0.00 1730.00 211.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 207)">
+<title>dependencies</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-207 1726,-207 1726,4 -4,4"/>
+<text text-anchor="start" x="840.01" y="-42.4" font-family="Times-12" font-weight="bold" font-size="14.00">Legend</text>
+<polygon fill="#ffffb3" stroke="transparent" points="627,-10 627,-30 647,-30 647,-10 627,-10"/>
+<text text-anchor="start" x="650.63" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Declarations</text>
+<polygon fill="#8dd3c7" stroke="transparent" points="740,-10 740,-30 760,-30 760,-10 740,-10"/>
+<text text-anchor="start" x="763.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Module</text>
+<polygon fill="#80b1d3" stroke="transparent" points="826,-10 826,-30 846,-30 846,-10 826,-10"/>
+<text text-anchor="start" x="849.78" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Bootstrap</text>
+<polygon fill="#fdb462" stroke="transparent" points="923,-10 923,-30 943,-30 943,-10 923,-10"/>
+<text text-anchor="start" x="946.67" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Providers</text>
+<polygon fill="#fb8072" stroke="transparent" points="1019,-10 1019,-30 1039,-30 1039,-10 1019,-10"/>
+<text text-anchor="start" x="1042.73" y="-15.4" font-family="Times-12" font-size="14.00"> &#160;Exports</text>
+<g id="clust1" class="cluster">
+<title>cluster_AppModule</title>
+<polygon fill="none" stroke="black" stroke-dasharray="1,5" points="8,-70 8,-195 1714,-195 1714,-70 8,-70"/>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_AppModule_imports</title>
+<polygon fill="none" stroke="black" points="154,-78 154,-130 1706,-130 1706,-78 154,-78"/>
+</g>
+<g id="clust6" class="cluster">
+<title>cluster_AppModule_providers</title>
+<polygon fill="none" stroke="black" points="16,-78 16,-130 146,-130 146,-78 16,-78"/>
+</g>
+<!-- AssignmentsModule -->
+<g id="node1" class="node"><a xlink:href="../modules/AssignmentsModule.html" href="../modules/AssignmentsModule.html" target="_top">
+<title>AssignmentsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1697.88,-122 1694.88,-126 1673.88,-126 1670.88,-122 1566.12,-122 1566.12,-86 1697.88,-86 1697.88,-122"/>
+<text text-anchor="middle" x="1632" y="-99.8" font-family="Times,serif" font-size="14.00">AssignmentsModule</text>
+</a></g>
+<!-- AppModule -->
+<g id="node13" class="node"><a xlink:href="../modules/AppModule.html" href="../modules/AppModule.html" target="_top">
+<title>AppModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="942.66,-187 939.66,-191 918.66,-191 915.66,-187 859.34,-187 859.34,-151 942.66,-151 942.66,-187"/>
+<text text-anchor="middle" x="901" y="-164.8" font-family="Times,serif" font-size="14.00">AppModule</text>
+</a></g>
+<!-- AssignmentsModule&#45;&gt;AppModule -->
+<g id="edge1" class="edge">
+<title>AssignmentsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1632,-122.09C1632,-145.13 1632,-182 1632,-182 1632,-182 952.66,-182 952.66,-182"/>
+<polygon fill="black" stroke="black" points="952.66,-178.5 942.66,-182 952.66,-185.5 952.66,-178.5"/>
+</g>
+<!-- AttendanceModule -->
+<g id="node2" class="node"><a xlink:href="../modules/AttendanceModule.html" href="../modules/AttendanceModule.html" target="_top">
+<title>AttendanceModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1547.8,-122 1544.8,-126 1523.8,-126 1520.8,-122 1424.2,-122 1424.2,-86 1547.8,-86 1547.8,-122"/>
+<text text-anchor="middle" x="1486" y="-99.8" font-family="Times,serif" font-size="14.00">AttendanceModule</text>
+</a></g>
+<!-- AttendanceModule&#45;&gt;AppModule -->
+<g id="edge2" class="edge">
+<title>AttendanceModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1486,-122.04C1486,-143.66 1486,-177 1486,-177 1486,-177 953.07,-177 953.07,-177"/>
+<polygon fill="black" stroke="black" points="953.07,-173.5 943.07,-177 953.07,-180.5 953.07,-173.5"/>
+</g>
+<!-- AuthModule -->
+<g id="node3" class="node"><a xlink:href="../modules/AuthModule.html" href="../modules/AuthModule.html" target="_top">
+<title>AuthModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1406.55,-122 1403.55,-126 1382.55,-126 1379.55,-122 1319.45,-122 1319.45,-86 1406.55,-86 1406.55,-122"/>
+<text text-anchor="middle" x="1363" y="-99.8" font-family="Times,serif" font-size="14.00">AuthModule</text>
+</a></g>
+<!-- AuthModule&#45;&gt;AppModule -->
+<g id="edge3" class="edge">
+<title>AuthModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1363,-122.22C1363,-142.37 1363,-172 1363,-172 1363,-172 952.81,-172 952.81,-172"/>
+<polygon fill="black" stroke="black" points="952.81,-168.5 942.81,-172 952.81,-175.5 952.81,-168.5"/>
+</g>
+<!-- CropModule -->
+<g id="node4" class="node"><a xlink:href="../modules/CropModule.html" href="../modules/CropModule.html" target="_top">
+<title>CropModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1300.55,-122 1297.55,-126 1276.55,-126 1273.55,-122 1213.45,-122 1213.45,-86 1300.55,-86 1300.55,-122"/>
+<text text-anchor="middle" x="1257" y="-99.8" font-family="Times,serif" font-size="14.00">CropModule</text>
+</a></g>
+<!-- CropModule&#45;&gt;AppModule -->
+<g id="edge4" class="edge">
+<title>CropModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1257,-122.22C1257,-140.83 1257,-167 1257,-167 1257,-167 952.88,-167 952.88,-167"/>
+<polygon fill="black" stroke="black" points="952.88,-163.5 942.88,-167 952.88,-170.5 952.88,-163.5"/>
+</g>
+<!-- EmployeesModule -->
+<g id="node5" class="node"><a xlink:href="../modules/EmployeesModule.html" href="../modules/EmployeesModule.html" target="_top">
+<title>EmployeesModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1194.76,-122 1191.76,-126 1170.76,-126 1167.76,-122 1073.24,-122 1073.24,-86 1194.76,-86 1194.76,-122"/>
+<text text-anchor="middle" x="1134" y="-99.8" font-family="Times,serif" font-size="14.00">EmployeesModule</text>
+</a></g>
+<!-- EmployeesModule&#45;&gt;AppModule -->
+<g id="edge5" class="edge">
+<title>EmployeesModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1134,-122.03C1134,-139.06 1134,-162 1134,-162 1134,-162 952.92,-162 952.92,-162"/>
+<polygon fill="black" stroke="black" points="952.92,-158.5 942.92,-162 952.92,-165.5 952.92,-158.5"/>
+</g>
+<!-- EstatesModule -->
+<g id="node6" class="node"><a xlink:href="../modules/EstatesModule.html" href="../modules/EstatesModule.html" target="_top">
+<title>EstatesModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="1055.7,-122 1052.7,-126 1031.7,-126 1028.7,-122 956.3,-122 956.3,-86 1055.7,-86 1055.7,-122"/>
+<text text-anchor="middle" x="1006" y="-99.8" font-family="Times,serif" font-size="14.00">EstatesModule</text>
+</a></g>
+<!-- EstatesModule&#45;&gt;AppModule -->
+<g id="edge6" class="edge">
+<title>EstatesModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M1006,-122.24C1006,-137.57 1006,-157 1006,-157 1006,-157 952.8,-157 952.8,-157"/>
+<polygon fill="black" stroke="black" points="952.8,-153.5 942.8,-157 952.8,-160.5 952.8,-153.5"/>
+</g>
+<!-- IotModule -->
+<g id="node7" class="node"><a xlink:href="../modules/IotModule.html" href="../modules/IotModule.html" target="_top">
+<title>IotModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="938.6,-122 935.6,-126 914.6,-126 911.6,-122 863.4,-122 863.4,-86 938.6,-86 938.6,-122"/>
+<text text-anchor="middle" x="901" y="-99.8" font-family="Times,serif" font-size="14.00">IotModule</text>
+</a></g>
+<!-- IotModule&#45;&gt;AppModule -->
+<g id="edge7" class="edge">
+<title>IotModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M901,-122.11C901,-122.11 901,-140.99 901,-140.99"/>
+<polygon fill="black" stroke="black" points="897.5,-140.99 901,-150.99 904.5,-140.99 897.5,-140.99"/>
+</g>
+<!-- OwnersModule -->
+<g id="node8" class="node"><a xlink:href="../modules/OwnersModule.html" href="../modules/OwnersModule.html" target="_top">
+<title>OwnersModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="845.58,-122 842.58,-126 821.58,-126 818.58,-122 742.42,-122 742.42,-86 845.58,-86 845.58,-122"/>
+<text text-anchor="middle" x="794" y="-99.8" font-family="Times,serif" font-size="14.00">OwnersModule</text>
+</a></g>
+<!-- OwnersModule&#45;&gt;AppModule -->
+<g id="edge8" class="edge">
+<title>OwnersModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M794,-122.24C794,-137.57 794,-157 794,-157 794,-157 849.32,-157 849.32,-157"/>
+<polygon fill="black" stroke="black" points="849.32,-160.5 859.32,-157 849.32,-153.5 849.32,-160.5"/>
+</g>
+<!-- PaymentDetailsModule -->
+<g id="node9" class="node"><a xlink:href="../modules/PaymentDetailsModule.html" href="../modules/PaymentDetailsModule.html" target="_top">
+<title>PaymentDetailsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="724.2,-122 721.2,-126 700.2,-126 697.2,-122 575.8,-122 575.8,-86 724.2,-86 724.2,-122"/>
+<text text-anchor="middle" x="650" y="-99.8" font-family="Times,serif" font-size="14.00">PaymentDetailsModule</text>
+</a></g>
+<!-- PaymentDetailsModule&#45;&gt;AppModule -->
+<g id="edge9" class="edge">
+<title>PaymentDetailsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M650,-122.03C650,-139.06 650,-162 650,-162 650,-162 849.27,-162 849.27,-162"/>
+<polygon fill="black" stroke="black" points="849.27,-165.5 859.27,-162 849.27,-158.5 849.27,-165.5"/>
+</g>
+<!-- PayrollModule -->
+<g id="node10" class="node"><a xlink:href="../modules/PayrollModule.html" href="../modules/PayrollModule.html" target="_top">
+<title>PayrollModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="557.99,-122 554.99,-126 533.99,-126 530.99,-122 458.01,-122 458.01,-86 557.99,-86 557.99,-122"/>
+<text text-anchor="middle" x="508" y="-99.8" font-family="Times,serif" font-size="14.00">PayrollModule</text>
+</a></g>
+<!-- PayrollModule&#45;&gt;AppModule -->
+<g id="edge10" class="edge">
+<title>PayrollModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M508,-122.22C508,-140.83 508,-167 508,-167 508,-167 849.31,-167 849.31,-167"/>
+<polygon fill="black" stroke="black" points="849.31,-170.5 859.31,-167 849.31,-163.5 849.31,-170.5"/>
+</g>
+<!-- ProductionModule -->
+<g id="node11" class="node"><a xlink:href="../modules/ProductionModule.html" href="../modules/ProductionModule.html" target="_top">
+<title>ProductionModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="440.49,-122 437.49,-126 416.49,-126 413.49,-122 319.51,-122 319.51,-86 440.49,-86 440.49,-122"/>
+<text text-anchor="middle" x="380" y="-99.8" font-family="Times,serif" font-size="14.00">ProductionModule</text>
+</a></g>
+<!-- ProductionModule&#45;&gt;AppModule -->
+<g id="edge11" class="edge">
+<title>ProductionModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M380,-122.22C380,-142.37 380,-172 380,-172 380,-172 849.25,-172 849.25,-172"/>
+<polygon fill="black" stroke="black" points="849.25,-175.5 859.25,-172 849.25,-168.5 849.25,-175.5"/>
+</g>
+<!-- WorkSessionsModule -->
+<g id="node12" class="node"><a xlink:href="../modules/WorkSessionsModule.html" href="../modules/WorkSessionsModule.html" target="_top">
+<title>WorkSessionsModule</title>
+<polygon fill="#8dd3c7" stroke="black" points="301.65,-122 298.65,-126 277.65,-126 274.65,-122 162.35,-122 162.35,-86 301.65,-86 301.65,-122"/>
+<text text-anchor="middle" x="232" y="-99.8" font-family="Times,serif" font-size="14.00">WorkSessionsModule</text>
+</a></g>
+<!-- WorkSessionsModule&#45;&gt;AppModule -->
+<g id="edge12" class="edge">
+<title>WorkSessionsModule&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M232,-122.04C232,-143.66 232,-177 232,-177 232,-177 849.15,-177 849.15,-177"/>
+<polygon fill="black" stroke="black" points="849.15,-180.5 859.15,-177 849.15,-173.5 849.15,-180.5"/>
+</g>
+<!-- AppService -->
+<g id="node14" class="node"><a xlink:href="../injectables/AppService.html" href="../injectables/AppService.html" target="_top">
+<title>AppService</title>
+<ellipse fill="#fdb462" stroke="black" cx="81" cy="-104" rx="56.74" ry="18"/>
+<text text-anchor="middle" x="81" y="-99.8" font-family="Times,serif" font-size="14.00">AppService</text>
+</a></g>
+<!-- AppService&#45;&gt;AppModule -->
+<g id="edge13" class="edge">
+<title>AppService&#45;&gt;AppModule</title>
+<path fill="none" stroke="black" d="M81,-122.09C81,-145.13 81,-182 81,-182 81,-182 849.21,-182 849.21,-182"/>
+<polygon fill="black" stroke="black" points="849.21,-185.5 859.21,-182 849.21,-178.5 849.21,-185.5"/>
+</g>
+</g>
+</svg>
+
+    </div>
+    <i id="fullscreen" class="icon ion-ios-resize module-graph-fullscreen-btn" aria-hidden="true"></i>
+    <div class="btn-group size-buttons">
+        <button id="zoom-in" class="btn btn-default btn-sm">Zoom in</button>
+        <button id="reset" class="btn btn-default btn-sm">Reset</button>
+        <button id="zoom-out" class="btn btn-default btn-sm">Zoom out</button>
+    </div>
+</div>
+<script src="../js/libs/svg-pan-zoom.min.js"></script>
+<script src="../js/svg-pan-zoom.controls.js"></script>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+        <a href="#info" 
+            class="nav-link"
+            class="nav-link active"
+            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+    </li>
+    <li class="nav-item">
+        <a href="#source" 
+            class="nav-link"
+            
+            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+
+        <div class="container-fluid module">
+            <div class="row">
+                <div class="col-sm-3">
+                    <h3>Providers<a href="https://angular.io/api/core/NgModule#providers" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module providers"><span class="icon ion-ios-information-circle-outline"></a></h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="../injectables/AppService.html">AppService</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h3>Controllers<a href="https://docs.nestjs.com/controllers" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module controllers"><span
+                                class="icon ion-ios-information-circle-outline"></a></h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="../controllers/AppController.html">AppController</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-3">
+                    <h3>Imports<a href="https://angular.io/api/core/NgModule#imports" target="_blank" rel="noopener noreferrer"
+                            title="Official documentation about module imports"><span
+                                class="icon ion-ios-information-circle-outline"></a></h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="../modules/AssignmentsModule.html">AssignmentsModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/AttendanceModule.html">AttendanceModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/AuthModule.html">AuthModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/CropModule.html">CropModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/EmployeesModule.html">EmployeesModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/EstatesModule.html">EstatesModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/IotModule.html">IotModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/OwnersModule.html">OwnersModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/PaymentDetailsModule.html">PaymentDetailsModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/PayrollModule.html">PayrollModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/ProductionModule.html">ProductionModule</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="../modules/WorkSessionsModule.html">WorkSessionsModule</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No results matching.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../modules/AssignmentsModule.html" target="_self" >AssignmentsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/AttendanceModule.html" target="_self" >AttendanceModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/AuthModule.html" target="_self" >AuthModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/CropModule.html" target="_self" >CropModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/EmployeesModule.html" target="_self" >EmployeesModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/EstatesModule.html" target="_self" >EstatesModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/IotModule.html" target="_self" >IotModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/OwnersModule.html" target="_self" >OwnersModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/PaymentDetailsModule.html" target="_self" >PaymentDetailsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/PayrollModule.html" target="_self" >PayrollModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/ProductionModule.html" target="_self" >ProductionModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../modules/WorkSessionsModule.html" target="_self" >WorkSessionsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../controllers/AppController.html" target="_self" >AppController</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="../injectables/AppService.html" target="_self" >AppService</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Module } from &#x27;@nestjs/common&#x27;;
+import { ConfigModule, ConfigService } from &#x27;@nestjs/config&#x27;;
+import { TypeOrmModule } from &#x27;@nestjs/typeorm&#x27;;
+import { DataSource, DataSourceOptions } from &#x27;typeorm&#x27;;
+import { AppController } from &#x27;./app.controller&#x27;;
+import { AppService } from &#x27;./app.service&#x27;;
+
+// Modules
+import { AuthModule } from &#x27;./auth/auth.module&#x27;;
+import { OwnersModule } from &#x27;./owners/owners.module&#x27;;
+import { EstatesModule } from &#x27;./estates/estates.module&#x27;;
+import { CropModule } from &#x27;./crop/crop.module&#x27;;
+import { EmployeesModule } from &#x27;./employees/employees.module&#x27;;
+import { AssignmentsModule } from &#x27;./assignments/assignments.module&#x27;;
+import { PaymentDetailsModule } from &#x27;./payment-details/payment-details.module&#x27;;
+import { IotModule } from &#x27;./iot/iot.module&#x27;;
+import { WorkSessionsModule } from &#x27;./work-sessions/work-sessions.module&#x27;;
+import { AttendanceModule } from &#x27;./attendance/attendance.module&#x27;;
+import { ProductionModule } from &#x27;./production/production.module&#x27;;
+import { PayrollModule } from &#x27;./payroll/payroll.module&#x27;;
+
+// Entities
+import { Owner } from &#x27;./owners/owner.entity&#x27;;
+import { User } from &#x27;./auth/entities/users.entity&#x27;;
+import { Estate } from &#x27;./estates/estate.entity&#x27;;
+import { Crop } from &#x27;./crop/crop.entity&#x27;;
+import { Employee } from &#x27;./employees/employee.entity&#x27;;
+import { EstateAssignment } from &#x27;./assignments/entities/estate-assignment.entity&#x27;;
+import { WorkerAssignment } from &#x27;./assignments/entities/worker-assignment.entity&#x27;;
+import { EmployeePaymentDetail } from &#x27;./payment-details/payment-details.entity&#x27;;
+import { Device } from &#x27;./iot/entities/device.entity&#x27;;
+import { DeviceAssignment } from &#x27;./iot/entities/device-assignment.entity&#x27;;
+import { WorkerIotReading } from &#x27;./iot/entities/worker-iot-reading.entity&#x27;;
+import { EnvironmentIotReading } from &#x27;./iot/entities/environment-iot-reading.entity&#x27;;
+import { WorkSession } from &#x27;./work-sessions/work-session.entity&#x27;;
+import { Attendance } from &#x27;./attendance/attendance.entity&#x27;;
+import { ProductionRecord } from &#x27;./production/production-record.entity&#x27;;
+import { EstatePayRate } from &#x27;./payroll/entities/estate-pay-rate.entity&#x27;;
+import { Payroll } from &#x27;./payroll/entities/payroll.entity&#x27;;
+import { PayrollItem } from &#x27;./payroll/entities/payroll-item.entity&#x27;;
+import { Payment } from &#x27;./payroll/entities/payment.entity&#x27;;
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+
+    // Feature Modules
+    AuthModule,
+    OwnersModule,
+    EstatesModule,
+    CropModule,
+    EmployeesModule,
+    AssignmentsModule,
+    PaymentDetailsModule,
+    IotModule,
+    WorkSessionsModule,
+    AttendanceModule,
+    ProductionModule,
+    PayrollModule,
+
+    // Database Connection
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) &#x3D;&gt; ({
+        type: &#x27;postgres&#x27;,
+        entities: [
+          Owner,
+          User,
+          Estate,
+          Crop,
+          Employee,
+          EstateAssignment,
+          WorkerAssignment,
+          EmployeePaymentDetail,
+          Device,
+          DeviceAssignment,
+          WorkerIotReading,
+          EnvironmentIotReading,
+          WorkSession,
+          Attendance,
+          ProductionRecord,
+          EstatePayRate,
+          Payroll,
+          PayrollItem,
+          Payment,
+        ],
+        synchronize: true,
+        port: Number(configService.get&lt;number&gt;(&#x27;DB_PORT&#x27;) ?? 5432),
+        host: configService.get&lt;string&gt;(&#x27;DB_HOST&#x27;) ?? &#x27;localhost&#x27;,
+        username: configService.get&lt;string&gt;(&#x27;DB_USERNAME&#x27;) ?? &#x27;postgres&#x27;,
+        password: configService.get&lt;string&gt;(&#x27;DB_PASSWORD&#x27;) ?? &#x27;toor&#x27;,
+        database: configService.get&lt;string&gt;(&#x27;DB_NAME&#x27;) ?? &#x27;estate360-ai&#x27;,
+      }),
+      dataSourceFactory: async (options?: DataSourceOptions) &#x3D;&gt; {
+        if (!options) {
+          throw new Error(&#x27;Invalid DataSource options passed&#x27;);
+        }
+        const dataSource &#x3D; new DataSource({
+          ...options,
+          synchronize: false,
+        });
+        await dataSource.initialize();
+
+        // Ensure PostGIS extension is available for geometry/geography columns
+        try {
+          await dataSource.query(&#x27;CREATE EXTENSION IF NOT EXISTS postgis;&#x27;);
+        } catch {
+          // Ignore if extension already exists or cannot be created
+        }
+
+        // Backfill any legacy null values before schema synchronization runs
+        try {
+          await dataSource.query(&#x60;
+            DO $$
+            BEGIN
+              IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name&#x3D;&#x27;estate_assignment&#x27; AND column_name&#x3D;&#x27;role&#x27;) THEN
+                UPDATE &quot;estate_assignment&quot; SET &quot;role&quot; &#x3D; &#x27;supervisor&#x27; WHERE &quot;role&quot; IS NULL;
+              END IF;
+              IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name&#x3D;&#x27;worker_assignment&#x27; AND column_name&#x3D;&#x27;employee_id&#x27;)
+                 AND EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name&#x3D;&#x27;worker_assignment&#x27; AND column_name&#x3D;&#x27;worker_id&#x27;) THEN
+                UPDATE &quot;worker_assignment&quot; SET &quot;worker_id&quot; &#x3D; &quot;employee_id&quot; WHERE &quot;worker_id&quot; IS NULL;
+              END IF;
+              IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name&#x3D;&#x27;owner&#x27; AND column_name&#x3D;&#x27;contact_email&#x27;)
+                 AND EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name&#x3D;&#x27;owner&#x27; AND column_name&#x3D;&#x27;email&#x27;) THEN
+                UPDATE &quot;owner&quot; SET &quot;email&quot; &#x3D; &quot;contact_email&quot; WHERE &quot;email&quot; IS NULL;
+              END IF;
+            END $$;
+          &#x60;);
+        } catch {
+          // Ignore if tables do not exist yet
+        }
+
+        if (options.synchronize) {
+          await dataSource.synchronize();
+        }
+
+        return dataSource;
+      },
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
+            var COMPODOC_CURRENT_PAGE_URL = 'AppModule.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "doc": "compodoc -p tsconfig.build.json",
+    "doc:serve": "compodoc -s -p tsconfig.build.json -r 8080",
+    "doc:coverage": "compodoc -p tsconfig.build.json --coverageTest 0",
+    "doc:json": "compodoc -p tsconfig.build.json -e json"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -37,6 +41,7 @@
     "typeorm": "^1.1.0"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^2.0.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@nestjs/cli": "^11.0.0",

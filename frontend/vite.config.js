@@ -19,4 +19,5 @@ export default defineConfig({
       '/payroll': 'http://localhost:3000',
     },
   },
+  appType: 'spa',
 });
