@@ -1,0 +1,226 @@
+:root {
+  --bg-glass: rgba(15, 23, 42, 0.75);
+  --bg-glass-hover: rgba(30, 41, 59, 0.85);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --accent-color: #38bdf8;
+  --accent-hover: #0284c7;
+  --danger-color: #f43f5e;
+  --radius: 12px;
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #0f172a;
+}
+
+/* 100% Full Screen Map */
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Glassmorphism Control Panel Overlay */
+.control-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 340px;
+  max-height: calc(100vh - 40px);
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Hide control panel completely when used as an overlay / embed in another webpage */
+body.embed-mode .control-panel,
+body.hide-toolbox .control-panel {
+  display: none !important;
+}
+
+
+.panel-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-color);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.panel-section h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Form Controls */
+#pin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-glass);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus {
+  border-color: var(--accent-color);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 14px;
+  transition: all 0.2s ease;
+}
+
+#add-pin-btn {
+  background: var(--accent-color);
+  color: #0f172a;
+}
+
+#add-pin-btn:hover {
+  background: var(--accent-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-sub);
+  padding: 4px 8px;
+  font-size: 0.75rem;
+}
+
+.btn-secondary:hover {
+  color: var(--danger-color);
+}
+
+/* Pins List */
+.pins-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.pins-list li {
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pins-list li .pin-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pins-list li .pin-title {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.pins-list li .pin-coords {
+  color: var(--text-sub);
+  font-size: 0.75rem;
+}
+
+.pins-list li .delete-btn {
+  background: transparent;
+  color: var(--text-sub);
+  padding: 4px;
+}
+
+.pins-list li .delete-btn:hover {
+  color: var(--danger-color);
+}
+
+.empty-msg {
+  color: var(--text-sub);
+  font-style: italic;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 12px 0;
+  background: none !important;
+}
+
+/* Customizing Leaflet Tooltip & Controls position */
+.leaflet-top.leaflet-left {
+  top: 10px;
+  left: 10px;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1e293b;
+  color: #f8fafc;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
+
+.leaflet-popup-tip {
+  background: #1e293b;
+}
