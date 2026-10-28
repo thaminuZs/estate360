@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estate360 - Mock IoT Cloud Server</title>
+  <style>
+    :root {
+      --bg: #f4f7f5;
+      --surface: #ffffff;
+      --primary: #1f3d2c;
+      --primary-hover: #162d20;
+      --accent: #8c6239;
+      --border: #d7e6dd;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --danger: #b91c1c;
+      --success: #047857;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent);
+    }
+    header h1 { font-size: 16px; font-weight: 700; letter-spacing: 0.3px; }
+    header p { font-size: 11px; color: #d1fae5; margin-top: 2px; }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      padding: 5px 10px;
+      font-size: 11px;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #34d399;
+    }
+    .container {
+      max-width: 1320px;
+      margin: 18px auto;
+      padding: 0 18px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .badge {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 7px;
+      background: #e6f4ea;
+      color: var(--primary);
+      border: 1px solid var(--border);
+      text-transform: uppercase;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    input, select {
+      height: 30px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text);
+      background: #fff;
+    }
+    input:focus, select:focus {
+      outline: 1px solid var(--primary);
+    }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      transition: background 0.15s;
+    }
+    button:hover { background: var(--primary-hover); }
+    button.secondary {
+      background: #fff;
+      color: var(--primary);
+      border-color: var(--border);
+    }
+    button.secondary:hover { background: #eef5f0; }
+    button.danger {
+      background: #fff;
+      color: var(--danger);
+      border-color: #fecaca;
+    }
+    button.danger:hover { background: #fef2f2; }
+    button.accent {
+      background: var(--accent);
+      color: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background: #f8faf9;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    td input, td select {
+      width: 100%;
+      height: 26px;
+      padding: 0 6px;
+      font-size: 11px;
+    }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      color: #374151;
+    }
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      border-left: 4px solid #34d399;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 100;
+    }
+    .endpoints-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: #eef5f0;
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+    }
+    .endpoint-chip {
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Estate360 Mock IoT Cloud Server & Base Station Gateway</h1>
+      <p>Simulates LoRa Base Station ingestion & cloud endpoints consumed by Estate360 Core API</p>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <div class="status-pill">
+        <span class="dot" id="simDot"></span>
+        <span id="simStatusText">Base Station Online</span>
+      </div>
+      <button class="danger" onclick="clearAllRecords()">Clear All Data</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Cloud API Endpoints & Base Station Settings -->
+    <div class="endpoints-bar">
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+        <strong>Core API Fetch Routes:</strong>
+        <span class="endpoint-chip">GET /readings/workers</span>
+        <span class="endpoint-chip">GET /readings/environment</span>
+        <span class="endpoint-chip">GET /readings/production</span>
+        <span class="endpoint-chip">POST /base-station/ingest</span>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <label style="display:flex; align-items:center; gap:5px; cursor:pointer; color:var(--primary);">
+          <input type="checkbox" id="autoSimulateToggle" onchange="saveSettings()" style="width:15px; height:15px;" />
+          Auto-Send Periodic Telemetry
+        </label>
+        <label>Worker Interval (s):
+          <input type="number" id="workerIntervalSec" style="width:70px; height:26px;" value="600" onchange="saveSettings()" />
+        </label>
+        <label>Env Interval (s):
+          <input type="number" id="environmentIntervalSec" style="width:70px; height:26px;" value="3600" onchange="saveSettings()" />
+        </label>
+      </div>
+    </div>
+
+    <!-- 3 IoT Devices Configuration & Instant Send Panels -->
+    <div class="grid-3">
+      <!-- Device 1: User Tracking Device (Every 10 mins) -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">1. User Tracking Device</span>
+          <span class="badge">Every 10 Mins • GPS + Altitude</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Device Code / UUID</label>
+            <input type="text" id="w_deviceCode" value="550e8400-e29b-41d4-a716-446655440000" />
+          </div>
+          <div class="form-group">
+            <label>Worker ID / Code</label>
+            <input type="text" id="w_workerId" value="EMP-0042" />
+          </div>
+          <div class="form-group">
+            <label>Estate ID / Code</label>
+            <input type="text" id="w_estateId" value="GV-TEA-001" />
+          </div>
+          <div class="form-group">
+            <label>Longitude (LON)</label>
+            <input type="number" step="0.000001" id="w_lon" value="80.633700" />
+          </div>
+          <div class="form-group">
+            <label>Latitude (LAT)</label>
+            <input type="number" step="0.000001" id="w_lat" value="6.949700" />
+          </div>
+          <div class="form-group">
+            <label>Altitude (m)</label>
+            <input type="number" step="0.1" id="w_alt" value="1428.50" />
+          </div>
+          <div class="form-group">
+            <label>Activity Status</label>
+            <select id="w_status">
+              <option value="ACTIVE">ACTIVE</option>
+              <option value="LOW_MOVEMENT">LOW_MOVEMENT</option>
+              <option value="RESTING">RESTING</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button onclick="addWorkerReading()">+ Send Worker Location via Base Station</button>
+          <button class="secondary" onclick="saveSettings()">Save as Default</button>
+        </div>
+      </div>
+
+      <!-- Device 2: Environmental Sensor (Every 1 hr) -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">2. Environmental Sensor</span>
+          <span class="badge">Every 1 Hour • Temp / Hum / Soil</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Sensor Device Code</label>
+            <input type="text" id="e_deviceCode" value="ENV-SENSOR-01" />
+          </div>
+          <div class="form-group">
+            <label>Estate ID / Code</label>
+            <input type="text" id="e_estateId" value="GV-TEA-001" />
+          </div>
+          <div class="form-group">
+            <label>Temperature (°C)</label>
+            <input type="number" step="0.1" id="e_temp" value="24.50" />
+          </div>
+          <div class="form-group">
+            <label>Humidity (%)</label>
+            <input type="number" step="0.1" id="e_hum" value="81.00" />
+          </div>
+          <div class="form-group">
+            <label>Soil Moisture (%)</label>
+            <input type="number" step="0.1" id="e_soil" value="46.50" />
+          </div>
+          <div class="form-group">
+            <label>Coords (Lon, Lat)</label>
+            <div style="display:flex; gap:4px;">
+              <input type="number" step="0.0001" id="e_lon" value="80.6337" placeholder="Lon" />
+              <input type="number" step="0.0001" id="e_lat" value="6.9497" placeholder="Lat" />
+            </div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button onclick="addEnvReading()">+ Send Environmental Reading</button>
+          <button class="secondary" onclick="saveSettings()">Save as Default</button>
+        </div>
+      </div>
+
+      <!-- Device 3: Smart Scale (End of Day Harvest Weight) -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">3. Smart Harvest Scale</span>
+          <span class="badge">End of Day • Daily Production</span>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Scale Device Code</label>
+            <input type="text" id="p_deviceCode" value="SCALE-SMART-01" />
+          </div>
+          <div class="form-group">
+            <label>Worker ID / Code</label>
+            <input type="text" id="p_workerId" value="EMP-0042" />
+          </div>
+          <div class="form-group">
+            <label>Estate ID / Code</label>
+            <input type="text" id="p_estateId" value="GV-TEA-001" />
+          </div>
+          <div class="form-group">
+            <label>Work Session ID (Optional)</label>
+            <input type="text" id="p_sessionId" placeholder="Auto-resolved if blank" />
+          </div>
+          <div class="form-group">
+            <label>Harvest Weight / Quantity</label>
+            <input type="number" step="0.1" id="p_weight" value="28.50" />
+          </div>
+          <div class="form-group">
+            <label>Unit</label>
+            <select id="p_unit">
+              <option value="kg">kg</option>
+              <option value="g">g</option>
+              <option value="lbs">lbs</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="accent" onclick="addProductionReading()">+ Send End-of-Day Harvest Weight</button>
+          <button class="secondary" onclick="saveSettings()">Save as Default</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Raw LoRa Base Station Packet Simulator -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Base Station Raw LoRa Packet Forwarder</span>
+        <span class="badge">LoRa E32 -> Base Station -> Cloud</span>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input
+          type="text"
+          id="rawLoraInput"
+          class="mono"
+          style="flex:1;"
+          value="WORKER|550e8400-e29b-41d4-a716-446655440000|LAT=6.949700|LON=80.633700|ALT=1428.50|STATUS=ACTIVE"
+        />
+        <button class="secondary" onclick="setSamplePacket('worker')">Sample Worker</button>
+        <button class="secondary" onclick="setSamplePacket('env')">Sample Env</button>
+        <button class="secondary" onclick="setSamplePacket('scale')">Sample Scale</button>
+        <button onclick="sendRawPacket()">Forward Packet</button>
+      </div>
+    </div>
+
+    <!-- Editable Cloud Data Tables -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Worker Location & Altitude Readings (Adjust Data Live)</span>
+        <span class="badge" id="workerCountBadge">0 Records</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Device Code</th>
+              <th>Worker ID/Code</th>
+              <th>Estate ID/Code</th>
+              <th>Longitude</th>
+              <th>Latitude</th>
+              <th>Altitude (m)</th>
+              <th>Status</th>
+              <th>Recorded At (ISO)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="workersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Environmental Sensor Readings (Adjust Data Live)</span>
+        <span class="badge" id="envCountBadge">0 Records</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Device Code</th>
+              <th>Estate ID/Code</th>
+              <th>Temp (°C)</th>
+              <th>Humidity (%)</th>
+              <th>Soil Moisture (%)</th>
+              <th>Longitude</th>
+              <th>Latitude</th>
+              <th>Recorded At (ISO)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="envTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Smart Scale Daily Production Records (Adjust Data Live)</span>
+        <span class="badge" id="prodCountBadge">0 Records</span>
+      </div>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Scale Device</th>
+              <th>Worker ID/Code</th>
+              <th>Estate ID/Code</th>
+              <th>Harvest Weight</th>
+              <th>Unit</th>
+              <th>Recorded At (ISO)</th>
+              <th>Raw LoRa Packet</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="prodTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Saved!</div>
+
+  <script>
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 2400);
+    }
+
+    async function loadState() {
+      const res = await fetch('/api/state');
+      const data = await res.json();
+      renderSettings(data.settings);
+      renderWorkers(data.workers || []);
+      renderEnv(data.environment || []);
+      renderProduction(data.production || []);
+    }
+
+    function renderSettings(s) {
+      if (!s) return;
+      document.getElementById('autoSimulateToggle').checked = !!s.autoSimulate;
+      document.getElementById('workerIntervalSec').value = s.workerIntervalSec || 600;
+      document.getElementById('environmentIntervalSec').value = s.environmentIntervalSec || 3600;
+      document.getElementById('simStatusText').textContent = s.autoSimulate
+        ? 'Base Station Auto-Streaming Active'
+        : 'Base Station Online (Manual/On-Demand)';
+    }
+
+    function renderWorkers(items) {
+      document.getElementById('workerCountBadge').textContent = `${items.length} Records`;
+      const tbody = document.getElementById('workersTableBody');
+      tbody.innerHTML = items.slice().reverse().map(item => {
+        const lon = item.location ? item.location.longitude : 0;
+        const lat = item.location ? item.location.latitude : 0;
+        const alt = item.altitude ?? (item.location && item.location.altitude) ?? 0;
+        return `
+          <tr id="row-${item.id}">
+            <td class="mono">${item.id}</td>
+            <td><input type="text" id="w-dev-${item.id}" value="${item.deviceCode || ''}" /></td>
+            <td><input type="text" id="w-wrk-${item.id}" value="${item.workerId || ''}" /></td>
+            <td><input type="text" id="w-est-${item.id}" value="${item.estateId || ''}" /></td>
+            <td><input type="number" step="0.000001" id="w-lon-${item.id}" value="${lon}" /></td>
+            <td><input type="number" step="0.000001" id="w-lat-${item.id}" value="${lat}" /></td>
+            <td><input type="number" step="0.1" id="w-alt-${item.id}" value="${alt}" /></td>
+            <td>
+              <select id="w-st-${item.id}">
+                <option value="ACTIVE" ${item.activityStatus === 'ACTIVE' ? 'selected' : ''}>ACTIVE</option>
+                <option value="LOW_MOVEMENT" ${item.activityStatus === 'LOW_MOVEMENT' ? 'selected' : ''}>LOW_MOVEMENT</option>
+                <option value="RESTING" ${item.activityStatus === 'RESTING' ? 'selected' : ''}>RESTING</option>
+              </select>
+            </td>
+            <td><input type="text" id="w-ts-${item.id}" value="${item.recordedAt || ''}" /></td>
+            <td style="white-space:nowrap;">
+              <button class="secondary" onclick="updateWorker('${item.id}')">Save</button>
+              <button class="danger" onclick="deleteRecord('/readings/workers/${item.id}')">Del</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderEnv(items) {
+      document.getElementById('envCountBadge').textContent = `${items.length} Records`;
+      const tbody = document.getElementById('envTableBody');
+      tbody.innerHTML = items.slice().reverse().map(item => {
+        const lon = item.location ? item.location.longitude : 0;
+        const lat = item.location ? item.location.latitude : 0;
+        return `
+          <tr>
+            <td class="mono">${item.id}</td>
+            <td><input type="text" id="e-dev-${item.id}" value="${item.deviceCode || ''}" /></td>
+            <td><input type="text" id="e-est-${item.id}" value="${item.estateId || ''}" /></td>
+            <td><input type="number" step="0.1" id="e-tmp-${item.id}" value="${item.temperature ?? 0}" /></td>
+            <td><input type="number" step="0.1" id="e-hum-${item.id}" value="${item.humidity ?? 0}" /></td>
+            <td><input type="number" step="0.1" id="e-sol-${item.id}" value="${item.soilMoisture ?? 0}" /></td>
+            <td><input type="number" step="0.0001" id="e-lon-${item.id}" value="${lon}" /></td>
+            <td><input type="number" step="0.0001" id="e-lat-${item.id}" value="${lat}" /></td>
+            <td><input type="text" id="e-ts-${item.id}" value="${item.recordedAt || ''}" /></td>
+            <td style="white-space:nowrap;">
+              <button class="secondary" onclick="updateEnv('${item.id}')">Save</button>
+              <button class="danger" onclick="deleteRecord('/readings/environment/${item.id}')">Del</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderProduction(items) {
+      document.getElementById('prodCountBadge').textContent = `${items.length} Records`;
+      const tbody = document.getElementById('prodTableBody');
+      tbody.innerHTML = items.slice().reverse().map(item => {
+        return `
+          <tr>
+            <td class="mono">${item.id}</td>
+            <td><input type="text" id="p-dev-${item.id}" value="${item.deviceCode || ''}" /></td>
+            <td><input type="text" id="p-wrk-${item.id}" value="${item.workerId || ''}" /></td>
+            <td><input type="text" id="p-est-${item.id}" value="${item.estateId || ''}" /></td>
+            <td><input type="number" step="0.1" id="p-qty-${item.id}" value="${item.quantity ?? item.weight ?? 0}" /></td>
+            <td><input type="text" id="p-unt-${item.id}" value="${item.unit || 'kg'}" style="width:55px;" /></td>
+            <td><input type="text" id="p-ts-${item.id}" value="${item.recordedAt || ''}" /></td>
+            <td class="mono">${item.rawMessage || ''}</td>
+            <td style="white-space:nowrap;">
+              <button class="secondary" onclick="updateProduction('${item.id}')">Save</button>
+              <button class="danger" onclick="deleteRecord('/readings/production/${item.id}')">Del</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function addWorkerReading() {
+      const lon = parseFloat(document.getElementById('w_lon').value);
+      const lat = parseFloat(document.getElementById('w_lat').value);
+      const alt = parseFloat(document.getElementById('w_alt').value);
+      const payload = {
+        deviceCode: document.getElementById('w_deviceCode').value.trim(),
+        workerId: document.getElementById('w_workerId').value.trim(),
+        estateId: document.getElementById('w_estateId').value.trim(),
+        altitude: alt,
+        location: { latitude: lat, longitude: lon, altitude: alt },
+        activityStatus: document.getElementById('w_status').value,
+      };
+      await fetch('/readings/workers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast('Worker location + altitude sent to cloud!');
+      loadState();
+    }
+
+    async function updateWorker(id) {
+      const lon = parseFloat(document.getElementById(`w-lon-${id}`).value);
+      const lat = parseFloat(document.getElementById(`w-lat-${id}`).value);
+      const alt = parseFloat(document.getElementById(`w-alt-${id}`).value);
+      const payload = {
+        id,
+        deviceCode: document.getElementById(`w-dev-${id}`).value.trim(),
+        workerId: document.getElementById(`w-wrk-${id}`).value.trim(),
+        estateId: document.getElementById(`w-est-${id}`).value.trim(),
+        altitude: alt,
+        location: { latitude: lat, longitude: lon, altitude: alt },
+        activityStatus: document.getElementById(`w-st-${id}`).value,
+        recordedAt: document.getElementById(`w-ts-${id}`).value.trim(),
+      };
+      await fetch(`/readings/workers/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast(`Updated worker reading ${id}`);
+      loadState();
+    }
+
+    async function addEnvReading() {
+      const payload = {
+        deviceCode: document.getElementById('e_deviceCode').value.trim(),
+        estateId: document.getElementById('e_estateId').value.trim(),
+        temperature: parseFloat(document.getElementById('e_temp').value),
+        humidity: parseFloat(document.getElementById('e_hum').value),
+        soilMoisture: parseFloat(document.getElementById('e_soil').value),
+        location: {
+          longitude: parseFloat(document.getElementById('e_lon').value),
+          latitude: parseFloat(document.getElementById('e_lat').value),
+        },
+      };
+      await fetch('/readings/environment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast('Environmental reading sent to cloud!');
+      loadState();
+    }
+
+    async function updateEnv(id) {
+      const payload = {
+        id,
+        deviceCode: document.getElementById(`e-dev-${id}`).value.trim(),
+        estateId: document.getElementById(`e-est-${id}`).value.trim(),
+        temperature: parseFloat(document.getElementById(`e-tmp-${id}`).value),
+        humidity: parseFloat(document.getElementById(`e-hum-${id}`).value),
+        soilMoisture: parseFloat(document.getElementById(`e-sol-${id}`).value),
+        location: {
+          longitude: parseFloat(document.getElementById(`e-lon-${id}`).value),
+          latitude: parseFloat(document.getElementById(`e-lat-${id}`).value),
+        },
+        recordedAt: document.getElementById(`e-ts-${id}`).value.trim(),
+      };
+      await fetch(`/readings/environment/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast(`Updated environmental reading ${id}`);
+      loadState();
+    }
+
+    async function addProductionReading() {
+      const weight = parseFloat(document.getElementById('p_weight').value);
+      const payload = {
+        deviceCode: document.getElementById('p_deviceCode').value.trim(),
+        workerId: document.getElementById('p_workerId').value.trim(),
+        estateId: document.getElementById('p_estateId').value.trim(),
+        workSessionId: document.getElementById('p_sessionId').value.trim() || undefined,
+        quantity: weight,
+        weight: weight,
+        unit: document.getElementById('p_unit').value,
+      };
+      await fetch('/readings/production', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast('End-of-day harvest weight sent to cloud!');
+      loadState();
+    }
+
+    async function updateProduction(id) {
+      const qty = parseFloat(document.getElementById(`p-qty-${id}`).value);
+      const payload = {
+        id,
+        deviceCode: document.getElementById(`p-dev-${id}`).value.trim(),
+        workerId: document.getElementById(`p-wrk-${id}`).value.trim(),
+        estateId: document.getElementById(`p-est-${id}`).value.trim(),
+        quantity: qty,
+        weight: qty,
+        unit: document.getElementById(`p-unt-${id}`).value.trim(),
+        recordedAt: document.getElementById(`p-ts-${id}`).value.trim(),
+      };
+      await fetch(`/readings/production/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast(`Updated daily production record ${id}`);
+      loadState();
+    }
+
+    async function deleteRecord(url) {
+      await fetch(url, { method: 'DELETE' });
+      showToast('Record deleted');
+      loadState();
+    }
+
+    async function clearAllRecords() {
+      await fetch('/api/simulate/clear', { method: 'POST' });
+      showToast('All mock cloud records cleared');
+      loadState();
+    }
+
+    async function saveSettings() {
+      const payload = {
+        autoSimulate: document.getElementById('autoSimulateToggle').checked,
+        workerIntervalSec: parseInt(document.getElementById('workerIntervalSec').value, 10) || 600,
+        environmentIntervalSec: parseInt(document.getElementById('environmentIntervalSec').value, 10) || 3600,
+        baseStationCode: 'BS-GATEWAY-01',
+        trackerDeviceCode: document.getElementById('w_deviceCode').value.trim(),
+        defaultWorkerId: document.getElementById('w_workerId').value.trim(),
+        defaultEstateId: document.getElementById('w_estateId').value.trim(),
+        defaultLatitude: parseFloat(document.getElementById('w_lat').value),
+        defaultLongitude: parseFloat(document.getElementById('w_lon').value),
+        defaultAltitude: parseFloat(document.getElementById('w_alt').value),
+        defaultActivityStatus: document.getElementById('w_status').value,
+        envSensorDeviceCode: document.getElementById('e_deviceCode').value.trim(),
+        defaultTemperature: parseFloat(document.getElementById('e_temp').value),
+        defaultHumidity: parseFloat(document.getElementById('e_hum').value),
+        defaultSoilMoisture: parseFloat(document.getElementById('e_soil').value),
+        smartScaleDeviceCode: document.getElementById('p_deviceCode').value.trim(),
+        defaultHarvestWeight: parseFloat(document.getElementById('p_weight').value),
+        defaultHarvestUnit: document.getElementById('p_unit').value,
+      };
+      await fetch('/api/settings', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      showToast('Simulation defaults saved');
+      loadState();
+    }
+
+    function setSamplePacket(type) {
+      const input = document.getElementById('rawLoraInput');
+      if (type === 'worker') {
+        input.value = 'WORKER|550e8400-e29b-41d4-a716-446655440000|LAT=6.949700|LON=80.633700|ALT=1428.50|STATUS=ACTIVE';
+      } else if (type === 'env') {
+        input.value = 'ENV|ENV-SENSOR-01|TEMP=24.50|HUM=81.00|SOIL=46.50|LAT=6.949700|LON=80.633700';
+      } else if (type === 'scale') {
+        input.value = 'SCALE|SCALE-SMART-01|WORKER=EMP-0042|WEIGHT=31.25|UNIT=kg|ESTATE=GV-TEA-001';
+      }
+    }
+
+    async function sendRawPacket() {
+      const rawPacket = document.getElementById('rawLoraInput').value.trim();
+      const res = await fetch('/base-station/ingest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ baseStationId: 'BS-GATEWAY-01', rawPacket }),
+      });
+      if (res.ok) {
+        showToast('LoRa packet ingested via Base Station!');
+        loadState();
+      } else {
+        const err = await res.json();
+        showToast('Error: ' + (err.error || 'Failed'));
+      }
+    }
+
+    loadState();
+    setInterval(loadState, 5000);
+  </script>
+</body>
+</html>
