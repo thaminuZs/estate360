@@ -186,4 +186,22 @@ export class IotController {
       limit: limit ? Number(limit) : undefined,
     });
   }
+
+  @Roles(Role.ADMIN, Role.OWNER)
+  @Post('cloud/sync/production')
+  public async syncProductionFromCloud(
+    @ActiveUser() user: ActiveUserData,
+    @Query('estateId') estateId?: string,
+    @Query('workerId') workerId?: string,
+    @Query('limit') limit?: number,
+  ) {
+    if (estateId) {
+      await this.iotService.verifyEstateOwnership(estateId, user);
+    }
+    return this.cloudFetchService.fetchAndSyncProductionReadings({
+      estateId,
+      workerId,
+      limit: limit ? Number(limit) : undefined,
+    });
+  }
 }

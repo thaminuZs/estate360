@@ -18,9 +18,9 @@ export class CreateProductionRecordDto {
   @IsNotEmpty()
   estateId!: string;
 
+  @IsOptional()
   @IsUUID()
-  @IsNotEmpty()
-  workSessionId!: string;
+  workSessionId?: string;
 
   @IsNumber()
   @IsPositive()

@@ -9,6 +9,8 @@ import { DeviceAssignment } from '../entities/device-assignment.entity';
 import { Employee } from 'src/employees/employee.entity';
 import { Estate } from 'src/estates/estate.entity';
 import { WorkSession } from 'src/work-sessions/work-session.entity';
+import { ProductionRecord } from 'src/production/production-record.entity';
+import { WorkerAssignment } from 'src/assignments/entities/worker-assignment.entity';
 
 describe('IotCloudFetchService', () => {
   let service: IotCloudFetchService;
@@ -26,6 +28,7 @@ describe('IotCloudFetchService', () => {
         if (key === 'IOT_CLOUD_API_KEY') return 'test-key-123';
         if (key === 'IOT_CLOUD_WORKER_PATH') return '/readings/workers';
         if (key === 'IOT_CLOUD_ENV_PATH') return '/readings/environment';
+        if (key === 'IOT_CLOUD_PRODUCTION_PATH') return '/readings/production';
         if (key === 'IOT_CLOUD_FETCH_ENABLED') return 'true';
         return null;
       }),
@@ -45,6 +48,8 @@ describe('IotCloudFetchService', () => {
         { provide: getRepositoryToken(Employee), useValue: mockRepo },
         { provide: getRepositoryToken(Estate), useValue: mockRepo },
         { provide: getRepositoryToken(WorkSession), useValue: mockRepo },
+        { provide: getRepositoryToken(ProductionRecord), useValue: mockRepo },
+        { provide: getRepositoryToken(WorkerAssignment), useValue: mockRepo },
       ],
     }).compile();
 
@@ -60,11 +65,15 @@ describe('IotCloudFetchService', () => {
     expect(config.apiUrl).toBe('https://api.test-cloud.com');
     expect(config.workerReadingsPath).toBe('/readings/workers');
     expect(config.environmentReadingsPath).toBe('/readings/environment');
+    expect(config.productionReadingsPath).toBe('/readings/production');
     expect(config.fullWorkerUrl).toBe(
       'https://api.test-cloud.com/readings/workers',
     );
     expect(config.fullEnvUrl).toBe(
       'https://api.test-cloud.com/readings/environment',
+    );
+    expect(config.fullProductionUrl).toBe(
+      'https://api.test-cloud.com/readings/production',
     );
   });
 
@@ -73,13 +82,18 @@ describe('IotCloudFetchService', () => {
       apiUrl: 'https://new-cloud-server.org/',
       workerReadingsPath: 'v2/telemetry/workers',
       environmentReadingsPath: '/v2/telemetry/env',
+      productionReadingsPath: 'v2/telemetry/production',
     });
 
     expect(updated.apiUrl).toBe('https://new-cloud-server.org');
     expect(updated.workerReadingsPath).toBe('/v2/telemetry/workers');
     expect(updated.environmentReadingsPath).toBe('/v2/telemetry/env');
+    expect(updated.productionReadingsPath).toBe('/v2/telemetry/production');
     expect(updated.fullWorkerUrl).toBe(
       'https://new-cloud-server.org/v2/telemetry/workers',
+    );
+    expect(updated.fullProductionUrl).toBe(
+      'https://new-cloud-server.org/v2/telemetry/production',
     );
   });
 
@@ -98,10 +112,29 @@ describe('IotCloudFetchService', () => {
       deviceId: '550e8400-e29b-41d4-a716-446655440000',
       deviceCode: '550e8400-e29b-41d4-a716-446655440000',
       activityStatus: 'ACTIVE',
+      altitude: 12.5,
       location: {
         latitude: 6.9271,
         longitude: 79.8612,
+        altitude: 12.5,
       },
+    });
+  });
+
+  it('should parse raw LoRa scale packet for daily production record', () => {
+    const raw =
+      'SCALE|SCALE-DEV-001|WORKER=EMP-0042|WEIGHT=28.50|UNIT=kg|ESTATE=GV-TEA-001';
+    const parsed = service.parseRawLoRaScalePacket(raw);
+
+    expect(parsed).toEqual({
+      deviceId: 'SCALE-DEV-001',
+      deviceCode: 'SCALE-DEV-001',
+      workerId: 'EMP-0042',
+      employeeCode: 'EMP-0042',
+      estateId: 'GV-TEA-001',
+      estateCode: 'GV-TEA-001',
+      quantity: 28.5,
+      unit: 'kg',
     });
   });
 });

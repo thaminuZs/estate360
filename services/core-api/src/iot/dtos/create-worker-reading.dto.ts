@@ -15,6 +15,10 @@ export class GeoPointDto {
 
   @IsNumber()
   longitude!: number;
+
+  @IsOptional()
+  @IsNumber()
+  altitude?: number;
 }
 
 export class CreateWorkerReadingDto {
@@ -42,6 +46,10 @@ export class CreateWorkerReadingDto {
   @ValidateNested()
   @Type(() => GeoPointDto)
   location?: GeoPointDto;
+
+  @IsOptional()
+  @IsNumber()
+  altitude?: number;
 
   @IsOptional()
   @IsString()

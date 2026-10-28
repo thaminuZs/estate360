@@ -205,6 +205,7 @@ export class IotService {
       workSession,
       recordedAt: dto.recordedAt ? new Date(dto.recordedAt) : new Date(),
       activityStatus: dto.activityStatus ?? 'active',
+      altitude: dto.altitude ?? dto.location?.altitude,
       location: dto.location
         ? {
             type: 'Point',
