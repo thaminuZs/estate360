@@ -92,3 +92,6 @@ test-results/
 
 # Local environment overrides
 *.local
+
+# Compodoc
+documentation/

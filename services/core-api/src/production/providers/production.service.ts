@@ -30,7 +30,7 @@ export class ProductionService {
   ) {}
 
   public async create(dto: CreateProductionRecordDto, user?: ActiveUserData) {
-    const [worker, estate, workSession] = await Promise.all([
+    const [worker, estate] = await Promise.all([
       this.employeesRepo.findOne({
         where: { id: dto.workerId },
         relations: { owner: true },
@@ -39,15 +39,25 @@ export class ProductionService {
         where: { id: dto.estateId },
         relations: { owner: true },
       }),
-      this.sessionsRepo.findOne({
-        where: { id: dto.workSessionId },
-        relations: { estate: { owner: true } },
-      }),
     ]);
 
     if (!worker) throw new NotFoundException('Worker not found');
     if (!estate) throw new NotFoundException('Estate not found');
-    if (!workSession) throw new NotFoundException('Work session not found');
+
+    let workSession: WorkSession | null = null;
+    if (dto.workSessionId) {
+      workSession = await this.sessionsRepo.findOne({
+        where: { id: dto.workSessionId },
+        relations: { estate: { owner: true } },
+      });
+      if (!workSession) throw new NotFoundException('Work session not found');
+    } else {
+      workSession = await this.sessionsRepo.findOne({
+        where: { worker: { id: worker.id }, estate: { id: estate.id } },
+        relations: { estate: { owner: true } },
+        order: { startTime: 'DESC' },
+      });
+    }
 
     if (user?.role === Role.OWNER) {
       if (!user.ownerId || estate.owner?.id !== user.ownerId) {
@@ -58,7 +68,7 @@ export class ProductionService {
       if (worker.owner && worker.owner.id !== user.ownerId) {
         throw new ForbiddenException('You do not have access to this worker');
       }
-      if (workSession.estate?.owner?.id !== user.ownerId) {
+      if (workSession && workSession.estate?.owner?.id !== user.ownerId) {
         throw new ForbiddenException(
           'You do not have access to this work session',
         );

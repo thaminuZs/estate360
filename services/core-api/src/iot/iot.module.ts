@@ -7,6 +7,8 @@ import { EnvironmentIotReading } from './entities/environment-iot-reading.entity
 import { Employee } from 'src/employees/employee.entity';
 import { Estate } from 'src/estates/estate.entity';
 import { WorkSession } from 'src/work-sessions/work-session.entity';
+import { ProductionRecord } from 'src/production/production-record.entity';
+import { WorkerAssignment } from 'src/assignments/entities/worker-assignment.entity';
 import { IotService } from './providers/iot.service';
 import { IotCloudFetchService } from './providers/iot-cloud-fetch.service';
 import { IotController } from './iot.controller';
@@ -23,6 +25,8 @@ import { ConfigModule } from '@nestjs/config';
       Employee,
       Estate,
       WorkSession,
+      ProductionRecord,
+      WorkerAssignment,
     ]),
     AuthModule,
     ConfigModule,

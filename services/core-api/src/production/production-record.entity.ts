@@ -30,11 +30,11 @@ export class ProductionRecord {
   estate!: Estate;
 
   @ManyToOne(() => WorkSession, {
-    nullable: false,
+    nullable: true,
     eager: true,
   })
   @JoinColumn({ name: 'work_session_id' })
-  workSession!: WorkSession;
+  workSession?: WorkSession | null;
 
   @Column({ type: 'numeric', precision: 10, scale: 2 })
   quantity!: number;

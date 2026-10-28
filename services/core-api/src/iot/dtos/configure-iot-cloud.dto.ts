@@ -18,6 +18,10 @@ export class ConfigureIotCloudDto {
   environmentReadingsPath?: string;
 
   @IsOptional()
+  @IsString()
+  productionReadingsPath?: string;
+
+  @IsOptional()
   @IsBoolean()
   enabled?: boolean;
 }

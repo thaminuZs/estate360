@@ -46,6 +46,9 @@ export class WorkerIotReading {
     coordinates: [number, number];
   };
 
+  @Column({ type: 'numeric', precision: 8, scale: 2, nullable: true })
+  altitude?: number;
+
   @Column({
     name: 'activity_status',
     type: 'varchar',
